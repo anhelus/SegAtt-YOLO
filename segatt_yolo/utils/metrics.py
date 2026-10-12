@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """Model validation metrics."""
 
 from __future__ import annotations
@@ -12,8 +12,8 @@ from typing import Any
 import numpy as np
 import torch
 
-from segab_yolo.utils import LOGGER, DataExportMixin, SimpleClass, TryExcept, checks, plt_settings
-from segab_yolo.utils.plotting import colors
+from segatt_yolo.utils import LOGGER, DataExportMixin, SimpleClass, TryExcept, checks, plt_settings
+from segatt_yolo.utils.plotting import colors
 
 OKS_SIGMA = (
     np.array(
@@ -387,7 +387,7 @@ def smooth_bce(eps: float = 0.1) -> tuple[float, float]:
         neg (float): Negative label smoothing BCE target.
 
     References:
-        https://github.com/segab_yolo/yolov3/issues/238#issuecomment-598028441
+        https://github.com/segatt_yolo/yolov3/issues/238#issuecomment-598028441
     """
     return 1.0 - 0.5 * eps, 0.5 * eps
 
@@ -605,7 +605,7 @@ class ConfusionMatrix(DataExportMixin):
             save_dir (str, optional): Directory where the plot will be saved.
             on_plot (callable, optional): An optional callback to pass plots path and data when they are rendered.
         """
-        import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+        import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
         array = self.matrix / ((self.matrix.sum(0).reshape(1, -1) + 1e-9) if normalize else 1)  # normalize columns
         array[array < 0.005] = np.nan  # don't annotate (would appear as 0.00)
@@ -744,7 +744,7 @@ def plot_pr_curve(
         names (dict[int, str], optional): Dictionary mapping class indices to class names.
         on_plot (callable, optional): Function to call after plot is saved.
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
     fig, ax = plt.subplots(1, 1, figsize=(9, 6), tight_layout=True)
     py = np.stack(py, axis=1)
@@ -791,7 +791,7 @@ def plot_mc_curve(
         ylabel (str, optional): Y-axis label.
         on_plot (callable, optional): Function to call after plot is saved.
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
     fig, ax = plt.subplots(1, 1, figsize=(9, 6), tight_layout=True)
 
@@ -945,7 +945,7 @@ def ap_per_class(
 
 
 class Metric(SimpleClass):
-    """Class for computing evaluation metrics for segab_yolo YOLO models.
+    """Class for computing evaluation metrics for segatt_yolo YOLO models.
 
     Attributes:
         p (list): Precision for each class. Shape: (nc,).

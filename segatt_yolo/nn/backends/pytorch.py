@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import Any
 import torch
 import torch.nn as nn
 
-from segab_yolo.utils import IS_JETSON, LOGGER, is_jetson
+from segatt_yolo.utils import IS_JETSON, LOGGER, is_jetson
 
 from .base import BaseBackend
 
@@ -47,7 +47,7 @@ class PyTorchBackend(BaseBackend):
         Args:
             weight (str | torch.nn.Module): Path to the .pt checkpoint or a pre-loaded module.
         """
-        from segab_yolo.nn.tasks import load_checkpoint
+        from segatt_yolo.nn.tasks import load_checkpoint
 
         if isinstance(weight, torch.nn.Module):
             if self.fuse and hasattr(weight, "fuse"):

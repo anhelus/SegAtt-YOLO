@@ -18,14 +18,14 @@ class TestCBAM:
         (2, 128, 16, 16),
     ])
     def test_output_shape(self, batch, channels, height, width):
-        from segab_yolo.nn.modules.conv import CBAM
+        from segatt_yolo.nn.modules.conv import CBAM
         module = CBAM(c1=channels)
         x = torch.randn(batch, channels, height, width)
         out = module(x)
         assert out.shape == x.shape
 
     def test_grad_flow(self):
-        from segab_yolo.nn.modules.conv import CBAM
+        from segatt_yolo.nn.modules.conv import CBAM
         module = CBAM(c1=64)
         x = torch.randn(1, 64, 32, 32, requires_grad=True)
         out = module(x).sum()
@@ -34,7 +34,7 @@ class TestCBAM:
         assert x.grad.shape == x.shape
 
     def test_invalid_kernel_size(self):
-        from segab_yolo.nn.modules.conv import CBAM
+        from segatt_yolo.nn.modules.conv import CBAM
         with pytest.raises(AssertionError):
             CBAM(c1=64, kernel_size=5)
 
@@ -44,7 +44,7 @@ class TestCBAM:
 class TestChannelAttention:
     @pytest.mark.parametrize("channels", [32, 64, 128])
     def test_output_shape(self, channels):
-        from segab_yolo.nn.modules.conv import ChannelAttention
+        from segatt_yolo.nn.modules.conv import ChannelAttention
         module = ChannelAttention(channels)
         x = torch.randn(1, channels, 16, 16)
         out = module(x)
@@ -56,7 +56,7 @@ class TestChannelAttention:
 class TestSpatialAttention:
     @pytest.mark.parametrize("kernel_size", [3, 7])
     def test_output_shape(self, kernel_size):
-        from segab_yolo.nn.modules.conv import SpatialAttention
+        from segatt_yolo.nn.modules.conv import SpatialAttention
         module = SpatialAttention(kernel_size)
         x = torch.randn(1, 64, 32, 32)
         out = module(x)
@@ -71,14 +71,14 @@ class TestEMA:
         (2, 64, 16, 16),
     ])
     def test_output_shape(self, batch, channels, height, width):
-        from segab_yolo.nn.modules.attention import EMA
+        from segatt_yolo.nn.modules.attention import EMA
         module = EMA(channels=channels)
         x = torch.randn(batch, channels, height, width)
         out = module(x)
         assert out.shape == x.shape
 
     def test_grad_flow(self):
-        from segab_yolo.nn.modules.attention import EMA
+        from segatt_yolo.nn.modules.attention import EMA
         module = EMA(channels=32)
         x = torch.randn(1, 32, 32, 32, requires_grad=True)
         out = module(x).sum()
@@ -86,7 +86,7 @@ class TestEMA:
         assert x.grad is not None
 
     def test_invalid_channels(self):
-        from segab_yolo.nn.modules.attention import EMA
+        from segatt_yolo.nn.modules.attention import EMA
         with pytest.raises(AssertionError):
             EMA(channels=33, groups=4)  # 33 not divisible by 4
 
@@ -99,14 +99,14 @@ class TestCoT:
         (2, 64, 8, 8),
     ])
     def test_output_shape(self, batch, channels, height, width):
-        from segab_yolo.nn.modules.attention import CoT
+        from segatt_yolo.nn.modules.attention import CoT
         module = CoT(in_channels=channels)
         x = torch.randn(batch, channels, height, width)
         out = module(x)
         assert out.shape == x.shape
 
     def test_grad_flow(self):
-        from segab_yolo.nn.modules.attention import CoT
+        from segatt_yolo.nn.modules.attention import CoT
         module = CoT(in_channels=32)
         x = torch.randn(1, 32, 16, 16, requires_grad=True)
         out = module(x).sum()
@@ -124,14 +124,14 @@ class TestODConv:
         (64, 128, 5),
     ])
     def test_output_shape(self, cin, cout, ks):
-        from segab_yolo.nn.modules.attention import ODConv
+        from segatt_yolo.nn.modules.attention import ODConv
         module = ODConv(cin, cout, ks).eval()
         x = torch.randn(2, cin, 16, 16)
         out = module(x)
         assert out.shape == (2, cout, 16, 16)
 
     def test_grad_flow(self):
-        from segab_yolo.nn.modules.attention import ODConv
+        from segatt_yolo.nn.modules.attention import ODConv
         module = ODConv(16, 32, 3)
         x = torch.randn(2, 16, 16, 16, requires_grad=True)
         out = module(x).sum()
@@ -139,14 +139,14 @@ class TestODConv:
         assert x.grad is not None
 
     def test_stride_downsample(self):
-        from segab_yolo.nn.modules.attention import ODConv
+        from segatt_yolo.nn.modules.attention import ODConv
         module = ODConv(16, 32, 3, stride=2).eval()
         x = torch.randn(2, 16, 32, 32)
         out = module(x)
         assert out.shape == (2, 32, 16, 16)
 
     def test_groups(self):
-        from segab_yolo.nn.modules.attention import ODConv
+        from segatt_yolo.nn.modules.attention import ODConv
         module = ODConv(32, 64, 3, groups=2).eval()
         x = torch.randn(2, 32, 16, 16)
         out = module(x)
@@ -158,7 +158,7 @@ class TestODConv:
 class TestPConv:
     @pytest.mark.parametrize("channels,n_div", [(32, 4), (64, 2)])
     def test_output_shape(self, channels, n_div):
-        from segab_yolo.nn.modules.attention import PConv
+        from segatt_yolo.nn.modules.attention import PConv
         module = PConv(channels, n_div=n_div)
         x = torch.randn(1, channels, 16, 16)
         out = module(x)
@@ -172,7 +172,7 @@ class TestFasterNetBlock:
         (64, 128, 2),
     ])
     def test_output_shape(self, cin, cout, stride):
-        from segab_yolo.nn.modules.attention import FasterNetBlock
+        from segatt_yolo.nn.modules.attention import FasterNetBlock
         module = FasterNetBlock(cin, cout, stride=stride)
         h = w = 32 // stride
         x = torch.randn(1, cin, 32, 32)
@@ -180,7 +180,7 @@ class TestFasterNetBlock:
         assert out.shape == (1, cout, h, w)
 
     def test_grad_flow(self):
-        from segab_yolo.nn.modules.attention import FasterNetBlock
+        from segatt_yolo.nn.modules.attention import FasterNetBlock
         module = FasterNetBlock(32, 32)
         x = torch.randn(1, 32, 16, 16, requires_grad=True)
         out = module(x).sum()
@@ -188,12 +188,12 @@ class TestFasterNetBlock:
         assert x.grad is not None
 
     def test_identity_shortcut(self):
-        from segab_yolo.nn.modules.attention import FasterNetBlock
+        from segatt_yolo.nn.modules.attention import FasterNetBlock
         module = FasterNetBlock(32, 32, stride=1)
         assert isinstance(module.shortcut, torch.nn.Identity)
 
     def test_conv_shortcut(self):
-        from segab_yolo.nn.modules.attention import FasterNetBlock
+        from segatt_yolo.nn.modules.attention import FasterNetBlock
         module = FasterNetBlock(32, 64, stride=2)
         assert not isinstance(module.shortcut, torch.nn.Identity)
 
@@ -206,10 +206,10 @@ class TestFasterNetBlock:
 # ======================================================================
 
 class TestGenerateCam:
-    """Test generate_cam function from segab_yolo.utils.xai."""
+    """Test generate_cam function from segatt_yolo.utils.xai."""
 
     def test_invalid_method_returns_zeros(self):
-        from segab_yolo.utils.xai import generate_cam
+        from segatt_yolo.utils.xai import generate_cam
         import torch.nn as nn
         model = nn.Conv2d(3, 16, 3)
         img = torch.randn(1, 3, 32, 32)
@@ -220,7 +220,7 @@ class TestGenerateCam:
         assert result.shape == (3, 32, 32)
 
     def test_valid_methods_listed(self):
-        from segab_yolo.utils.xai import generate_cam
+        from segatt_yolo.utils.xai import generate_cam
         import inspect
         source = inspect.getsource(generate_cam)
         for method in ("gradcam", "gradcam++", "eigencam", "ss-gradcam++"):
@@ -228,7 +228,7 @@ class TestGenerateCam:
 
     def test_cam_config_methods_match_generate_cam(self):
         """All methods in xai_config.yaml must be supported by generate_cam or process_single_image."""
-        from segab_yolo.utils.xai import generate_cam
+        from segatt_yolo.utils.xai import generate_cam
         import inspect
         source = inspect.getsource(generate_cam)
         # activation is handled separately in process_single_image, not generate_cam
@@ -242,7 +242,7 @@ class TestGenerateCam:
         assert "eigencam" in source
 
     def test_show_cam_on_image_rgb(self):
-        from segab_yolo.utils.xai import show_cam_on_image
+        from segatt_yolo.utils.xai import show_cam_on_image
         import numpy as np
         img = np.random.randint(0, 255, (32, 32, 3), dtype=np.uint8)
         cam = np.random.rand(32, 32).astype(np.float32)
@@ -251,7 +251,7 @@ class TestGenerateCam:
         assert result.dtype == np.uint8
 
     def test_show_cam_on_image_bgr(self):
-        from segab_yolo.utils.xai import show_cam_on_image
+        from segatt_yolo.utils.xai import show_cam_on_image
         import numpy as np
         img = np.random.randint(0, 255, (32, 32, 3), dtype=np.uint8)
         cam = np.random.rand(32, 32).astype(np.float32)
@@ -277,7 +277,7 @@ class TestEigenCAMDirect:
 class TestModelYamls:
     """Verify that YAML model definitions can be parsed and run a forward pass."""
 
-    MODELS_DIR = Path(__import__("segab_yolo").__file__).resolve().parent / "cfg" / "models"
+    MODELS_DIR = Path(__import__("segatt_yolo").__file__).resolve().parent / "cfg" / "models"
 
     @pytest.mark.parametrize("subdir,yaml_name", [
         ("11", "yolo11.yaml"),
@@ -288,7 +288,7 @@ class TestModelYamls:
     ])
     def test_yaml_model_forward(self, subdir, yaml_name):
         """Build model from YAML and run a tiny forward pass."""
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
         yaml_path = self.MODELS_DIR / subdir / yaml_name
         if not yaml_path.exists():
             pytest.skip(f"YAML not found: {yaml_path}")
@@ -306,7 +306,7 @@ class TestModelYamls:
     ])
     def test_broken_yamls_reported(self, yaml_name):
         """These YAMLs should now have all classes implemented."""
-        from segab_yolo.nn.modules import __all__ as known_modules
+        from segatt_yolo.nn.modules import __all__ as known_modules
         known = set(known_modules) | {"Detect", "Segment", "Pose", "Classify", "OBB", "OBB26", "Segment26",
                                        "YOLOEDetect", "YOLOESegment", "YOLOESegment26",
                                        "nn", "Conv", "C3k2", "Concat", "C2PSA", "SPPF"}

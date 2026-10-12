@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,12 +7,12 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.data import YOLOConcatDataset, build_yolo_dataset
-from segab_yolo.data.augment import LoadVisualPrompt
-from segab_yolo.models.yolo.detect import DetectionTrainer, DetectionValidator
-from segab_yolo.nn.tasks import YOLOEModel
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, RANK
-from segab_yolo.utils.torch_utils import unwrap_model
+from segatt_yolo.data import YOLOConcatDataset, build_yolo_dataset
+from segatt_yolo.data.augment import LoadVisualPrompt
+from segatt_yolo.models.yolo.detect import DetectionTrainer, DetectionValidator
+from segatt_yolo.nn.tasks import YOLOEModel
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, RANK
+from segatt_yolo.utils.torch_utils import unwrap_model
 
 from ..world.train_world import WorldTrainerFromScratch
 from .val import YOLOEDetectValidator

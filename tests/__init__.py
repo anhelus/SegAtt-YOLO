@@ -1,7 +1,7 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.cfg import TASK2DATA, TASK2MODEL, TASKS
-from segab_yolo.utils import ASSETS, WEIGHTS_DIR, checks
+from segatt_yolo.cfg import TASK2DATA, TASK2MODEL, TASKS
+from segatt_yolo.utils import ASSETS, WEIGHTS_DIR, checks
 
 # Constants used in tests
 MODEL = WEIGHTS_DIR / "path with spaces" / "yolo26n.pt"  # test spaces in path

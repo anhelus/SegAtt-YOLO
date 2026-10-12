@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ import numpy as np
 import torch
 from PIL import Image
 
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.checks import check_requirements
 
 from .base import BaseBackend
 
@@ -54,7 +54,7 @@ class CoreMLBackend(BaseBackend):
         im = im.transpose(0, 3, 1, 2) if self.dynamic else Image.fromarray((im[0] * 255).astype("uint8"))
         y = self.model.predict({self.input_name: im})
         if "confidence" in y:  # NMS included
-            from segab_yolo.utils.ops import xywh2xyxy
+            from segatt_yolo.utils.ops import xywh2xyxy
 
             box = xywh2xyxy(y["coordinates"] * [[w, h, w, h]])
             cls = y["confidence"].argmax(1, keepdims=True)

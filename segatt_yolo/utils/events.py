@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import json
 import random
@@ -7,10 +7,10 @@ from pathlib import Path
 from threading import Thread
 from urllib.request import Request, urlopen
 
-from segab_yolo import SETTINGS, __version__
-from segab_yolo.utils import ARGV, ENVIRONMENT, GIT, IS_PIP_PACKAGE, ONLINE, PYTHON_VERSION, RANK, TESTS_RUNNING
-from segab_yolo.utils.downloads import GITHUB_ASSETS_NAMES
-from segab_yolo.utils.torch_utils import get_cpu_info
+from segatt_yolo import SETTINGS, __version__
+from segatt_yolo.utils import ARGV, ENVIRONMENT, GIT, IS_PIP_PACKAGE, ONLINE, PYTHON_VERSION, RANK, TESTS_RUNNING
+from segatt_yolo.utils.downloads import GITHUB_ASSETS_NAMES
+from segatt_yolo.utils.torch_utils import get_cpu_info
 
 
 def _post(url: str, data: dict, timeout: float = 5.0) -> None:
@@ -28,7 +28,7 @@ class Events:
 
     Event collection and transmission are enabled when sync is enabled in settings, the current process is rank -1 or 0,
     tests are not running, the environment is online, and the installation source is either pip or the official
-    segab_yolo GitHub repository.
+    segatt_yolo GitHub repository.
 
     Attributes:
         url (str): Measurement Protocol endpoint for receiving anonymous events.
@@ -66,7 +66,7 @@ class Events:
             and RANK in {-1, 0}
             and not TESTS_RUNNING
             and ONLINE
-            and (IS_PIP_PACKAGE or GIT.origin == "https://github.com/segab_yolo/segab_yolo.git")
+            and (IS_PIP_PACKAGE or GIT.origin == "https://github.com/segatt_yolo/segatt_yolo.git")
         )
 
     def __call__(self, cfg, device=None, backend=None) -> None:

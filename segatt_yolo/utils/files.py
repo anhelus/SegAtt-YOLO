@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -190,13 +190,13 @@ def update_models(model_names: tuple = ("yolo26n.pt",), source_dir: Path = Path(
 
     Examples:
         Update specified YOLO models and save them in 'updated_models' subdirectory:
-        >>> from segab_yolo.utils.files import update_models
+        >>> from segatt_yolo.utils.files import update_models
         >>> model_names = ("yolo26n.pt", "yolo11s.pt")
         >>> update_models(model_names, source_dir=Path("/models"), update_names=True)
     """
-    from segab_yolo import YOLO
-    from segab_yolo.nn.autobackend import default_class_names
-    from segab_yolo.utils import LOGGER
+    from segatt_yolo import YOLO
+    from segatt_yolo.nn.autobackend import default_class_names
+    from segatt_yolo.utils import LOGGER
 
     target_dir = source_dir / "updated_models"
     target_dir.mkdir(parents=True, exist_ok=True)  # Ensure target directory exists

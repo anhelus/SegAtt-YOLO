@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 from __future__ import annotations
 
 import copy
@@ -10,7 +10,7 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 
-from segab_yolo.nn.modules import MLP, LayerNorm2d, MLPBlock
+from segatt_yolo.nn.modules import MLP, LayerNorm2d, MLPBlock
 
 from .transformer import Attention, TwoWayAttentionBlock, TwoWayTransformer
 from .utils import add_decomposed_rel_pos, apply_rotary_enc, compute_axial_cis, window_partition, window_unpartition

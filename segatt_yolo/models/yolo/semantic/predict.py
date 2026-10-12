@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import torch
 
-from segab_yolo.engine.predictor import BasePredictor
-from segab_yolo.engine.results import Results
-from segab_yolo.utils import DEFAULT_CFG, ops
+from segatt_yolo.engine.predictor import BasePredictor
+from segatt_yolo.engine.results import Results
+from segatt_yolo.utils import DEFAULT_CFG, ops
 
 
 class SemanticSegmentationPredictor(BasePredictor):
@@ -15,7 +15,7 @@ class SemanticSegmentationPredictor(BasePredictor):
     This predictor processes model outputs to produce per-pixel class label maps.
 
     Examples:
-        >>> from segab_yolo.models.yolo.semantic import SemanticSegmentationPredictor
+        >>> from segatt_yolo.models.yolo.semantic import SemanticSegmentationPredictor
         >>> args = dict(model="yolo26n-sem.pt", source="path/to/image.jpg")
         >>> predictor = SemanticSegmentationPredictor(overrides=args)
         >>> predictor.predict_cli()

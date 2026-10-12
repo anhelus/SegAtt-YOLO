@@ -8,7 +8,7 @@ Typical usage::
 import argparse
 from pathlib import Path
 
-from segab_yolo import YOLO, RTDETR
+from segatt_yolo import YOLO, RTDETR
 
 
 def parse_args() -> argparse.Namespace:

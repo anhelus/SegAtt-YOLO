@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.checks import check_executorch_requirements
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.checks import check_executorch_requirements
 
 from .base import BaseBackend
 
@@ -43,7 +43,7 @@ class ExecuTorchBackend(BaseBackend):
 
         # Load metadata
         if metadata_file.exists():
-            from segab_yolo.utils import YAML
+            from segatt_yolo.utils import YAML
 
             self.apply_metadata(YAML.load(metadata_file))
 

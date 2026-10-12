@@ -1,9 +1,9 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
-from segab_yolo.hub.utils import HUB_API_ROOT, HUB_WEB_ROOT, PREFIX, request_with_credentials
-from segab_yolo.utils import IS_COLAB, LOGGER, SETTINGS, emojis
+from segatt_yolo.hub.utils import HUB_API_ROOT, HUB_WEB_ROOT, PREFIX, request_with_credentials
+from segatt_yolo.utils import IS_COLAB, LOGGER, SETTINGS, emojis
 
 API_KEY_URL = f"{HUB_WEB_ROOT}/settings?tab=api+keys"
 

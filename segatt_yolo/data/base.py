@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -15,9 +15,9 @@ import cv2
 import numpy as np
 from torch.utils.data import Dataset
 
-from segab_yolo.data.utils import FORMATS_HELP_MSG, HELP_URL, IMG_FORMATS, check_file_speeds
-from segab_yolo.utils import DEFAULT_CFG, LOCAL_RANK, LOGGER, NUM_THREADS, TQDM
-from segab_yolo.utils.patches import imread
+from segatt_yolo.data.utils import FORMATS_HELP_MSG, HELP_URL, IMG_FORMATS, check_file_speeds
+from segatt_yolo.utils import DEFAULT_CFG, LOCAL_RANK, LOGGER, NUM_THREADS, TQDM
+from segatt_yolo.utils.patches import imread
 
 
 class BaseDataset(Dataset):
@@ -400,7 +400,7 @@ class BaseDataset(Dataset):
         Returns:
             (dict[str, Any]): Label dictionary with image and metadata.
         """
-        label = deepcopy(self.labels[index])  # requires deepcopy() https://github.com/segab_yolo/segab_yolo/pull/1948
+        label = deepcopy(self.labels[index])  # requires deepcopy() https://github.com/segatt_yolo/segatt_yolo/pull/1948
         label.pop("shape", None)  # shape is for rect, remove it
         label["img"], label["ori_shape"], label["resized_shape"] = self.load_image(index)
         label["ratio_pad"] = (

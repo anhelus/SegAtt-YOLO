@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from segab_yolo.utils.loss import FocalLoss, VarifocalLoss
-from segab_yolo.utils.metrics import bbox_iou
+from segatt_yolo.utils.loss import FocalLoss, VarifocalLoss
+from segatt_yolo.utils.metrics import bbox_iou
 
 from .ops import HungarianMatcher
 

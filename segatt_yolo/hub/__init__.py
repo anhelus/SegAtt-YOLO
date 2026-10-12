@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
-from segab_yolo.data.utils import HUBDatasetStats
-from segab_yolo.hub.auth import Auth
-from segab_yolo.hub.session import HUBTrainingSession
-from segab_yolo.hub.utils import HUB_API_ROOT, HUB_WEB_ROOT, PREFIX
-from segab_yolo.utils import LOGGER, SETTINGS, checks
+from segatt_yolo.data.utils import HUBDatasetStats
+from segatt_yolo.hub.auth import Auth
+from segatt_yolo.hub.session import HUBTrainingSession
+from segatt_yolo.hub.utils import HUB_API_ROOT, HUB_WEB_ROOT, PREFIX
+from segatt_yolo.utils import LOGGER, SETTINGS, checks
 
 __all__ = (
     "HUB_WEB_ROOT",
@@ -23,7 +23,7 @@ __all__ = (
 
 
 def login(api_key: str | None = None, save: bool = True) -> bool:
-    """Log in to the segab_yolo HUB API using the provided API key.
+    """Log in to the segatt_yolo HUB API using the provided API key.
 
     The session is not stored; a new session is created when needed using the saved SETTINGS or the HUB_API_KEY
     environment variable if successfully authenticated.
@@ -66,7 +66,7 @@ def login(api_key: str | None = None, save: bool = True) -> bool:
 
 
 def logout():
-    """Log out of segab_yolo HUB by removing the API key from the settings file."""
+    """Log out of segatt_yolo HUB by removing the API key from the settings file."""
     SETTINGS["api_key"] = ""
     LOGGER.info(f"{PREFIX}logged out ✅. To log in again, use 'yolo login'.")
 
@@ -84,13 +84,13 @@ def reset_model(model_id: str = ""):
 
 def export_fmts_hub():
     """Return a list of HUB-supported export formats."""
-    from segab_yolo.engine.exporter import export_formats
+    from segatt_yolo.engine.exporter import export_formats
 
     return [*list(export_formats()["Argument"][1:]), "ultralytics_tflite", "ultralytics_coreml"]
 
 
 def export_model(model_id: str = "", format: str = "torchscript"):
-    """Export a model to a specified format for deployment via the segab_yolo HUB API.
+    """Export a model to a specified format for deployment via the segatt_yolo HUB API.
 
     Args:
         model_id (str): The ID of the model to export. An empty string will use the default model.
@@ -101,7 +101,7 @@ def export_model(model_id: str = "", format: str = "torchscript"):
         AssertionError: If the specified format is not supported or if the export request fails.
 
     Examples:
-        >>> from segab_yolo import hub
+        >>> from segatt_yolo import hub
         >>> hub.export_model(model_id="your_model_id", format="torchscript")
     """
     import requests  # scoped as slow import
@@ -115,10 +115,10 @@ def export_model(model_id: str = "", format: str = "torchscript"):
 
 
 def get_export(model_id: str = "", format: str = "torchscript"):
-    """Retrieve an exported model in the specified format from segab_yolo HUB using the model ID.
+    """Retrieve an exported model in the specified format from segatt_yolo HUB using the model ID.
 
     Args:
-        model_id (str): The ID of the model to retrieve from segab_yolo HUB.
+        model_id (str): The ID of the model to retrieve from segatt_yolo HUB.
         format (str): The export format to retrieve. Must be one of the supported formats returned by export_fmts_hub().
 
     Returns:
@@ -128,7 +128,7 @@ def get_export(model_id: str = "", format: str = "torchscript"):
         AssertionError: If the specified format is not supported or if the API request fails.
 
     Examples:
-        >>> from segab_yolo import hub
+        >>> from segatt_yolo import hub
         >>> result = hub.get_export(model_id="your_model_id", format="torchscript")
     """
     import requests  # scoped as slow import
@@ -151,7 +151,7 @@ def check_dataset(path: str, task: str) -> None:
         task (str): Dataset task. Options are 'detect', 'segment', 'pose', 'classify', 'obb'.
 
     Examples:
-        >>> from segab_yolo.hub import check_dataset
+        >>> from segatt_yolo.hub import check_dataset
         >>> check_dataset("path/to/coco8.zip", task="detect")  # detect dataset
         >>> check_dataset("path/to/coco8-seg.zip", task="segment")  # segment dataset
         >>> check_dataset("path/to/coco8-pose.zip", task="pose")  # pose dataset
@@ -159,8 +159,8 @@ def check_dataset(path: str, task: str) -> None:
         >>> check_dataset("path/to/imagenet10.zip", task="classify")  # classification dataset
 
     Notes:
-        Download *.zip files from https://github.com/segab_yolo/hub/tree/main/example_datasets
-        i.e. https://github.com/segab_yolo/hub/raw/main/example_datasets/coco8.zip for coco8.zip.
+        Download *.zip files from https://github.com/segatt_yolo/hub/tree/main/example_datasets
+        i.e. https://github.com/segatt_yolo/hub/raw/main/example_datasets/coco8.zip for coco8.zip.
     """
     HUBDatasetStats(path=path, task=task).get_json()
     LOGGER.info(f"Checks completed correctly ✅. Upload this dataset to {HUB_WEB_ROOT}/datasets/.")

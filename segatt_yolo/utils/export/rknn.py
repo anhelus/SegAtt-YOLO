@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from segab_yolo.utils import IS_COLAB, LOGGER, YAML
+from segatt_yolo.utils import IS_COLAB, LOGGER, YAML
 
 
 def onnx2rknn(
@@ -28,11 +28,11 @@ def onnx2rknn(
     """
     if name in {"rv1103", "rv1106", "rv1103b", "rv1106b"}:
         raise ValueError(
-            f"Rockchip target '{name}' requires INT8 quantization, which is not yet supported by segab_yolo RKNN. "
+            f"Rockchip target '{name}' requires INT8 quantization, which is not yet supported by segatt_yolo RKNN. "
             f"Use a target that supports FP16 builds (e.g. rk2118, rk3562, rk3566, rk3568, rk3576, rk3588, rv1126b)."
         )
 
-    from segab_yolo.utils.checks import check_requirements
+    from segatt_yolo.utils.checks import check_requirements
 
     LOGGER.info(f"\n{prefix} starting export with rknn-toolkit2...")
     check_requirements("rknn-toolkit2>=2.3.2")

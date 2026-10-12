@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -15,10 +15,10 @@ import torch
 from PIL import Image
 from torch.utils.data import ConcatDataset
 
-from segab_yolo.utils import LOCAL_RANK, LOGGER, NUM_THREADS, TQDM, colorstr
-from segab_yolo.utils.instance import Instances
-from segab_yolo.utils.ops import resample_segments, segments2boxes
-from segab_yolo.utils.torch_utils import TORCHVISION_0_18
+from segatt_yolo.utils import LOCAL_RANK, LOGGER, NUM_THREADS, TQDM, colorstr
+from segatt_yolo.utils.instance import Instances
+from segatt_yolo.utils.ops import resample_segments, segments2boxes
+from segatt_yolo.utils.torch_utils import TORCHVISION_0_18
 
 from .augment import (
     Compose,
@@ -45,7 +45,7 @@ from .utils import (
     verify_image_mask,
 )
 
-# segab_yolo dataset *.cache version, >= 1.0.0 for segab_yolo YOLO models
+# segatt_yolo dataset *.cache version, >= 1.0.0 for segatt_yolo YOLO models
 DATASET_CACHE_VERSION = "1.0.3"
 
 
@@ -970,7 +970,7 @@ class ClassificationDataset:
             augment (bool, optional): Whether to apply augmentations to the dataset.
             prefix (str, optional): Prefix for logging and cache filenames, aiding in dataset identification.
         """
-        import torchvision  # scope for faster 'import segab_yolo'
+        import torchvision  # scope for faster 'import segatt_yolo'
 
         # Base class assigned as attribute rather than used as base class to allow for scoping slow torchvision import
         if TORCHVISION_0_18:  # 'allow_empty' argument first introduced in torchvision 0.18
@@ -988,7 +988,7 @@ class ClassificationDataset:
         if self.cache_ram:
             LOGGER.warning(
                 "Classification `cache_ram` training has known memory leak in "
-                "https://github.com/segab_yolo/segab_yolo/issues/9824, setting `cache_ram=False`."
+                "https://github.com/segatt_yolo/segatt_yolo/issues/9824, setting `cache_ram=False`."
             )
             self.cache_ram = False
         self.cache_disk = str(args.cache).lower() == "disk"  # cache images on hard drive as uncompressed *.npy files

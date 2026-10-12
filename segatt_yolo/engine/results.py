@@ -1,8 +1,8 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
-segab_yolo Results, Boxes, Masks, SemanticMask, Keypoints, Probs, and OBB classes for handling inference results.
+segatt_yolo Results, Boxes, Masks, SemanticMask, Keypoints, Probs, and OBB classes for handling inference results.
 
-Usage: See https://docs.segab_yolo.com/modes/predict/
+Usage: See https://docs.segatt_yolo.com/modes/predict/
 """
 
 from __future__ import annotations
@@ -16,9 +16,9 @@ import numpy as np
 import torch
 import cv2
 
-from segab_yolo.data.augment import LetterBox
-from segab_yolo.utils import LOGGER, DataExportMixin, SimpleClass, ops
-from segab_yolo.utils.plotting import Annotator, colors, save_one_box
+from segatt_yolo.data.augment import LetterBox
+from segatt_yolo.utils import LOGGER, DataExportMixin, SimpleClass, ops
+from segatt_yolo.utils.plotting import Annotator, colors, save_one_box
 
 
 class BaseTensor(SimpleClass):
@@ -115,7 +115,7 @@ class BaseTensor(SimpleClass):
 
         Examples:
             >>> import torch
-            >>> from segab_yolo.engine.results import BaseTensor
+            >>> from segatt_yolo.engine.results import BaseTensor
             >>> data = torch.tensor([[1, 2, 3], [4, 5, 6]])
             >>> base_tensor = BaseTensor(data, orig_shape=(720, 1280))
             >>> gpu_tensor = base_tensor.cuda()
@@ -185,7 +185,7 @@ class SemanticMask(BaseTensor):
 class Results(SimpleClass, DataExportMixin):
     """A class for storing and manipulating inference results.
 
-    This class provides comprehensive functionality for handling inference results from various segab_yolo models,
+    This class provides comprehensive functionality for handling inference results from various segatt_yolo models,
     including detection, segmentation, classification, and pose estimation. It supports visualization, data export, and
     various coordinate transformations.
 
@@ -318,7 +318,7 @@ class Results(SimpleClass, DataExportMixin):
         """
         # 1. --- Input Validation and Setup ---
         if not hasattr(self, "model") or not hasattr(self, "_processed_tensor"):
-            LOGGER.warning("⚠️ XAI attributes not found. This version of segab_yolo may not be configured for XAI.")
+            LOGGER.warning("⚠️ XAI attributes not found. This version of segatt_yolo may not be configured for XAI.")
             return self.orig_img
 
         if self.boxes is None or len(self.boxes) == 0:
@@ -330,7 +330,7 @@ class Results(SimpleClass, DataExportMixin):
             box_index = 0
 
         try:
-            from segab_yolo.utils.xai import generate_cam
+            from segatt_yolo.utils.xai import generate_cam
         except ImportError:
             LOGGER.error("❌ 'grad-cam' package not found. Please run 'pip install grad-cam' to use XAI features.")
             return self.orig_img
@@ -751,7 +751,7 @@ class Results(SimpleClass, DataExportMixin):
             (str): Path to the saved text file.
 
         Examples:
-            >>> from segab_yolo import YOLO
+            >>> from segatt_yolo import YOLO
             >>> model = YOLO("yolo26n.pt")
             >>> results = model("path/to/image.jpg")
             >>> for result in results:
@@ -1239,7 +1239,7 @@ class Keypoints(BaseTensor):
 
     Examples:
         >>> import torch
-        >>> from segab_yolo.engine.results import Keypoints
+        >>> from segatt_yolo.engine.results import Keypoints
         >>> keypoints_data = torch.rand(1, 17, 3)  # 1 detection, 17 keypoints, (x, y, conf)
         >>> orig_shape = (480, 640)  # Original image shape (height, width)
         >>> keypoints = Keypoints(keypoints_data, orig_shape)
@@ -1622,7 +1622,7 @@ class OBB(BaseTensor):
 
         Examples:
             >>> import torch
-            >>> from segab_yolo import YOLO
+            >>> from segatt_yolo import YOLO
             >>> model = YOLO("yolo26n-obb.pt")
             >>> results = model("path/to/image.jpg")
             >>> for result in results:

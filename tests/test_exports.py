@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import io
 import shutil
@@ -13,11 +13,11 @@ import pytest
 import torch
 
 from tests import MODEL, SOURCE
-from segab_yolo import YOLO
-from segab_yolo.cfg import TASK2DATA, TASK2MODEL, TASKS
-from segab_yolo.utils import ARM64, IS_DOCKER, IS_RASPBERRYPI, LINUX, MACOS, MACOS_VERSION, WINDOWS, checks
-from segab_yolo.utils.export.engine import torch2onnx
-from segab_yolo.utils.torch_utils import (
+from segatt_yolo import YOLO
+from segatt_yolo.cfg import TASK2DATA, TASK2MODEL, TASKS
+from segatt_yolo.utils import ARM64, IS_DOCKER, IS_RASPBERRYPI, LINUX, MACOS, MACOS_VERSION, WINDOWS, checks
+from segatt_yolo.utils.export.engine import torch2onnx
+from segatt_yolo.utils.torch_utils import (
     TORCH_1_10,
     TORCH_1_11,
     TORCH_1_13,

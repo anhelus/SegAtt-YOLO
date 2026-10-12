@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ import random
 import shutil
 from pathlib import Path
 
-from segab_yolo.data.utils import IMG_FORMATS, img2label_paths
-from segab_yolo.utils import DATASETS_DIR, LOGGER, TQDM
+from segatt_yolo.data.utils import IMG_FORMATS, img2label_paths
+from segatt_yolo.utils import DATASETS_DIR, LOGGER, TQDM
 
 
 def split_classify_dataset(source_dir: str | Path, train_ratio: float = 0.8) -> Path:
@@ -110,7 +110,7 @@ def autosplit(
 
     Examples:
         Split images with default weights
-        >>> from segab_yolo.data.split import autosplit
+        >>> from segatt_yolo.data.split import autosplit
         >>> autosplit()
 
         Split with custom weights and annotated images only

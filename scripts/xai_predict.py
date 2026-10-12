@@ -19,16 +19,16 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-# Ensure the repo root is on sys.path so the local segab_yolo (with
+# Ensure the repo root is on sys.path so the local segatt_yolo (with
 # custom modules like GAM/SimAM) is found even when run directly.
 _repo_root = Path(__file__).resolve().parent.parent
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from segab_yolo import YOLO
-from segab_yolo.nn.modules import C3k2
-from segab_yolo.nn.modules.attention import GAM, SimAM
-from segab_yolo.utils.xai import (
+from segatt_yolo import YOLO
+from segatt_yolo.nn.modules import C3k2
+from segatt_yolo.nn.modules.attention import GAM, SimAM
+from segatt_yolo.utils.xai import (
     DummyTarget,
     EigenCAM,
     GradCAM,
@@ -284,7 +284,7 @@ def draw_detections(image: np.ndarray, result, model) -> np.ndarray:
 
     Args:
         image: RGB image (uint8) to draw on.
-        result: segab_yolo ``Results`` object with ``.boxes``.
+        result: segatt_yolo ``Results`` object with ``.boxes``.
         model: YOLO model instance (provides ``.names``).
 
     Returns:
@@ -603,7 +603,7 @@ def parse_args() -> argparse.Namespace:
         help="Path to YOLO model weights (.pt)",
     )
     parser.add_argument(
-        "--source", type=str, default="segab_yolo/assets/bus.jpg",
+        "--source", type=str, default="segatt_yolo/assets/bus.jpg",
         help="Path to a single image or a folder of images",
     )
     parser.add_argument(

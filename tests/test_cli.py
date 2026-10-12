@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import subprocess
 from pathlib import Path
@@ -7,8 +7,8 @@ import pytest
 from PIL import Image
 
 from tests import CUDA_DEVICE_COUNT, CUDA_IS_AVAILABLE, MODELS, TASK_MODEL_DATA
-from segab_yolo.utils import ARM64, ASSETS, LINUX, WEIGHTS_DIR, checks
-from segab_yolo.utils.torch_utils import TORCH_1_11
+from segatt_yolo.utils import ARM64, ASSETS, LINUX, WEIGHTS_DIR, checks
+from segatt_yolo.utils.torch_utils import TORCH_1_11
 
 
 def run(cmd: str) -> None:
@@ -58,7 +58,7 @@ def test_export(model: str) -> None:
 
 @pytest.mark.skipif(not TORCH_1_11, reason="RTDETR requires torch>=1.11")
 def test_rtdetr(task: str = "detect", model: Path = WEIGHTS_DIR / "rtdetr-l.pt", data: str = "coco8.yaml") -> None:
-    """Test the RTDETR functionality within segab_yolo for detection tasks using specified model and data."""
+    """Test the RTDETR functionality within segatt_yolo for detection tasks using specified model and data."""
     # Add comma, spaces, fraction=0.25 args to test single-image training
     run(f"yolo predict {task} model={model} source={ASSETS / 'bus.jpg'} imgsz=160 save save_crop save_txt")
     run(f"yolo train {task} model={model} data={data} --imgsz= 160 epochs =1, cache = disk fraction=0.25")
@@ -72,14 +72,14 @@ def test_rtdetr(task: str = "detect", model: Path = WEIGHTS_DIR / "rtdetr-l.pt",
 def test_fastsam(
     task: str = "segment", model: str = WEIGHTS_DIR / "FastSAM-s.pt", data: str = "coco8-seg.yaml"
 ) -> None:
-    """Test FastSAM model for segmenting objects in images using various prompts within segab_yolo."""
+    """Test FastSAM model for segmenting objects in images using various prompts within segatt_yolo."""
     source = ASSETS / "bus.jpg"
 
     run(f"yolo segment val {task} model={model} data={data} imgsz=32")
     run(f"yolo segment predict model={model} source={source} imgsz=32 save save_crop save_txt")
 
-    from segab_yolo import FastSAM
-    from segab_yolo.models.sam import Predictor
+    from segatt_yolo import FastSAM
+    from segatt_yolo.models.sam import Predictor
 
     # Create a FastSAM model
     sam_model = FastSAM(model)  # or FastSAM-x.pt
@@ -96,8 +96,8 @@ def test_fastsam(
 
 
 def test_mobilesam() -> None:
-    """Test MobileSAM segmentation with point and box prompts using segab_yolo."""
-    from segab_yolo import SAM
+    """Test MobileSAM segmentation with point and box prompts using segatt_yolo."""
+    from segatt_yolo import SAM
 
     # Load the model
     model = SAM(WEIGHTS_DIR / "mobile_sam.pt")

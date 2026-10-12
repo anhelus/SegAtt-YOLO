@@ -1,9 +1,9 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from typing import Any
 
-from segab_yolo.engine.results import Results
-from segab_yolo.solutions.solutions import BaseSolution, SolutionResults
+from segatt_yolo.engine.results import Results
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionResults
 
 
 class InstanceSegmentation(BaseSolution):
@@ -68,7 +68,7 @@ class InstanceSegmentation(BaseSolution):
 
         # Iterate over detected classes, track IDs, and segmentation masks
         if self.masks is None:
-            self.LOGGER.warning("No masks detected! Ensure you're using a supported segab_yolo segmentation model.")
+            self.LOGGER.warning("No masks detected! Ensure you're using a supported segatt_yolo segmentation model.")
             plot_im = im0
         else:
             results = Results(im0, path=None, names=self.names, boxes=self.track_data.data, masks=self.masks.data)

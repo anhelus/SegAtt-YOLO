@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -11,14 +11,14 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from segab_yolo.data import build_dataloader, build_yolo_dataset
-from segab_yolo.engine.trainer import BaseTrainer
-from segab_yolo.models import yolo
-from segab_yolo.nn.tasks import DetectionModel
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, RANK
-from segab_yolo.utils.patches import override_configs
-from segab_yolo.utils.plotting import plot_images, plot_labels
-from segab_yolo.utils.torch_utils import torch_distributed_zero_first, unwrap_model
+from segatt_yolo.data import build_dataloader, build_yolo_dataset
+from segatt_yolo.engine.trainer import BaseTrainer
+from segatt_yolo.models import yolo
+from segatt_yolo.nn.tasks import DetectionModel
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, RANK
+from segatt_yolo.utils.patches import override_configs
+from segatt_yolo.utils.plotting import plot_images, plot_labels
+from segatt_yolo.utils.torch_utils import torch_distributed_zero_first, unwrap_model
 
 
 class DetectionTrainer(BaseTrainer):
@@ -46,7 +46,7 @@ class DetectionTrainer(BaseTrainer):
         auto_batch: Calculate optimal batch size based on model memory requirements.
 
     Examples:
-        >>> from segab_yolo.models.yolo.detect import DetectionTrainer
+        >>> from segatt_yolo.models.yolo.detect import DetectionTrainer
         >>> args = dict(model="yolo26n.pt", data="coco8.yaml", epochs=3)
         >>> trainer = DetectionTrainer(overrides=args)
         >>> trainer.train()

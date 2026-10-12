@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from copy import copy
 
-from segab_yolo.models.yolo.detect import DetectionTrainer
-from segab_yolo.nn.tasks import RTDETRDetectionModel
-from segab_yolo.utils import RANK, colorstr
+from segatt_yolo.models.yolo.detect import DetectionTrainer
+from segatt_yolo.nn.tasks import RTDETRDetectionModel
+from segatt_yolo.utils import RANK, colorstr
 
 from .val import RTDETRDataset, RTDETRValidator
 
@@ -31,7 +31,7 @@ class RTDETRTrainer(DetectionTrainer):
         get_validator: Return a DetectionValidator suitable for RT-DETR model validation.
 
     Examples:
-        >>> from segab_yolo.models.rtdetr.train import RTDETRTrainer
+        >>> from segatt_yolo.models.rtdetr.train import RTDETRTrainer
         >>> args = dict(model="rtdetr-l.yaml", data="coco8.yaml", imgsz=640, epochs=3)
         >>> trainer = RTDETRTrainer(overrides=args)
         >>> trainer.train()

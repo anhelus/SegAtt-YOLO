@@ -10,7 +10,7 @@ import torch
     (4, 32, 64, 64),
 ])
 def test_simam_output_shape(batch, channels, height, width):
-    from segab_yolo.nn.modules.attention import SimAM
+    from segatt_yolo.nn.modules.attention import SimAM
     module = SimAM()
     x = torch.randn(batch, channels, height, width)
     out = module(x)
@@ -23,7 +23,7 @@ def test_simam_output_shape(batch, channels, height, width):
     (4, 32, 64, 64),
 ])
 def test_gam_output_shape(batch, channels, height, width):
-    from segab_yolo.nn.modules.attention import GAM
+    from segatt_yolo.nn.modules.attention import GAM
     module = GAM(c1=channels)
     x = torch.randn(batch, channels, height, width)
     out = module(x)
@@ -31,7 +31,7 @@ def test_gam_output_shape(batch, channels, height, width):
 
 
 def test_simam_save_attention():
-    from segab_yolo.nn.modules.attention import SimAM
+    from segatt_yolo.nn.modules.attention import SimAM
     module = SimAM()
     module.save_attention = True
     x = torch.randn(1, 64, 32, 32)
@@ -41,7 +41,7 @@ def test_simam_save_attention():
 
 
 def test_gam_save_attention():
-    from segab_yolo.nn.modules.attention import GAM
+    from segatt_yolo.nn.modules.attention import GAM
     module = GAM(c1=64)
     module.save_attention = True
     x = torch.randn(1, 64, 32, 32)
@@ -52,7 +52,7 @@ def test_gam_save_attention():
 
 
 def test_simam_grad_flow():
-    from segab_yolo.nn.modules.attention import SimAM
+    from segatt_yolo.nn.modules.attention import SimAM
     module = SimAM()
     x = torch.randn(1, 64, 32, 32, requires_grad=True)
     out = module(x)
@@ -63,7 +63,7 @@ def test_simam_grad_flow():
 
 
 def test_gam_grad_flow():
-    from segab_yolo.nn.modules.attention import GAM
+    from segatt_yolo.nn.modules.attention import GAM
     module = GAM(c1=64)
     x = torch.randn(1, 64, 32, 32, requires_grad=True)
     out = module(x)

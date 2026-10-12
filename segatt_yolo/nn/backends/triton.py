@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.checks import check_requirements
 
 from .base import BaseBackend
 
@@ -25,7 +25,7 @@ class TritonBackend(BaseBackend):
             weight (str | Path): Triton model URL (e.g., 'triton://host:8000/model_name').
         """
         check_requirements("tritonclient[all]")
-        from segab_yolo.utils.triton import TritonRemoteModel
+        from segatt_yolo.utils.triton import TritonRemoteModel
 
         self.model = TritonRemoteModel(weight)
 

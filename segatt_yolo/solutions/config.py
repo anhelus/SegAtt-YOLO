@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,15 +10,15 @@ import cv2
 
 @dataclass
 class SolutionConfig:
-    """Manages configuration parameters for segab_yolo Vision AI solutions.
+    """Manages configuration parameters for segatt_yolo Vision AI solutions.
 
-    The SolutionConfig class serves as a centralized configuration container for all the segab_yolo solution modules:
-    https://docs.segab_yolo.com/solutions/#solutions. It leverages Python `dataclass` for clear, type-safe, and
+    The SolutionConfig class serves as a centralized configuration container for all the segatt_yolo solution modules:
+    https://docs.segatt_yolo.com/solutions/#solutions. It leverages Python `dataclass` for clear, type-safe, and
     maintainable parameter definitions.
 
     Attributes:
         source (str, optional): Path to the input source (video, RTSP, etc.). Only usable with Solutions CLI.
-        model (str, optional): Path to the segab_yolo YOLO model to be used for inference.
+        model (str, optional): Path to the segatt_yolo YOLO model to be used for inference.
         classes (list[int], optional): List of class indices to filter detections.
         show_conf (bool): Whether to show confidence scores on the visual output.
         show_labels (bool): Whether to display class labels on visual output.
@@ -56,7 +56,7 @@ class SolutionConfig:
         update: Update the configuration with user-defined keyword arguments and raise error on invalid keys.
 
     Examples:
-        >>> from segab_yolo.solutions.config import SolutionConfig
+        >>> from segatt_yolo.solutions.config import SolutionConfig
         >>> cfg = SolutionConfig(model="yolo26n.pt", region=[(0, 0), (100, 0), (100, 100), (0, 100)])
         >>> cfg.update(show=False, conf=0.3)
         >>> print(cfg.model)
@@ -102,7 +102,7 @@ class SolutionConfig:
             if hasattr(self, key):
                 setattr(self, key, value)
             else:
-                url = "https://docs.segab_yolo.com/solutions/#solutions-arguments"
+                url = "https://docs.segatt_yolo.com/solutions/#solutions-arguments"
                 raise ValueError(f"{key} is not a valid solution argument, see {url}")
 
         return self

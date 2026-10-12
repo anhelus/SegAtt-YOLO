@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ from typing import Any
 
 import torch
 
-from segab_yolo.data.build import load_inference_source
-from segab_yolo.engine.model import Model
-from segab_yolo.models import yolo
-from segab_yolo.nn.tasks import (
+from segatt_yolo.data.build import load_inference_source
+from segatt_yolo.engine.model import Model
+from segatt_yolo.models import yolo
+from segatt_yolo.nn.tasks import (
     ClassificationModel,
     DetectionModel,
     OBBModel,
@@ -21,7 +21,7 @@ from segab_yolo.nn.tasks import (
     YOLOEModel,
     YOLOESegModel,
 )
-from segab_yolo.utils import ROOT, YAML
+from segatt_yolo.utils import ROOT, YAML
 
 
 class YOLO(Model):
@@ -76,7 +76,7 @@ class YOLO(Model):
             # Continue with default YOLO initialization
             super().__init__(model=model, task=task, verbose=verbose)
             if hasattr(self.model, "model") and "RTDETR" in self.model.model[-1]._get_name():  # if RTDETR head
-                from segab_yolo import RTDETR
+                from segatt_yolo import RTDETR
 
                 new_instance = RTDETR(self)
                 self.__class__ = type(new_instance)

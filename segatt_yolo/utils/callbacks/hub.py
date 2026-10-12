@@ -1,15 +1,15 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import json
 from time import time
 
-from segab_yolo.hub import HUB_WEB_ROOT, PREFIX, HUBTrainingSession
-from segab_yolo.utils import LOGGER, RANK, SETTINGS
-from segab_yolo.utils.events import events
+from segatt_yolo.hub import HUB_WEB_ROOT, PREFIX, HUBTrainingSession
+from segatt_yolo.utils import LOGGER, RANK, SETTINGS
+from segatt_yolo.utils.events import events
 
 
 def on_pretrain_routine_start(trainer):
-    """Create a remote segab_yolo HUB session to log local model training."""
+    """Create a remote segatt_yolo HUB session to log local model training."""
     if RANK in {-1, 0} and SETTINGS["hub"] is True and SETTINGS["api_key"] and trainer.hub_session is None:
         trainer.hub_session = HUBTrainingSession.create_session(trainer.args.model, trainer.args)
 
@@ -22,7 +22,7 @@ def on_pretrain_routine_end(trainer):
 
 
 def on_fit_epoch_end(trainer):
-    """Upload training progress metrics to segab_yolo HUB at the end of each epoch."""
+    """Upload training progress metrics to segatt_yolo HUB at the end of each epoch."""
     if session := getattr(trainer, "hub_session", None):
         # Upload metrics after validation ends
         all_plots = {
@@ -30,7 +30,7 @@ def on_fit_epoch_end(trainer):
             **trainer.metrics,
         }
         if trainer.epoch == 0:
-            from segab_yolo.utils.torch_utils import model_info_for_loggers
+            from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
             all_plots = {**all_plots, **model_info_for_loggers(trainer)}
 
@@ -47,7 +47,7 @@ def on_fit_epoch_end(trainer):
 
 
 def on_model_save(trainer):
-    """Upload model checkpoints to segab_yolo HUB with rate limiting."""
+    """Upload model checkpoints to segatt_yolo HUB with rate limiting."""
     if session := getattr(trainer, "hub_session", None):
         # Upload checkpoints with rate limiting
         is_best = trainer.best_fitness == trainer.fitness
@@ -58,7 +58,7 @@ def on_model_save(trainer):
 
 
 def on_train_end(trainer):
-    """Upload final model and metrics to segab_yolo HUB at the end of training."""
+    """Upload final model and metrics to segatt_yolo HUB at the end of training."""
     if session := getattr(trainer, "hub_session", None):
         # Upload final model and metrics with exponential standoff
         LOGGER.info(f"{PREFIX}Syncing final model...")

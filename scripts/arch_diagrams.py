@@ -9,7 +9,7 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch
 
 OUTPUT_DIR = Path("reports/architecture")
-MODELS_DIR = Path("segab_yolo/cfg/models")
+MODELS_DIR = Path("segatt_yolo/cfg/models")
 
 COLORS = {
     "backbone": "#D6EAF8",

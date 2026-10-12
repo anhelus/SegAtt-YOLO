@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
-from segab_yolo import __version__
-from segab_yolo.utils import (
+from segatt_yolo import __version__
+from segatt_yolo.utils import (
     ASSETS,
     DEFAULT_CFG,
     DEFAULT_CFG_DICT,
@@ -92,13 +92,13 @@ TASK2METRIC = {
 
 ARGV = sys.argv or ["", ""]  # sometimes sys.argv = []
 SOLUTIONS_HELP_MSG = f"""
-    Arguments received: {["yolo", *ARGV[1:]]!s}. segab_yolo 'yolo solutions' usage overview:
+    Arguments received: {["yolo", *ARGV[1:]]!s}. segatt_yolo 'yolo solutions' usage overview:
 
         yolo solutions SOLUTION ARGS
 
         Where SOLUTION (optional) is one of {list(SOLUTION_MAP.keys())[:-1]}
               ARGS (optional) are any number of custom 'arg=value' pairs like 'show_in=True' that override defaults
-                  at https://docs.segab_yolo.com/usage/cfg
+                  at https://docs.segatt_yolo.com/usage/cfg
 
     1. Call object counting solution
         yolo solutions count source="path/to/video.mp4" region="[(20, 400), (1080, 400), (1080, 360), (20, 360)]"
@@ -131,14 +131,14 @@ SOLUTIONS_HELP_MSG = f"""
         yolo streamlit-predict
     """
 CLI_HELP_MSG = f"""
-    Arguments received: {["yolo", *ARGV[1:]]!s}. segab_yolo 'yolo' commands use the following syntax:
+    Arguments received: {["yolo", *ARGV[1:]]!s}. segatt_yolo 'yolo' commands use the following syntax:
 
         yolo TASK MODE ARGS
 
         Where   TASK (optional) is one of {list(TASKS)}
                 MODE (required) is one of {list(MODES)}
                 ARGS (optional) are any number of custom 'arg=value' pairs like 'imgsz=320' that override defaults.
-                    See all ARGS at https://docs.segab_yolo.com/usage/cfg or with 'yolo cfg'
+                    See all ARGS at https://docs.segatt_yolo.com/usage/cfg or with 'yolo cfg'
 
     1. Train a detection model for 10 epochs with an initial learning_rate of 0.01
         yolo train data=coco8.yaml model=yolo26n.pt epochs=10 lr0=0.01
@@ -152,7 +152,7 @@ CLI_HELP_MSG = f"""
     4. Export a YOLO26n classification model to ONNX format at image size 224 by 128 (no TASK required)
         yolo export model=yolo26n-cls.pt format=onnx imgsz=224,128
 
-    5. segab_yolo solutions usage
+    5. segatt_yolo solutions usage
         yolo solutions count or any of {list(SOLUTION_MAP.keys())[1:-1]} source="path/to/video.mp4"
 
     6. Run special commands:
@@ -164,10 +164,10 @@ CLI_HELP_MSG = f"""
         yolo cfg
         yolo solutions help
 
-    Docs: https://docs.segab_yolo.com
-    Solutions: https://docs.segab_yolo.com/solutions/
-    Community: https://community.segab_yolo.com
-    GitHub: https://github.com/segab_yolo/segab_yolo
+    Docs: https://docs.segatt_yolo.com
+    Solutions: https://docs.segatt_yolo.com/solutions/
+    Community: https://community.segatt_yolo.com
+    GitHub: https://github.com/segatt_yolo/segatt_yolo
     """
 
 # Define keys for arg type checks
@@ -314,7 +314,7 @@ def get_cfg(
         (SimpleNamespace): Namespace containing the merged configuration arguments.
 
     Examples:
-        >>> from segab_yolo.cfg import get_cfg
+        >>> from segatt_yolo.cfg import get_cfg
         >>> config = get_cfg()  # Load default configuration
         >>> config_with_overrides = get_cfg("path/to/config.yaml", overrides={"epochs": 50, "batch_size": 16})
 
@@ -348,7 +348,7 @@ def get_cfg(
 
 
 def check_cfg(cfg: dict, hard: bool = True) -> None:
-    """Check configuration argument types and values for the segab_yolo library.
+    """Check configuration argument types and values for the segatt_yolo library.
 
     This function validates the types and values of configuration arguments, ensuring correctness and converting them if
     necessary. It checks for specific key types defined in global variables such as `CFG_FLOAT_KEYS`,
@@ -449,7 +449,7 @@ def get_save_dir(args: SimpleNamespace, name: str | None = None) -> Path:
     if getattr(args, "save_dir", None):
         save_dir = args.save_dir
     else:
-        from segab_yolo.utils.files import increment_path
+        from segatt_yolo.utils.files import increment_path
 
         project = args.project or ""
         if not Path(project).is_absolute():
@@ -608,9 +608,9 @@ def merge_equals_args(args: list[str]) -> list[str]:
 
 
 def handle_yolo_hub(args: list[str]) -> None:
-    """Handle segab_yolo HUB command-line interface (CLI) commands for authentication.
+    """Handle segatt_yolo HUB command-line interface (CLI) commands for authentication.
 
-    This function processes segab_yolo HUB CLI commands such as login and logout. It should be called when executing a
+    This function processes segatt_yolo HUB CLI commands such as login and logout. It should be called when executing a
     script with arguments related to HUB authentication.
 
     Args:
@@ -621,18 +621,18 @@ def handle_yolo_hub(args: list[str]) -> None:
         $ yolo login YOUR_API_KEY
 
     Notes:
-        - The function imports the 'hub' module from segab_yolo to perform login and logout operations.
+        - The function imports the 'hub' module from segatt_yolo to perform login and logout operations.
         - For the 'login' command, if no API key is provided, an empty string is passed to the login function.
         - The 'logout' command does not require any additional arguments.
     """
-    from segab_yolo import hub
+    from segatt_yolo import hub
 
     if args[0] == "login":
         key = args[1] if len(args) > 1 else ""
-        # Log in to segab_yolo HUB using the provided API key
+        # Log in to segatt_yolo HUB using the provided API key
         hub.login(key)
     elif args[0] == "logout":
-        # Log out from segab_yolo HUB
+        # Log out from segatt_yolo HUB
         hub.logout()
 
 
@@ -656,9 +656,9 @@ def handle_yolo_settings(args: list[str]) -> None:
         - The function will check for alignment between the provided settings and the existing ones.
         - After processing, the updated settings will be displayed.
         - For more information on handling YOLO settings, visit:
-          https://docs.segab_yolo.com/quickstart/#segab_yolo-settings
+          https://docs.segatt_yolo.com/quickstart/#segatt_yolo-settings
     """
-    url = "https://docs.segab_yolo.com/quickstart/#segab_yolo-settings"  # help URL
+    url = "https://docs.segatt_yolo.com/quickstart/#segatt_yolo-settings"  # help URL
     try:
         if any(args):
             if args[0] == "reset":
@@ -673,7 +673,7 @@ def handle_yolo_settings(args: list[str]) -> None:
                     LOGGER.info(f"✅ Updated '{k}={v}'")
 
         LOGGER.info(SETTINGS)  # print the current settings
-        LOGGER.info(f"💡 Learn more about segab_yolo Settings at {url}")
+        LOGGER.info(f"💡 Learn more about segatt_yolo Settings at {url}")
     except Exception as e:
         LOGGER.warning(f"settings error: '{e}'. Please see {url} for help.")
 
@@ -682,7 +682,7 @@ def handle_yolo_solutions(args: list[str]) -> None:
     """Process YOLO solutions arguments and run the specified computer vision solutions pipeline.
 
     Args:
-        args (list[str]): Command-line arguments for configuring and running the segab_yolo YOLO solutions.
+        args (list[str]): Command-line arguments for configuring and running the segatt_yolo YOLO solutions.
 
     Examples:
         Run people counting solution with default settings:
@@ -704,9 +704,9 @@ def handle_yolo_solutions(args: list[str]) -> None:
         - Processes video frames sequentially and saves output in .avi format
         - If no source is specified, downloads and uses a default sample video
         - The inference solution will be launched using the 'streamlit run' command.
-        - The Streamlit app file is located in the segab_yolo package directory.
+        - The Streamlit app file is located in the segatt_yolo package directory.
     """
-    from segab_yolo.solutions.config import SolutionConfig
+    from segatt_yolo.solutions.config import SolutionConfig
 
     full_args_dict = vars(SolutionConfig())  # arguments dictionary
     overrides = {}
@@ -742,7 +742,7 @@ def handle_yolo_solutions(args: list[str]) -> None:
 
     if solution_name == "inference":
         checks.check_requirements("streamlit>=1.29.0")
-        LOGGER.info("💡 Loading segab_yolo live inference app...")
+        LOGGER.info("💡 Loading segatt_yolo live inference app...")
         subprocess.run(
             [  # Run subprocess with Streamlit custom argument
                 "streamlit",
@@ -756,7 +756,7 @@ def handle_yolo_solutions(args: list[str]) -> None:
     else:
         import cv2  # Only needed for cap and vw functionality
 
-        from segab_yolo import solutions
+        from segatt_yolo import solutions
 
         solution = getattr(solutions, SOLUTION_MAP[solution_name])(is_cli=True, **overrides)  # class i.e. ObjectCounter
 
@@ -870,9 +870,9 @@ def smart_value(v: str) -> Any:
 
 
 def entrypoint(debug: str = "") -> None:
-    """segab_yolo entrypoint function for parsing and executing command-line arguments.
+    """segatt_yolo entrypoint function for parsing and executing command-line arguments.
 
-    This function serves as the main entry point for the segab_yolo CLI, parsing command-line arguments and executing
+    This function serves as the main entry point for the segatt_yolo CLI, parsing command-line arguments and executing
     the corresponding tasks such as training, validation, prediction, exporting models, and more.
 
     Args:
@@ -891,7 +891,7 @@ def entrypoint(debug: str = "") -> None:
     Notes:
         - If no arguments are passed, the function will display the usage help message.
         - For a list of all available commands and their arguments, see the provided help messages and the
-          segab_yolo documentation at https://docs.segab_yolo.com.
+          segatt_yolo documentation at https://docs.segatt_yolo.com.
     """
     args = (debug.split(" ") if debug else ARGV)[1:]
     if not args:  # no arguments passed
@@ -986,19 +986,19 @@ def entrypoint(debug: str = "") -> None:
     overrides["model"] = model
     stem = Path(model).stem.lower()
     if "rtdetr" in stem:  # guess architecture
-        from segab_yolo import RTDETR
+        from segatt_yolo import RTDETR
 
         model = RTDETR(model)  # no task argument
     elif "fastsam" in stem:
-        from segab_yolo import FastSAM
+        from segatt_yolo import FastSAM
 
         model = FastSAM(model)
     elif "sam_" in stem or "sam2_" in stem or "sam2.1_" in stem:
-        from segab_yolo import SAM
+        from segatt_yolo import SAM
 
         model = SAM(model)
     else:
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         model = YOLO(model, task=task)
         if "yoloe" in stem or "world" in stem:
@@ -1017,7 +1017,7 @@ def entrypoint(debug: str = "") -> None:
     # Mode
     if mode in {"predict", "track"} and "source" not in overrides:
         overrides["source"] = (
-            "https://segab_yolo.com/images/boats.jpg" if task == "obb" else DEFAULT_CFG.source or ASSETS
+            "https://segatt_yolo.com/images/boats.jpg" if task == "obb" else DEFAULT_CFG.source or ASSETS
         )
         LOGGER.warning(f"'source' argument is missing. Using default 'source={overrides['source']}'.")
     elif mode in {"train", "val"}:
@@ -1033,7 +1033,7 @@ def entrypoint(debug: str = "") -> None:
     getattr(model, mode)(**overrides)  # default args from model
 
     # Show help
-    LOGGER.info(f"💡 Learn more at https://docs.segab_yolo.com/modes/{mode}")
+    LOGGER.info(f"💡 Learn more at https://docs.segatt_yolo.com/modes/{mode}")
 
     # Recommend VS Code extension
     if IS_VSCODE and SETTINGS.get("vscode_msg", True):

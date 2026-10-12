@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 __version__ = "8.4.52"
 
@@ -7,16 +7,16 @@ import importlib
 import os
 from typing import TYPE_CHECKING
 
-# Shim: allow old checkpoints referencing 'ultralytics.*' to resolve via 'segab_yolo.*'
+# Shim: allow old checkpoints referencing 'ultralytics.*' to resolve via 'segatt_yolo.*'
 sys.modules.setdefault("ultralytics", sys.modules[__name__])
 
 # Set ENV variables (place before imports)
 if not os.environ.get("OMP_NUM_THREADS"):
     os.environ["OMP_NUM_THREADS"] = "1"  # default for reduced CPU utilization during training
 
-from segab_yolo.utils import ASSETS, SETTINGS
-from segab_yolo.utils.checks import check_yolo as checks
-from segab_yolo.utils.downloads import download
+from segatt_yolo.utils import ASSETS, SETTINGS
+from segatt_yolo.utils.checks import check_yolo as checks
+from segatt_yolo.utils.downloads import download
 
 settings = SETTINGS
 
@@ -33,13 +33,13 @@ __all__ = (
 
 if TYPE_CHECKING:
     # Enable hints for type checkers
-    from segab_yolo.models import YOLO, YOLOWorld, YOLOE, NAS, SAM, FastSAM, RTDETR  # noqa
+    from segatt_yolo.models import YOLO, YOLOWorld, YOLOE, NAS, SAM, FastSAM, RTDETR  # noqa
 
 
 def __getattr__(name: str):
     """Lazy-import model classes on first access."""
     if name in MODELS:
-        return getattr(importlib.import_module("segab_yolo.models"), name)
+        return getattr(importlib.import_module("segatt_yolo.models"), name)
     raise AttributeError(f"module {__name__} has no attribute {name}")
 
 

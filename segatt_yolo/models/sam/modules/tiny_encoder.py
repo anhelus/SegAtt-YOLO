@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # --------------------------------------------------------
 # TinyViT Model Architecture
@@ -17,8 +17,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from segab_yolo.nn.modules import LayerNorm2d
-from segab_yolo.utils.instance import to_2tuple
+from segatt_yolo.nn.modules import LayerNorm2d
+from segatt_yolo.utils.instance import to_2tuple
 
 
 class Conv2d_BN(torch.nn.Sequential):

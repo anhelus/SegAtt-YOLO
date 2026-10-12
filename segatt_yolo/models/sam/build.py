@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
@@ -10,8 +10,8 @@ from functools import partial
 
 import torch
 
-from segab_yolo.utils.downloads import attempt_download_asset
-from segab_yolo.utils.patches import torch_load
+from segatt_yolo.utils.downloads import attempt_download_asset
+from segatt_yolo.utils.patches import torch_load
 
 from .modules.decoders import MaskDecoder
 from .modules.encoders import FpnNeck, Hiera, ImageEncoder, ImageEncoderViT, MemoryEncoder, PromptEncoder

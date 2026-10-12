@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.utils import LOGGER, YAML
+from segatt_yolo.utils import LOGGER, YAML
 
 
 def torch2ncnn(
@@ -32,7 +32,7 @@ def torch2ncnn(
     Returns:
         (str): Path to the exported ``_ncnn_model`` directory.
     """
-    from segab_yolo.utils.checks import check_requirements
+    from segatt_yolo.utils.checks import check_requirements
 
     check_requirements("ncnn", cmds="--no-deps")  # no deps to avoid installing opencv-python
     check_requirements("pnnx")

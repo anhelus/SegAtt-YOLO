@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """Monkey patches to update/extend functionality of existing functions."""
 
 from __future__ import annotations
@@ -76,7 +76,7 @@ def image_open(filename, *args, **kwargs):
     try:
         return _image_open(filename, *args, **kwargs)
     except Exception:
-        from segab_yolo.utils.checks import check_requirements
+        from segatt_yolo.utils.checks import check_requirements
 
         check_requirements("pi-heif")
         from pi_heif import register_heif_opener
@@ -173,7 +173,7 @@ def torch_load(*args, **kwargs):
         For PyTorch versions 1.13 and above, this function automatically sets `weights_only=False` if the argument is
         not provided, to avoid deprecation warnings.
     """
-    from segab_yolo.utils.torch_utils import TORCH_1_13
+    from segatt_yolo.utils.torch_utils import TORCH_1_13
 
     if TORCH_1_13 and "weights_only" not in kwargs:
         kwargs["weights_only"] = False
@@ -227,7 +227,7 @@ def arange_patch(dynamic: bool = False, half: bool = False, fmt: str = ""):
 @contextmanager
 def onnx_export_patch():
     """Workaround for ONNX export issues in PyTorch 2.9+ with Dynamo enabled."""
-    from segab_yolo.utils.torch_utils import TORCH_2_9
+    from segatt_yolo.utils.torch_utils import TORCH_2_9
 
     if TORCH_2_9:
         func = torch.onnx.export

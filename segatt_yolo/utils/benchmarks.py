@@ -1,9 +1,9 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Benchmark YOLO model formats for speed and accuracy.
 
 Usage:
-    from segab_yolo.utils.benchmarks import ProfileModels, benchmark
+    from segatt_yolo.utils.benchmarks import ProfileModels, benchmark
     ProfileModels(['yolo26n.yaml', 'yolov8s.yaml']).run()
     benchmark(model='yolo26n.pt', imgsz=160)
 
@@ -43,11 +43,11 @@ from pathlib import Path
 import numpy as np
 import torch.cuda
 
-from segab_yolo import YOLO, YOLOWorld
-from segab_yolo.cfg import TASK2DATA, TASK2METRIC
-from segab_yolo.engine.exporter import export_formats
-from segab_yolo.nn.modules import Segment26
-from segab_yolo.utils import (
+from segatt_yolo import YOLO, YOLOWorld
+from segatt_yolo.cfg import TASK2DATA, TASK2METRIC
+from segatt_yolo.engine.exporter import export_formats
+from segatt_yolo.nn.modules import Segment26
+from segatt_yolo.utils import (
     ARM64,
     ASSETS,
     ASSETS_URL,
@@ -60,10 +60,10 @@ from segab_yolo.utils import (
     WEIGHTS_DIR,
     YAML,
 )
-from segab_yolo.utils.checks import IS_PYTHON_3_13, check_imgsz, check_requirements, check_yolo, is_rockchip
-from segab_yolo.utils.downloads import safe_download
-from segab_yolo.utils.files import file_size
-from segab_yolo.utils.torch_utils import get_cpu_info, select_device
+from segatt_yolo.utils.checks import IS_PYTHON_3_13, check_imgsz, check_requirements, check_yolo, is_rockchip
+from segatt_yolo.utils.downloads import safe_download
+from segatt_yolo.utils.files import file_size
+from segatt_yolo.utils.torch_utils import get_cpu_info, select_device
 
 
 def benchmark(
@@ -98,13 +98,13 @@ def benchmark(
 
     Examples:
         Benchmark a YOLO model with default settings:
-        >>> from segab_yolo.utils.benchmarks import benchmark
+        >>> from segatt_yolo.utils.benchmarks import benchmark
         >>> benchmark(model="yolo26n.pt", imgsz=640)
     """
     imgsz = check_imgsz(imgsz)
     assert imgsz[0] == imgsz[1] if isinstance(imgsz, list) else True, "benchmark() only supports square imgsz."
 
-    import polars as pl  # scope for faster 'import segab_yolo'
+    import polars as pl  # scope for faster 'import segatt_yolo'
 
     pl.Config.set_tbl_cols(-1)  # Show all columns
     pl.Config.set_tbl_rows(-1)  # Show all rows
@@ -307,7 +307,7 @@ class RF100Benchmark:
         """
         (shutil.rmtree("rf-100"), os.mkdir("rf-100")) if os.path.exists("rf-100") else os.mkdir("rf-100")
         os.chdir("rf-100")
-        os.mkdir("segab_yolo-benchmarks")
+        os.mkdir("segatt_yolo-benchmarks")
         safe_download(f"{ASSETS_URL}/datasets_links.txt")
 
         with open(ds_link_txt, encoding="utf-8") as file:
@@ -419,7 +419,7 @@ class ProfileModels:
 
     Examples:
         Profile models and print results
-        >>> from segab_yolo.utils.benchmarks import ProfileModels
+        >>> from segatt_yolo.utils.benchmarks import ProfileModels
         >>> profiler = ProfileModels(["yolo26n.yaml", "yolov8s.yaml"], imgsz=640)
         >>> profiler.run()
     """
@@ -467,7 +467,7 @@ class ProfileModels:
 
         Examples:
             Profile models and print results
-            >>> from segab_yolo.utils.benchmarks import ProfileModels
+            >>> from segatt_yolo.utils.benchmarks import ProfileModels
             >>> profiler = ProfileModels(["yolo26n.yaml", "yolo11s.yaml"])
             >>> results = profiler.run()
         """

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,10 +10,10 @@ import numpy as np
 import torch
 from PIL import Image
 
-from segab_yolo.cfg import TASK2DATA, get_cfg, get_save_dir
-from segab_yolo.engine.results import Results
-from segab_yolo.nn.tasks import guess_model_task, load_checkpoint, yaml_model_load
-from segab_yolo.utils import (
+from segatt_yolo.cfg import TASK2DATA, get_cfg, get_save_dir
+from segatt_yolo.engine.results import Results
+from segatt_yolo.nn.tasks import guess_model_task, load_checkpoint, yaml_model_load
+from segatt_yolo.utils import (
     ARGV,
     ASSETS,
     DEFAULT_CFG_DICT,
@@ -31,7 +31,7 @@ class Model(torch.nn.Module):
 
     This class provides a common interface for various operations related to YOLO models, such as training, validation,
     prediction, exporting, and benchmarking. It handles different types of models, including those loaded from local
-    files, segab_yolo HUB, or Triton Server.
+    files, segatt_yolo HUB, or Triton Server.
 
     Attributes:
         callbacks (dict): A dictionary of callback functions for various events during model operations.
@@ -42,8 +42,8 @@ class Model(torch.nn.Module):
         cfg (str): The configuration of the model if loaded from a *.yaml file.
         ckpt_path (str): The path to the checkpoint file.
         overrides (dict): A dictionary of overrides for model configuration.
-        metrics (segab_yolo.utils.metrics.DetMetrics): The latest training/validation metrics.
-        session (HUBTrainingSession): The segab_yolo HUB session, if applicable.
+        metrics (segatt_yolo.utils.metrics.DetMetrics): The latest training/validation metrics.
+        session (HUBTrainingSession): The segatt_yolo HUB session, if applicable.
         task (str): The type of task the model is intended for.
         model_name (str): The name of the model.
 
@@ -70,7 +70,7 @@ class Model(torch.nn.Module):
         reset_callbacks: Reset all callbacks to their default functions.
 
     Examples:
-        >>> from segab_yolo import YOLO
+        >>> from segatt_yolo import YOLO
         >>> model = YOLO("yolo26n.pt")
         >>> results = model.predict("image.jpg")
         >>> model.train(data="coco8.yaml", epochs=3)
@@ -87,12 +87,12 @@ class Model(torch.nn.Module):
         """Initialize a new instance of the YOLO model class.
 
         This constructor sets up the model based on the provided model path or name. It handles various types of model
-        sources, including local files, segab_yolo HUB models, and Triton Server models. The method initializes several
+        sources, including local files, segatt_yolo HUB models, and Triton Server models. The method initializes several
         important attributes of the model and prepares it for operations like training, prediction, or export.
 
         Args:
             model (str | Path | Model): Path or name of the model to load or create. Can be a local file path, a model
-                name from segab_yolo HUB, a Triton Server model, or an already initialized Model instance.
+                name from segatt_yolo HUB, a Triton Server model, or an already initialized Model instance.
             task (str, optional): The specific task for the model. If None, it will be inferred from the config.
             verbose (bool): If True, enables verbose output during the model's initialization and subsequent operations.
 
@@ -119,9 +119,9 @@ class Model(torch.nn.Module):
         self.model_name = None  # model name
         model = str(model).strip()
 
-        # Check if segab_yolo HUB model from https://hub.segab_yolo.com
+        # Check if segatt_yolo HUB model from https://hub.segatt_yolo.com
         if self.is_hub_model(model):
-            from segab_yolo.hub import HUBTrainingSession
+            from segatt_yolo.hub import HUBTrainingSession
 
             # Fetch model from HUB
             checks.check_requirements("hub-sdk>=0.0.12")
@@ -165,12 +165,12 @@ class Model(torch.nn.Module):
             **kwargs (Any): Additional keyword arguments to configure the prediction process.
 
         Returns:
-            (list[segab_yolo.engine.results.Results]): A list of prediction results, each encapsulated in a Results
+            (list[segatt_yolo.engine.results.Results]): A list of prediction results, each encapsulated in a Results
                 object.
 
         Examples:
             >>> model = YOLO("yolo26n.pt")
-            >>> results = model("https://segab_yolo.com/images/bus.jpg")
+            >>> results = model("https://segatt_yolo.com/images/bus.jpg")
             >>> for r in results:
             ...     print(f"Detected {len(r)} objects in image")
         """
@@ -202,24 +202,24 @@ class Model(torch.nn.Module):
 
     @staticmethod
     def is_hub_model(model: str) -> bool:
-        """Check if the provided model is an segab_yolo HUB model.
+        """Check if the provided model is an segatt_yolo HUB model.
 
-        This static method determines whether the given model string represents a valid segab_yolo HUB model
+        This static method determines whether the given model string represents a valid segatt_yolo HUB model
         identifier.
 
         Args:
             model (str): The model string to check.
 
         Returns:
-            (bool): True if the model is a valid segab_yolo HUB model, False otherwise.
+            (bool): True if the model is a valid segatt_yolo HUB model, False otherwise.
 
         Examples:
-            >>> Model.is_hub_model("https://hub.segab_yolo.com/models/MODEL")
+            >>> Model.is_hub_model("https://hub.segatt_yolo.com/models/MODEL")
             True
             >>> Model.is_hub_model("yolo26n.pt")
             False
         """
-        from segab_yolo.hub import HUB_WEB_ROOT
+        from segatt_yolo.hub import HUB_WEB_ROOT
 
         return model.startswith(f"{HUB_WEB_ROOT}/models/")
 
@@ -376,7 +376,7 @@ class Model(torch.nn.Module):
         """Save the current model state to a file.
 
         This method exports the model's checkpoint (ckpt) to the specified filename. It includes metadata such as the
-        date, segab_yolo version, license information, and a link to the documentation.
+        date, segatt_yolo version, license information, and a link to the documentation.
 
         Args:
             filename (str | Path): The name of the file to save the model to.
@@ -392,14 +392,14 @@ class Model(torch.nn.Module):
         from copy import deepcopy
         from datetime import datetime
 
-        from segab_yolo import __version__
+        from segatt_yolo import __version__
 
         updates = {
             "model": deepcopy(self.model).half() if isinstance(self.model, torch.nn.Module) else self.model,
             "date": datetime.now().isoformat(),
             "version": __version__,
-            "license": "AGPL-3.0 License (https://segab_yolo.com/license)",
-            "docs": "https://docs.segab_yolo.com",
+            "license": "AGPL-3.0 License (https://segatt_yolo.com/license)",
+            "docs": "https://docs.segatt_yolo.com",
         }
         torch.save({**self.ckpt, **updates}, filename)
 
@@ -468,7 +468,7 @@ class Model(torch.nn.Module):
 
         Examples:
             >>> model = YOLO("yolo26n.pt")
-            >>> image = "https://segab_yolo.com/images/bus.jpg"
+            >>> image = "https://segatt_yolo.com/images/bus.jpg"
             >>> embeddings = model.embed(image)
             >>> print(embeddings[0].shape)
         """
@@ -499,7 +499,7 @@ class Model(torch.nn.Module):
             **kwargs (Any): Additional keyword arguments for configuring the prediction process.
 
         Returns:
-            (list[segab_yolo.engine.results.Results]): A list of prediction results, each encapsulated in a Results
+            (list[segatt_yolo.engine.results.Results]): A list of prediction results, each encapsulated in a Results
                 object.
 
         Examples:
@@ -514,10 +514,10 @@ class Model(torch.nn.Module):
             - For SAM-type models, 'prompts' can be passed as a keyword argument.
         """
         if source is None:
-            source = "https://segab_yolo.com/images/boats.jpg" if self.task == "obb" else ASSETS
+            source = "https://segatt_yolo.com/images/boats.jpg" if self.task == "obb" else ASSETS
             LOGGER.warning(f"'source' is missing. Using 'source={source}'.")
 
-        is_cli = (ARGV[0].endswith("yolo") or ARGV[0].endswith("segab_yolo")) and any(
+        is_cli = (ARGV[0].endswith("yolo") or ARGV[0].endswith("segatt_yolo")) and any(
             x in ARGV for x in ("predict", "track", "mode=predict", "mode=track")
         )
 
@@ -557,7 +557,7 @@ class Model(torch.nn.Module):
             **kwargs (Any): Additional keyword arguments for configuring the tracking process.
 
         Returns:
-            (list[segab_yolo.engine.results.Results]): A list of tracking results, each a Results object.
+            (list[segatt_yolo.engine.results.Results]): A list of tracking results, each a Results object.
 
         Examples:
             >>> model = YOLO("yolo26n.pt")
@@ -571,7 +571,7 @@ class Model(torch.nn.Module):
             - Batch size is set to 1 for tracking in videos.
         """
         if not hasattr(self.predictor, "trackers"):
-            from segab_yolo.trackers import register_tracker
+            from segatt_yolo.trackers import register_tracker
 
             register_tracker(self, persist)
         kwargs["conf"] = kwargs.get("conf") or 0.1  # ByteTrack-based method needs low confidence predictions as input
@@ -591,12 +591,12 @@ class Model(torch.nn.Module):
         configurations, method-specific defaults, and user-provided arguments to configure the validation process.
 
         Args:
-            validator (segab_yolo.engine.validator.BaseValidator, optional): An instance of a custom validator class
+            validator (segatt_yolo.engine.validator.BaseValidator, optional): An instance of a custom validator class
                 for validating the model.
             **kwargs (Any): Arbitrary keyword arguments for customizing the validation process.
 
         Returns:
-            (segab_yolo.utils.metrics.DetMetrics): Validation metrics obtained from the validation process. The
+            (segatt_yolo.utils.metrics.DetMetrics): Validation metrics obtained from the validation process. The
                 specific metrics type depends on the task (e.g., DetMetrics, SegmentMetrics,
                 PoseMetrics, ClassifyMetrics).
 
@@ -620,7 +620,7 @@ class Model(torch.nn.Module):
         """Benchmark the model across various export formats to evaluate performance.
 
         This method assesses the model's performance in different export formats, such as ONNX, TorchScript, etc. It
-        uses the 'benchmark' function from the segab_yolo.utils.benchmarks module. The benchmarking is configured using
+        uses the 'benchmark' function from the segatt_yolo.utils.benchmarks module. The benchmarking is configured using
         a combination of default configuration values, model-specific arguments, method-specific defaults, and any
         additional user-provided keyword arguments.
 
@@ -647,7 +647,7 @@ class Model(torch.nn.Module):
             >>> print(results)
         """
         self._check_is_pytorch_model()
-        from segab_yolo.utils.benchmarks import benchmark
+        from segatt_yolo.utils.benchmarks import benchmark
 
         from .exporter import export_formats
 
@@ -721,9 +721,9 @@ class Model(torch.nn.Module):
 
         This method facilitates model training with a range of customizable settings. It supports training with a custom
         trainer or the default training approach. The method handles scenarios such as resuming training from a
-        checkpoint, integrating with segab_yolo HUB, and updating model and configuration after training.
+        checkpoint, integrating with segatt_yolo HUB, and updating model and configuration after training.
 
-        When using segab_yolo HUB, if the session has a loaded model, the method prioritizes HUB training arguments and
+        When using segatt_yolo HUB, if the session has a loaded model, the method prioritizes HUB training arguments and
         warns if local arguments are provided. It checks for pip updates and combines default configurations,
         method-specific defaults, and user-provided arguments to configure the training process.
 
@@ -742,7 +742,7 @@ class Model(torch.nn.Module):
                 - augmentations (list[Callable]): List of augmentation functions to apply during training.
 
         Returns:
-            (segab_yolo.utils.metrics.DetMetrics | None): Training metrics if available and training is successful;
+            (segatt_yolo.utils.metrics.DetMetrics | None): Training metrics if available and training is successful;
                 otherwise, None. The specific metrics type depends on the task.
 
         Examples:
@@ -750,7 +750,7 @@ class Model(torch.nn.Module):
             >>> results = model.train(data="coco8.yaml", epochs=3)
         """
         self._check_is_pytorch_model()
-        if hasattr(self.session, "model") and self.session.model.id:  # segab_yolo HUB session with loaded model
+        if hasattr(self.session, "model") and self.session.model.id:  # segatt_yolo HUB session with loaded model
             if any(kwargs):
                 LOGGER.warning("using HUB training arguments, ignoring local training arguments.")
             kwargs = self.session.train_args  # overwrite kwargs
@@ -812,7 +812,7 @@ class Model(torch.nn.Module):
         """Conduct hyperparameter tuning for the model, with an option to use Ray Tune.
 
         This method supports two modes of hyperparameter tuning: using Ray Tune or a custom tuning method. When Ray Tune
-        is enabled, it leverages the 'run_ray_tune' function from the segab_yolo.utils.tuner module. Otherwise, it uses
+        is enabled, it leverages the 'run_ray_tune' function from the segatt_yolo.utils.tuner module. Otherwise, it uses
         the internal 'Tuner' class for tuning. The method combines default, overridden, and custom arguments to
         configure the tuning process.
 
@@ -840,7 +840,7 @@ class Model(torch.nn.Module):
         """
         self._check_is_pytorch_model()
         if use_ray:
-            from segab_yolo.utils.tuner import run_ray_tune
+            from segatt_yolo.utils.tuner import run_ray_tune
 
             return run_ray_tune(self, iterations=iterations, *args, **kwargs)
         else:
@@ -882,7 +882,7 @@ class Model(torch.nn.Module):
         """Retrieve the class names associated with the loaded model.
 
         This property returns the class names if they are defined in the model. It checks the class names for validity
-        using the 'check_class_names' function from the segab_yolo.nn.autobackend module. If the predictor is not
+        using the 'check_class_names' function from the segatt_yolo.nn.autobackend module. If the predictor is not
         initialized, it sets it up before retrieving the names.
 
         Returns:
@@ -897,7 +897,7 @@ class Model(torch.nn.Module):
             >>> print(model.names)
             {0: 'person', 1: 'bicycle', 2: 'car', ...}
         """
-        from segab_yolo.nn.autobackend import check_class_names
+        from segatt_yolo.nn.autobackend import check_class_names
 
         if hasattr(self.model, "names"):
             return check_class_names(self.model.names)
@@ -958,7 +958,7 @@ class Model(torch.nn.Module):
 
         Args:
             event (str): The name of the event to attach the callback to. Must be a valid event name recognized by the
-                segab_yolo framework.
+                segatt_yolo framework.
             func (Callable): The callback function to be registered. This function will be called when the specified
                 event occurs.
 
@@ -980,7 +980,7 @@ class Model(torch.nn.Module):
 
         Args:
             event (str): The name of the event for which to clear the callbacks. This should be a valid event name
-                recognized by the segab_yolo callback system.
+                recognized by the segatt_yolo callback system.
 
         Examples:
             >>> model = YOLO("yolo26n.pt")
@@ -990,7 +990,7 @@ class Model(torch.nn.Module):
 
         Notes:
             - This method affects both custom callbacks added by the user and default callbacks
-              provided by the segab_yolo framework.
+              provided by the segatt_yolo framework.
             - After calling this method, no callbacks will be executed for the specified event
               until new ones are added.
             - Use with caution as it removes all callbacks, including essential ones that might
@@ -1086,7 +1086,7 @@ class Model(torch.nn.Module):
 
         The mapping allows for dynamic loading of appropriate classes based on the model's task and the desired
         operational mode. This facilitates a flexible and extensible architecture for handling various tasks and modes
-        within the segab_yolo framework.
+        within the segatt_yolo framework.
 
         Returns:
             (dict[str, dict[str, Any]]): A dictionary mapping task names to nested dictionaries. Each nested dictionary

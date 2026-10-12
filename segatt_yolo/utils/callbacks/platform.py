@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import os
 import platform
@@ -10,12 +10,12 @@ from math import isfinite
 from pathlib import Path
 from time import sleep, time
 
-from segab_yolo.utils import ENVIRONMENT, GIT, LOGGER, PYTHON_VERSION, RANK, SETTINGS, TESTS_RUNNING, Retry, colorstr
+from segatt_yolo.utils import ENVIRONMENT, GIT, LOGGER, PYTHON_VERSION, RANK, SETTINGS, TESTS_RUNNING, Retry, colorstr
 
 PREFIX = colorstr("Platform: ")
 
 # Configurable platform URL for debugging (e.g. ULTRALYTICS_PLATFORM_URL=http://localhost:3000)
-PLATFORM_URL = os.getenv("ULTRALYTICS_PLATFORM_URL", "https://platform.segab_yolo.com").rstrip("/")
+PLATFORM_URL = os.getenv("ULTRALYTICS_PLATFORM_URL", "https://platform.segatt_yolo.com").rstrip("/")
 PLATFORM_API_URL = f"{PLATFORM_URL}/api/webhooks"
 
 
@@ -34,8 +34,8 @@ try:
 
     import requests
 
-    from segab_yolo.utils.logger import ConsoleLogger, SystemLogger
-    from segab_yolo.utils.torch_utils import model_info_for_loggers
+    from segatt_yolo.utils.logger import ConsoleLogger, SystemLogger
+    from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
     _executor = ThreadPoolExecutor(max_workers=10)  # Bounded thread pool for async operations
 
@@ -44,7 +44,7 @@ except (AssertionError, ImportError):
 
 
 def resolve_platform_uri(uri, hard=True):
-    """Resolve ul:// URIs to signed URLs by authenticating with segab_yolo Platform.
+    """Resolve ul:// URIs to signed URLs by authenticating with segatt_yolo Platform.
 
     Formats:
         ul://username/datasets/slug  -> Returns signed URL to NDJSON file
@@ -228,7 +228,7 @@ def _handle_control_response(trainer, ctx, response):
 
 def _upload_model(model_path, project, name, progress=False, retry=1, model_id=None):
     """Upload model checkpoint to Platform via signed URL."""
-    from segab_yolo.utils.uploads import safe_upload
+    from segatt_yolo.utils.uploads import safe_upload
 
     model_path = Path(model_path)
     if not model_path.exists():
@@ -268,14 +268,14 @@ def _upload_model_async(model_path, project, name, model_id=None):
 
 
 def _get_environment_info():
-    """Collect comprehensive environment info using existing segab_yolo utilities."""
+    """Collect comprehensive environment info using existing segatt_yolo utilities."""
     import shutil
 
     import psutil
     import torch
 
-    from segab_yolo import __version__
-    from segab_yolo.utils.torch_utils import get_cpu_info, get_gpu_info
+    from segatt_yolo import __version__
+    from segatt_yolo.utils.torch_utils import get_cpu_info, get_gpu_info
 
     # Get RAM and disk totals
     memory = psutil.virtual_memory()

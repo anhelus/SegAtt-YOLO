@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,13 +7,13 @@ from typing import Any
 
 import torch
 
-from segab_yolo.data import ClassificationDataset, build_dataloader
-from segab_yolo.engine.trainer import BaseTrainer
-from segab_yolo.models import yolo
-from segab_yolo.nn.tasks import ClassificationModel
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, RANK
-from segab_yolo.utils.plotting import plot_images
-from segab_yolo.utils.torch_utils import is_parallel, torch_distributed_zero_first
+from segatt_yolo.data import ClassificationDataset, build_dataloader
+from segatt_yolo.engine.trainer import BaseTrainer
+from segatt_yolo.models import yolo
+from segatt_yolo.nn.tasks import ClassificationModel
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, RANK
+from segatt_yolo.utils.plotting import plot_images
+from segatt_yolo.utils.torch_utils import is_parallel, torch_distributed_zero_first
 
 
 class ClassificationTrainer(BaseTrainer):
@@ -43,7 +43,7 @@ class ClassificationTrainer(BaseTrainer):
 
     Examples:
         Initialize and train a classification model
-        >>> from segab_yolo.models.yolo.classify import ClassificationTrainer
+        >>> from segatt_yolo.models.yolo.classify import ClassificationTrainer
         >>> args = dict(model="yolo26n-cls.pt", data="imagenet10", epochs=3)
         >>> trainer = ClassificationTrainer(overrides=args)
         >>> trainer.train()
@@ -98,7 +98,7 @@ class ClassificationTrainer(BaseTrainer):
         Returns:
             (Any): Model checkpoint if applicable, otherwise None.
         """
-        import torchvision  # scope for faster 'import segab_yolo'
+        import torchvision  # scope for faster 'import segatt_yolo'
 
         if str(self.model) in torchvision.models.__dict__:
             self.model = torchvision.models.__dict__[self.model](
@@ -141,7 +141,7 @@ class ClassificationTrainer(BaseTrainer):
         if not dataset.samples:
             raise FileNotFoundError(
                 f"No images found in '{mode}' split of {dataset_path}. "
-                f"See https://docs.segab_yolo.com/datasets/classify for cls dataset format."
+                f"See https://docs.segatt_yolo.com/datasets/classify for cls dataset format."
             )
 
         # Filter out samples with class indices >= nc (prevents CUDA assertion errors)

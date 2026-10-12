@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -12,11 +12,11 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from segab_yolo.utils import NOT_MACOS14
+from segatt_yolo.utils import NOT_MACOS14
 
 
 class Profile(contextlib.ContextDecorator):
-    """segab_yolo Profile class for timing code execution.
+    """segatt_yolo Profile class for timing code execution.
 
     Use as a decorator with @Profile() or as a context manager with 'with Profile():'. Provides accurate timing
     measurements with CUDA synchronization support for GPU operations.
@@ -173,7 +173,7 @@ def clip_boxes(boxes, shape):
             boxes[..., 1].clamp_(0, h)  # y1
             boxes[..., 2].clamp_(0, w)  # x2
             boxes[..., 3].clamp_(0, h)  # y2
-        else:  # Apple macOS14 MPS bug https://github.com/segab_yolo/segab_yolo/pull/21878
+        else:  # Apple macOS14 MPS bug https://github.com/segatt_yolo/segatt_yolo/pull/21878
             boxes[..., 0] = boxes[..., 0].clamp(0, w)
             boxes[..., 1] = boxes[..., 1].clamp(0, h)
             boxes[..., 2] = boxes[..., 2].clamp(0, w)
@@ -199,7 +199,7 @@ def clip_coords(coords, shape):
         if NOT_MACOS14:
             coords[..., 0].clamp_(0, w)  # x
             coords[..., 1].clamp_(0, h)  # y
-        else:  # Apple macOS14 MPS bug https://github.com/segab_yolo/segab_yolo/pull/21878
+        else:  # Apple macOS14 MPS bug https://github.com/segatt_yolo/segatt_yolo/pull/21878
             coords[..., 0] = coords[..., 0].clamp(0, w)
             coords[..., 1] = coords[..., 1].clamp(0, h)
     else:  # np.array
@@ -629,7 +629,7 @@ def masks2segments(masks: np.ndarray | torch.Tensor, strategy: str = "all") -> l
     Returns:
         (list): List of segment masks as float32 arrays.
     """
-    from segab_yolo.data.converter import merge_multi_segment
+    from segatt_yolo.data.converter import merge_multi_segment
 
     masks = masks.astype("uint8") if isinstance(masks, np.ndarray) else masks.byte().cpu().numpy()
     segments = []

@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates. All Rights Reserved
 
 import torch.nn as nn
 
-from segab_yolo.nn.modules.transformer import MLP
-from segab_yolo.utils.patches import torch_load
+from segatt_yolo.nn.modules.transformer import MLP
+from segatt_yolo.utils.patches import torch_load
 
 from .modules.blocks import PositionEmbeddingSine, RoPEAttention
 from .modules.encoders import MemoryEncoder
@@ -146,9 +146,9 @@ def build_sam3_image_model(checkpoint_path: str, enable_segmentation: bool = Tru
     try:
         import clip
     except ImportError:
-        from segab_yolo.utils.checks import check_requirements
+        from segatt_yolo.utils.checks import check_requirements
 
-        check_requirements("git+https://github.com/segab_yolo/CLIP.git")
+        check_requirements("git+https://github.com/segatt_yolo/CLIP.git")
         import clip
     # Create visual components
     compile_mode = "default" if compile else None

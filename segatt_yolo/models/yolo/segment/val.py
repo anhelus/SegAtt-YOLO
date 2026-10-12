@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,10 +9,10 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from segab_yolo.models.yolo.detect import DetectionValidator
-from segab_yolo.utils import LOGGER, ops
-from segab_yolo.utils.checks import check_requirements
-from segab_yolo.utils.metrics import SegmentMetrics, mask_iou, boundary_iou
+from segatt_yolo.models.yolo.detect import DetectionValidator
+from segatt_yolo.utils import LOGGER, ops
+from segatt_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.metrics import SegmentMetrics, mask_iou, boundary_iou
 
 
 class SegmentationValidator(DetectionValidator):
@@ -29,7 +29,7 @@ class SegmentationValidator(DetectionValidator):
         stats (dict): Dictionary to store statistics during validation.
 
     Examples:
-        >>> from segab_yolo.models.yolo.segment import SegmentationValidator
+        >>> from segatt_yolo.models.yolo.segment import SegmentationValidator
         >>> args = dict(model="yolo26n-seg.pt", data="coco8-seg.yaml")
         >>> validator = SegmentationValidator(args=args)
         >>> validator()
@@ -204,7 +204,7 @@ class SegmentationValidator(DetectionValidator):
             shape (tuple[int, int]): Shape of the original image.
             file (Path): File path to save the detections.
         """
-        from segab_yolo.engine.results import Results
+        from segatt_yolo.engine.results import Results
 
         Results(
             np.zeros((shape[0], shape[1]), dtype=np.uint8),

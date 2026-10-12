@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import numpy as np
 import torch
 
-from segab_yolo.data.augment import LoadVisualPrompt
-from segab_yolo.models.yolo.detect import DetectionPredictor
-from segab_yolo.models.yolo.segment import SegmentationPredictor
+from segatt_yolo.data.augment import LoadVisualPrompt
+from segatt_yolo.models.yolo.detect import DetectionPredictor
+from segatt_yolo.models.yolo.segment import SegmentationPredictor
 
 
 class YOLOEVPDetectPredictor(DetectionPredictor):

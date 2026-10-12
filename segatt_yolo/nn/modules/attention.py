@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from segab_yolo.nn.modules.conv import CBAM, ChannelAttention, SpatialAttention
+from segatt_yolo.nn.modules.conv import CBAM, ChannelAttention, SpatialAttention
 
 __all__ = (
     "BiLevelRoutingAttention",
@@ -167,7 +167,6 @@ class CoT(nn.Module):
 class SimAM(nn.Module):
     """
     SimAM: A Simple, Parameter-Free Attention Module for Convolutional Neural Networks.
-    Paper: https://arxiv.org/abs/2006.04412 (CVPR 2021)
     "SimAM: A Simple, Parameter-Free Attention Module for Convolutional Neural Networks"
     by Lingxiao Yang, Ruilin Li, Jie Yang, et al.
 
@@ -198,7 +197,7 @@ class SimAM(nn.Module):
 class GAM(nn.Module):
     """
     Global Attention Mechanism.
-    This module is a wrapper that sequentially applies the official segab_yolo
+    This module is a wrapper that sequentially applies the official segatt_yolo
     ChannelAttention and SpatialAttention modules.
     """
 

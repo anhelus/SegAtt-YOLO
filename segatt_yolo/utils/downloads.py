@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -11,9 +11,9 @@ from multiprocessing.pool import ThreadPool
 from pathlib import Path
 from urllib import parse, request
 
-from segab_yolo.utils import ASSETS_URL, LOGGER, TQDM, checks, clean_url, emojis, is_online, url2file
+from segatt_yolo.utils import ASSETS_URL, LOGGER, TQDM, checks, clean_url, emojis, is_online, url2file
 
-# Define segab_yolo GitHub assets maintained at https://github.com/ultralytics/assets
+# Define segatt_yolo GitHub assets maintained at https://github.com/ultralytics/assets
 GITHUB_ASSETS_REPO = "ultralytics/assets"
 GITHUB_ASSETS_NAMES = frozenset(
     [f"yolov8{k}{suffix}.pt" for k in "nsmlx" for suffix in ("", "-cls", "-seg", "-pose", "-obb", "-oiv7")]
@@ -80,7 +80,7 @@ def delete_dsstore(path: str | Path, files_to_delete: tuple[str, ...] = (".DS_St
         files_to_delete (tuple[str, ...]): The files to be deleted.
 
     Examples:
-        >>> from segab_yolo.utils.downloads import delete_dsstore
+        >>> from segatt_yolo.utils.downloads import delete_dsstore
         >>> delete_dsstore("path/to/dir")
 
     Notes:
@@ -114,7 +114,7 @@ def zip_directory(
         (Path): The path to the resulting zip file.
 
     Examples:
-        >>> from segab_yolo.utils.downloads import zip_directory
+        >>> from segatt_yolo.utils.downloads import zip_directory
         >>> file = zip_directory("path/to/dir")
     """
     from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
@@ -162,7 +162,7 @@ def unzip_file(
         BadZipFile: If the provided file does not exist or is not a valid zipfile.
 
     Examples:
-        >>> from segab_yolo.utils.downloads import unzip_file
+        >>> from segatt_yolo.utils.downloads import unzip_file
         >>> directory = unzip_file("path/to/file.zip")
     """
     from zipfile import BadZipFile, ZipFile, is_zipfile
@@ -255,7 +255,7 @@ def get_google_drive_file_info(link: str) -> tuple[str, str | None]:
         filename (str | None): Original filename of the Google Drive file. If filename extraction fails, returns None.
 
     Examples:
-        >>> from segab_yolo.utils.downloads import get_google_drive_file_info
+        >>> from segatt_yolo.utils.downloads import get_google_drive_file_info
         >>> link = "https://drive.google.com/file/d/1cqT-cJgANNrhIHCrEufUYhQ4RqiWG_lJ/view?usp=drive_link"
         >>> url, filename = get_google_drive_file_info(link)
     """
@@ -317,8 +317,8 @@ def safe_download(
         (Path | str): The path to the downloaded file or extracted directory.
 
     Examples:
-        >>> from segab_yolo.utils.downloads import safe_download
-        >>> link = "https://segab_yolo.com/assets/bus.jpg"
+        >>> from segatt_yolo.utils.downloads import safe_download
+        >>> link = "https://segatt_yolo.com/assets/bus.jpg"
         >>> path = safe_download(link)
     """
     url = str(url)
@@ -332,7 +332,7 @@ def safe_download(
 
         f = Path(dir or ".") / (file or url2file(url))  # URL converted to filename
         if not f.is_file():  # URL and file do not exist
-            uri = (url if gdrive else clean_url(url)).replace(ASSETS_URL, "https://segab_yolo.com/assets")  # clean
+            uri = (url if gdrive else clean_url(url)).replace(ASSETS_URL, "https://segatt_yolo.com/assets")  # clean
             desc = f"Downloading {uri} to '{f}'"
             f.parent.mkdir(parents=True, exist_ok=True)  # make directory if missing
             curl_installed = shutil.which("curl")
@@ -479,7 +479,7 @@ def attempt_download_asset(
     Examples:
         >>> file_path = attempt_download_asset("yolo26n.pt", repo="ultralytics/assets", release="latest")
     """
-    from segab_yolo.utils import SETTINGS  # scoped for circular import
+    from segatt_yolo.utils import SETTINGS  # scoped for circular import
 
     # YOLOv3/5u updates
     file = str(file)
@@ -539,7 +539,7 @@ def download(
         exist_ok (bool, optional): Whether to overwrite existing contents during unzipping.
 
     Examples:
-        >>> download("https://segab_yolo.com/assets/example.zip", dir="path/to/dir", unzip=True)
+        >>> download("https://segatt_yolo.com/assets/example.zip", dir="path/to/dir", unzip=True)
     """
     dir = Path(dir)
     dir.mkdir(parents=True, exist_ok=True)  # make directory

@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import List
 
 from tqdm import tqdm
-from segab_yolo import YOLO
+from segatt_yolo import YOLO
 
 
 def parse_args() -> argparse.Namespace:

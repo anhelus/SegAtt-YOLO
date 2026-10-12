@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import os
 import threading
 import time
 from typing import Any
 
-from segab_yolo.utils import (
+from segatt_yolo.utils import (
     IS_COLAB,
     LOGGER,
     TQDM,
@@ -13,11 +13,11 @@ from segab_yolo.utils import (
     colorstr,
 )
 
-HUB_API_ROOT = os.environ.get("ULTRALYTICS_HUB_API", "https://api.segab_yolo.com")
-HUB_WEB_ROOT = os.environ.get("ULTRALYTICS_HUB_WEB", "https://hub.segab_yolo.com")
+HUB_API_ROOT = os.environ.get("ULTRALYTICS_HUB_API", "https://api.segatt_yolo.com")
+HUB_WEB_ROOT = os.environ.get("ULTRALYTICS_HUB_WEB", "https://hub.segatt_yolo.com")
 
-PREFIX = colorstr("segab_yolo HUB: ")
-HELP_MSG = "If this issue persists please visit https://github.com/segab_yolo/hub/issues for assistance."
+PREFIX = colorstr("segatt_yolo HUB: ")
+HELP_MSG = "If this issue persists please visit https://github.com/segatt_yolo/hub/issues for assistance."
 
 
 def request_with_credentials(url: str) -> Any:

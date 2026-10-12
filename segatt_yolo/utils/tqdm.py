@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ def is_noninteractive_console() -> bool:
 
 
 class TQDM:
-    """Lightweight zero-dependency progress bar for segab_yolo.
+    """Lightweight zero-dependency progress bar for segatt_yolo.
 
     Provides clean, rich-style progress bars suitable for various environments including Weights & Biases, console
     outputs, and other logging systems. Features zero external dependencies, clean single-line output, rich-style
@@ -113,7 +113,7 @@ class TQDM:
         # Disable if not verbose
         if disable is None:
             try:
-                from segab_yolo.utils import LOGGER, VERBOSE
+                from segatt_yolo.utils import LOGGER, VERBOSE
 
                 disable = not VERBOSE or LOGGER.getEffectiveLevel() > 20
             except ImportError:

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates. All Rights Reserved
 # Based on https://github.com/IDEA-Research/GroundingDINO
@@ -7,7 +7,7 @@ from __future__ import annotations
 import torch
 from torch import nn
 
-from segab_yolo.nn.modules.utils import _get_clones
+from segatt_yolo.nn.modules.utils import _get_clones
 
 from .model_misc import get_valid_ratio
 

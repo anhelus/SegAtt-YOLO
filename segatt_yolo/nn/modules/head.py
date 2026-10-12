@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """Model head modules."""
 
 from __future__ import annotations
@@ -11,9 +11,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.init import constant_, xavier_uniform_
 
-from segab_yolo.utils import NOT_MACOS14
-from segab_yolo.utils.tal import dist2bbox, dist2rbox, make_anchors
-from segab_yolo.utils.torch_utils import TORCH_1_11, fuse_conv_and_bn, smart_inference_mode
+from segatt_yolo.utils import NOT_MACOS14
+from segatt_yolo.utils.tal import dist2bbox, dist2rbox, make_anchors
+from segatt_yolo.utils.torch_utils import TORCH_1_11, fuse_conv_and_bn, smart_inference_mode
 
 from .block import DFL, SAVPE, BNContrastiveHead, ContrastiveHead, Proto, Proto26, RealNVP, Residual, SwiGLUFFN
 from .conv import Conv, DWConv
@@ -656,7 +656,7 @@ class Pose(Detect):
             if ndim == 3:
                 if NOT_MACOS14:
                     y[:, 2::ndim].sigmoid_()
-                else:  # Apple macOS14 MPS bug https://github.com/segab_yolo/segab_yolo/pull/21878
+                else:  # Apple macOS14 MPS bug https://github.com/segatt_yolo/segatt_yolo/pull/21878
                     y[:, 2::ndim] = y[:, 2::ndim].sigmoid()
             y[:, 0::ndim] = (y[:, 0::ndim] * 2.0 + (self.anchors[0] - 0.5)) * self.strides
             y[:, 1::ndim] = (y[:, 1::ndim] * 2.0 + (self.anchors[1] - 0.5)) * self.strides
@@ -773,7 +773,7 @@ class Pose26(Pose):
             if ndim == 3:
                 if NOT_MACOS14:
                     y[:, 2::ndim].sigmoid_()
-                else:  # Apple macOS14 MPS bug https://github.com/segab_yolo/segab_yolo/pull/21878
+                else:  # Apple macOS14 MPS bug https://github.com/segatt_yolo/segatt_yolo/pull/21878
                     y[:, 2::ndim] = y[:, 2::ndim].sigmoid()
             y[:, 0::ndim] = (y[:, 0::ndim] + self.anchors[0]) * self.strides
             y[:, 1::ndim] = (y[:, 1::ndim] + self.anchors[1]) * self.strides
@@ -1552,7 +1552,7 @@ class RTDETRDecoder(nn.Module):
                 metadata. During inference, returns a tensor of shape (bs, num_queries, 6) containing bounding boxes,
                 confidence scores, and class labels.
         """
-        from segab_yolo.models.utils.ops import get_cdn_group
+        from segatt_yolo.models.utils.ops import get_cdn_group
 
         # Input projection and embedding
         feats, shapes = self._get_encoder_input(x)

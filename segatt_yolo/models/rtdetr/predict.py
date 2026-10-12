@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import torch
 
-from segab_yolo.data.augment import LetterBox
-from segab_yolo.engine.predictor import BasePredictor
-from segab_yolo.engine.results import Results
-from segab_yolo.utils import ops
+from segatt_yolo.data.augment import LetterBox
+from segatt_yolo.engine.predictor import BasePredictor
+from segatt_yolo.engine.results import Results
+from segatt_yolo.utils import ops
 
 
 class RTDETRPredictor(BasePredictor):
@@ -25,8 +25,8 @@ class RTDETRPredictor(BasePredictor):
         pre_transform: Pre-transform input images before feeding them into the model for inference.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.rtdetr import RTDETRPredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.rtdetr import RTDETRPredictor
         >>> args = dict(model="rtdetr-l.pt", source=ASSETS)
         >>> predictor = RTDETRPredictor(overrides=args)
         >>> predictor.predict_cli()

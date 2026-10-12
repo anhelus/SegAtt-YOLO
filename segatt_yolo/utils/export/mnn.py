@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from segab_yolo.utils import LOGGER
+from segatt_yolo.utils import LOGGER
 
 
 def onnx2mnn(
@@ -29,8 +29,8 @@ def onnx2mnn(
     Returns:
         (str): Path to the exported ``.mnn`` file.
     """
-    from segab_yolo.utils.checks import check_requirements
-    from segab_yolo.utils.torch_utils import TORCH_1_10
+    from segatt_yolo.utils.checks import check_requirements
+    from segatt_yolo.utils.torch_utils import TORCH_1_10
 
     assert TORCH_1_10, "MNN export requires torch>=1.10.0 to avoid segmentation faults"
     assert Path(onnx_file).exists(), f"failed to export ONNX file: {onnx_file}"

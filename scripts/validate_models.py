@@ -55,7 +55,7 @@ def main() -> None:
         model_name = model_dir.name
         print(f"[{idx}/{total}] Validating {model_name}...")
 
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
         model = YOLO(str(best_pt))
         results = model.val(data=dataset_yaml, verbose=args.verbose)
 

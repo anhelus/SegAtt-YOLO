@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,11 +8,11 @@ from typing import Any
 import torch
 import torch.distributed as dist
 
-from segab_yolo.data import ClassificationDataset, build_dataloader
-from segab_yolo.engine.validator import BaseValidator
-from segab_yolo.utils import LOGGER, RANK
-from segab_yolo.utils.metrics import ClassifyMetrics, ConfusionMatrix
-from segab_yolo.utils.plotting import plot_images
+from segatt_yolo.data import ClassificationDataset, build_dataloader
+from segatt_yolo.engine.validator import BaseValidator
+from segatt_yolo.utils import LOGGER, RANK
+from segatt_yolo.utils.metrics import ClassifyMetrics, ConfusionMatrix
+from segatt_yolo.utils.plotting import plot_images
 
 
 class ClassificationValidator(BaseValidator):
@@ -44,7 +44,7 @@ class ClassificationValidator(BaseValidator):
         plot_predictions: Plot images with their predicted class labels.
 
     Examples:
-        >>> from segab_yolo.models.yolo.classify import ClassificationValidator
+        >>> from segatt_yolo.models.yolo.classify import ClassificationValidator
         >>> args = dict(model="yolo26n-cls.pt", data="imagenet10")
         >>> validator = ClassificationValidator(args=args)
         >>> validator()

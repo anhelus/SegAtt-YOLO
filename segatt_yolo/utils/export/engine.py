@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.utils import IS_JETSON, LOGGER, TORCH_VERSION, ThreadingLocked, is_dgx, is_jetson
-from segab_yolo.utils.checks import check_tensorrt, check_version
-from segab_yolo.utils.torch_utils import TORCH_2_4, TORCH_2_9
+from segatt_yolo.utils import IS_JETSON, LOGGER, TORCH_VERSION, ThreadingLocked, is_dgx, is_jetson
+from segatt_yolo.utils.checks import check_tensorrt, check_version
+from segatt_yolo.utils.torch_utils import TORCH_2_4, TORCH_2_9
 
 
 def best_onnx_opset(onnx: types.ModuleType, cuda: bool = False) -> int:
@@ -115,7 +115,7 @@ def onnx2engine(
         dynamic (bool, optional): Enable dynamic input shapes.
         shape (tuple[int, int, int, int], optional): Input shape (batch, channels, height, width).
         dla (int | None): DLA core to use (Jetson devices only).
-        dataset (segab_yolo.data.build.InfiniteDataLoader, optional): Dataset for INT8 calibration.
+        dataset (segatt_yolo.data.build.InfiniteDataLoader, optional): Dataset for INT8 calibration.
         metadata (dict | None): Metadata to include in the engine file.
         verbose (bool, optional): Enable verbose logging.
         prefix (str, optional): Prefix for log messages.
@@ -133,7 +133,7 @@ def onnx2engine(
         Metadata is serialized and written to the engine file if provided.
     """
     # Force re-install TensorRT on CUDA 13 ARM devices to 10.15.x versions for RT-DETR exports
-    # https://github.com/segab_yolo/segab_yolo/issues/22873
+    # https://github.com/segatt_yolo/segatt_yolo/issues/22873
     if is_jetson(jetpack=7) or is_dgx():
         check_tensorrt("10.15")
 
@@ -143,7 +143,7 @@ def onnx2engine(
         check_tensorrt()
         import tensorrt as trt
     check_version(trt.__version__, ">=7.0.0", hard=True)
-    check_version(trt.__version__, "!=10.2.0", msg="https://github.com/segab_yolo/segab_yolo/pull/24367")
+    check_version(trt.__version__, "!=10.2.0", msg="https://github.com/segatt_yolo/segatt_yolo/pull/24367")
 
     LOGGER.info(f"\n{prefix} starting export with TensorRT {trt.__version__}...")
     output_file = output_file or Path(onnx_file).with_suffix(".engine")
@@ -230,7 +230,7 @@ def onnx2engine(
 
             def __init__(
                 self,
-                dataset,  # segab_yolo.data.build.InfiniteDataLoader
+                dataset,  # segatt_yolo.data.build.InfiniteDataLoader
                 cache: str = "",
             ) -> None:
                 """Initialize the INT8 calibrator with dataset and cache path."""

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,13 +9,13 @@ import torch
 import torch.nn as nn
 from PIL import Image
 
-from segab_yolo.utils import checks
-from segab_yolo.utils.torch_utils import smart_inference_mode
+from segatt_yolo.utils import checks
+from segatt_yolo.utils.torch_utils import smart_inference_mode
 
 try:
     import clip
 except ImportError:
-    checks.check_requirements("git+https://github.com/segab_yolo/CLIP.git")
+    checks.check_requirements("git+https://github.com/segatt_yolo/CLIP.git")
     import clip
 
 
@@ -146,7 +146,7 @@ class CLIP(TextModel):
             (torch.Tensor): Normalized image feature vectors with unit length (L2 norm = 1).
 
         Examples:
-            >>> from segab_yolo.nn.text_model import CLIP
+            >>> from segatt_yolo.nn.text_model import CLIP
             >>> from PIL import Image
             >>> clip_model = CLIP("ViT-B/32", device="cuda")
             >>> image = Image.open("path/to/image.jpg")
@@ -199,15 +199,15 @@ class MobileCLIP(TextModel):
         try:
             import mobileclip
         except ImportError:
-            # segab_yolo fork preferred since Apple MobileCLIP repo has incorrect version of torchvision
-            checks.check_requirements("git+https://github.com/segab_yolo/mobileclip.git")
+            # segatt_yolo fork preferred since Apple MobileCLIP repo has incorrect version of torchvision
+            checks.check_requirements("git+https://github.com/segatt_yolo/mobileclip.git")
             import mobileclip
 
         super().__init__()
         config = self.config_size_map[size]
         file = f"mobileclip_{size}.pt"
         if not Path(file).is_file():
-            from segab_yolo import download
+            from segatt_yolo import download
 
             download(f"https://docs-assets.developer.apple.com/ml-research/datasets/mobileclip/{file}")
         self.model = mobileclip.create_model_and_transforms(f"mobileclip_{config}", pretrained=file, device=device)[0]
@@ -287,7 +287,7 @@ class MobileCLIPTS(TextModel):
             weight (str): Path to the TorchScript model weights.
         """
         super().__init__()
-        from segab_yolo.utils.downloads import attempt_download_asset
+        from segatt_yolo.utils.downloads import attempt_download_asset
 
         self.encoder = torch.jit.load(attempt_download_asset(weight), map_location=device)
         self.tokenizer = clip.clip.tokenize

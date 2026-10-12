@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.models.yolo import classify, detect, obb, pose, segment, semantic, world, yoloe
+from segatt_yolo.models.yolo import classify, detect, obb, pose, segment, semantic, world, yoloe
 
 from .model import YOLO, YOLOE, YOLOWorld
 

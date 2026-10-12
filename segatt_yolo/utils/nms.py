@@ -1,13 +1,13 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import sys
 import time
 
 import torch
 
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.metrics import batch_probiou, box_iou
-from segab_yolo.utils.ops import xywh2xyxy
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.metrics import batch_probiou, box_iou
+from segatt_yolo.utils.ops import xywh2xyxy
 
 
 def non_max_suppression(
@@ -167,7 +167,7 @@ def non_max_suppression(
 
 
 class TorchNMS:
-    """segab_yolo custom NMS implementation optimized for YOLO.
+    """segatt_yolo custom NMS implementation optimized for YOLO.
 
     This class provides static methods for performing non-maximum suppression (NMS) operations on bounding boxes,
     including standard NMS, fast NMS, and batched NMS for multi-class scenarios.

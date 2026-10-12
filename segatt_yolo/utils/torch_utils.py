@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -20,8 +20,8 @@ import torch.distributed as dist
 import torch.nn as nn
 import torch.nn.functional as F
 
-from segab_yolo import __version__
-from segab_yolo.utils import (
+from segatt_yolo import __version__
+from segatt_yolo.utils import (
     DEFAULT_CFG_DICT,
     DEFAULT_CFG_KEYS,
     LOGGER,
@@ -32,9 +32,9 @@ from segab_yolo.utils import (
     WINDOWS,
     colorstr,
 )
-from segab_yolo.utils.checks import check_version
-from segab_yolo.utils.cpu import CPUInfo
-from segab_yolo.utils.patches import torch_load
+from segatt_yolo.utils.checks import check_version
+from segatt_yolo.utils.cpu import CPUInfo
+from segatt_yolo.utils.patches import torch_load
 
 # Version checks (all default to version>=min_version)
 TORCH_1_9 = check_version(TORCH_VERSION, "1.9.0")
@@ -56,7 +56,7 @@ TORCHVISION_0_18 = check_version(TORCHVISION_VERSION, "0.18.0")
 if WINDOWS and check_version(TORCH_VERSION, "==2.4.0"):  # reject version 2.4.0 on Windows
     LOGGER.warning(
         "Known issue with torch==2.4.0 on Windows with CPU, recommend upgrading to torch>=2.4.1 to resolve "
-        "https://github.com/segab_yolo/segab_yolo/issues/15049"
+        "https://github.com/segatt_yolo/segatt_yolo/issues/15049"
     )
 
 
@@ -117,7 +117,7 @@ def autocast(enabled: bool, device: str = "cuda"):
 @functools.lru_cache
 def get_cpu_info():
     """Return a string with system CPU information, i.e. 'Apple M2'."""
-    from segab_yolo.utils import PERSISTENT_CACHE  # avoid circular import error
+    from segatt_yolo.utils import PERSISTENT_CACHE  # avoid circular import error
 
     if "cpu_info" not in PERSISTENT_CACHE:
         try:
@@ -164,7 +164,7 @@ def select_device(device="", newline=False, verbose=True):
     if isinstance(device, torch.device) or str(device).startswith(("tpu", "intel", "vulkan")):
         return device
 
-    s = f"segab_yolo {__version__} 🚀 Python-{PYTHON_VERSION} torch-{TORCH_VERSION} "
+    s = f"segatt_yolo {__version__} 🚀 Python-{PYTHON_VERSION} torch-{TORCH_VERSION} "
     device = str(device).lower()
     for remove in "cuda:", "none", "(", ")", "[", "]", "'", " ":
         device = device.replace(remove, "")  # to string, 'cuda:0' -> '0' and '(0, 1)' -> '0,1'
@@ -199,7 +199,7 @@ def select_device(device="", newline=False, verbose=True):
 
     # Auto-select GPUs
     if "-1" in device:
-        from segab_yolo.utils.autodevice import GPUInfo
+        from segatt_yolo.utils.autodevice import GPUInfo
 
         # Replace each -1 with a selected GPU or remove it
         parts = device.split(",")
@@ -399,7 +399,7 @@ def model_info_for_loggers(trainer):
     """Return model info dict with useful model information.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer object containing model and validation data.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer object containing model and validation data.
 
     Returns:
         (dict): Dictionary containing model parameters, GFLOPs, and inference speeds.
@@ -415,7 +415,7 @@ def model_info_for_loggers(trainer):
         ...}
     """
     if trainer.args.profile:  # profile ONNX and TensorRT times
-        from segab_yolo.utils.benchmarks import ProfileModels
+        from segatt_yolo.utils.benchmarks import ProfileModels
 
         results = ProfileModels([trainer.last], device=trainer.device).run()[0]
         results.pop("model/name")
@@ -444,7 +444,7 @@ def get_flops(model, imgsz=640):
     try:
         import thop
     except ImportError:
-        thop = None  # conda support without 'segab_yolo-thop' installed
+        thop = None  # conda support without 'segatt_yolo-thop' installed
 
     if not thop:
         return 0.0  # if not installed return 0.0 GFLOPs
@@ -623,7 +623,7 @@ def init_seeds(seed=0, deterministic=False):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)  # for Multi-GPU, exception safe
-    # torch.backends.cudnn.benchmark = True  # AutoBatch problem https://github.com/segab_yolo/yolov5/issues/9287
+    # torch.backends.cudnn.benchmark = True  # AutoBatch problem https://github.com/segatt_yolo/yolov5/issues/9287
     if deterministic:
         if TORCH_2_0:
             torch.use_deterministic_algorithms(True, warn_only=True)  # warn if deterministic is not possible
@@ -722,7 +722,7 @@ def strip_optimizer(f: str | Path = "best.pt", s: str = "", updates: dict[str, A
 
     Examples:
         >>> from pathlib import Path
-        >>> from segab_yolo.utils.torch_utils import strip_optimizer
+        >>> from segatt_yolo.utils.torch_utils import strip_optimizer
         >>> for f in Path("path/to/model/checkpoints").rglob("*.pt"):
         ...     strip_optimizer(f)
     """
@@ -731,14 +731,14 @@ def strip_optimizer(f: str | Path = "best.pt", s: str = "", updates: dict[str, A
         assert isinstance(x, dict), "checkpoint is not a Python dictionary"
         assert "model" in x, "'model' missing from checkpoint"
     except Exception as e:
-        LOGGER.warning(f"Skipping {f}, not a valid segab_yolo model: {e}")
+        LOGGER.warning(f"Skipping {f}, not a valid segatt_yolo model: {e}")
         return {}
 
     metadata = {
         "date": datetime.now().isoformat(),
         "version": __version__,
-        "license": "AGPL-3.0 License (https://segab_yolo.com/license)",
-        "docs": "https://docs.segab_yolo.com",
+        "license": "AGPL-3.0 License (https://segatt_yolo.com/license)",
+        "docs": "https://docs.segatt_yolo.com",
     }
 
     # Update model
@@ -811,7 +811,7 @@ def cuda_memory_usage(device=None):
 
 
 def profile_ops(input, ops, n=10, device=None, max_num_obj=0):
-    """segab_yolo speed, memory and FLOPs profiler.
+    """segatt_yolo speed, memory and FLOPs profiler.
 
     Args:
         input (torch.Tensor | list): Input tensor(s) to profile.
@@ -824,7 +824,7 @@ def profile_ops(input, ops, n=10, device=None, max_num_obj=0):
         (list): Profile results for each operation.
 
     Examples:
-        >>> from segab_yolo.utils.torch_utils import profile_ops
+        >>> from segatt_yolo.utils.torch_utils import profile_ops
         >>> input = torch.randn(16, 3, 640, 640)
         >>> m1 = lambda x: x * torch.sigmoid(x)
         >>> m2 = nn.SiLU()
@@ -833,7 +833,7 @@ def profile_ops(input, ops, n=10, device=None, max_num_obj=0):
     try:
         import thop
     except ImportError:
-        thop = None  # conda support without 'segab_yolo-thop' installed
+        thop = None  # conda support without 'segatt_yolo-thop' installed
 
     results = []
     if not isinstance(device, torch.device):

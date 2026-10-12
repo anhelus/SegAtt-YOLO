@@ -1,8 +1,8 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
-MLflow Logging for segab_yolo YOLO.
+MLflow Logging for segatt_yolo YOLO.
 
-This module enables MLflow logging for segab_yolo YOLO. It logs metrics, parameters, and model artifacts.
+This module enables MLflow logging for segatt_yolo YOLO. It logs metrics, parameters, and model artifacts.
 For setting up, a tracking URI should be specified. The logging can be customized using environment variables.
 
 Commands:
@@ -21,7 +21,7 @@ Commands:
         ps aux | grep 'mlflow' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 """
 
-from segab_yolo.utils import LOGGER, RUNS_DIR, SETTINGS, TESTS_RUNNING, colorstr
+from segatt_yolo.utils import LOGGER, RUNS_DIR, SETTINGS, TESTS_RUNNING, colorstr
 
 try:
     import os
@@ -52,7 +52,7 @@ def on_pretrain_routine_end(trainer):
     the trainer.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The training object with arguments and parameters to log.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The training object with arguments and parameters to log.
 
     Notes:
         MLFLOW_TRACKING_URI: The URI for MLflow tracking. If not set, defaults to 'runs/mlflow'.
@@ -67,7 +67,7 @@ def on_pretrain_routine_end(trainer):
     mlflow.set_tracking_uri(uri)
 
     # Set experiment and run names
-    experiment_name = os.environ.get("MLFLOW_EXPERIMENT_NAME") or trainer.args.project or "/Shared/segab_yolo"
+    experiment_name = os.environ.get("MLFLOW_EXPERIMENT_NAME") or trainer.args.project or "/Shared/segatt_yolo"
     run_name = os.environ.get("MLFLOW_RUN") or trainer.args.name
     mlflow.set_experiment(experiment_name)
 

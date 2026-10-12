@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ class GCPRegions:
         lowest_latency: Determines the GCP region(s) with the lowest network latency.
 
     Examples:
-        >>> from segab_yolo.hub.google import GCPRegions
+        >>> from segatt_yolo.hub.google import GCPRegions
         >>> regions = GCPRegions()
         >>> lowest_latency_region = regions.lowest_latency(verbose=True, attempts=3)
         >>> print(f"Lowest latency region: {lowest_latency_region[0][0]}")

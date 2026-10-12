@@ -1,9 +1,9 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from collections import defaultdict
 from typing import Any
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
 
 
 class AIGym(BaseSolution):
@@ -47,7 +47,7 @@ class AIGym(BaseSolution):
         self.kpts = self.CFG["kpts"]  # User selected kpts of workouts storage for further usage
 
     def process(self, im0) -> SolutionResults:
-        """Monitor workouts using segab_yolo YOLO Pose Model.
+        """Monitor workouts using segatt_yolo YOLO Pose Model.
 
         This function processes an input image to track and analyze human poses for workout monitoring. It uses the YOLO
         Pose model to detect keypoints, estimate angles, and count repetitions based on predefined angle thresholds.

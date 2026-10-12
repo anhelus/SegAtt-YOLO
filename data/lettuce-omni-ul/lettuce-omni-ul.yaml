@@ -1,4 +1,4 @@
-path: C:/Users/acard/GitHub/Lavoro/STIIMA/YOLO/SegAtt-YOLO/data/lettuce-omni-ul
+path: C:/Users/laboratorio/Repos/SegAtt-YOLO/data/lettuce-omni-ul
 train: train/images
 val: val/images
 nc: 1

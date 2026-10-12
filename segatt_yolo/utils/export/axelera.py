@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from typing import Any
 import numpy as np
 import torch
 
-from segab_yolo.utils import LOGGER, YAML
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils import LOGGER, YAML
+from segatt_yolo.utils.checks import check_requirements
 
 
 def torch2axelera(

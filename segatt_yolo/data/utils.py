@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-from segab_yolo.nn.autobackend import check_class_names
-from segab_yolo.utils import (
+from segatt_yolo.nn.autobackend import check_class_names
+from segatt_yolo.utils import (
     ASSETS_URL,
     DATASETS_DIR,
     LOGGER,
@@ -32,11 +32,11 @@ from segab_yolo.utils import (
     emojis,
     is_dir_writeable,
 )
-from segab_yolo.utils.checks import check_file, check_font, is_ascii
-from segab_yolo.utils.downloads import download, safe_download, unzip_file
-from segab_yolo.utils.ops import segments2boxes
+from segatt_yolo.utils.checks import check_file, check_font, is_ascii
+from segatt_yolo.utils.downloads import download, safe_download, unzip_file
+from segatt_yolo.utils.ops import segments2boxes
 
-HELP_URL = "See https://docs.segab_yolo.com/datasets for dataset formatting guidance."
+HELP_URL = "See https://docs.segatt_yolo.com/datasets for dataset formatting guidance."
 IMG_FORMATS = {
     "avif",
     "bmp",
@@ -137,7 +137,7 @@ def check_file_speeds(
         LOGGER.warning(
             f"{prefix}Slow image access detected ({ping_msg}{speed_msg}{size_msg}). "
             f"Use local storage instead of remote/mounted storage for better performance. "
-            f"See https://docs.segab_yolo.com/guides/model-training-tips/"
+            f"See https://docs.segatt_yolo.com/guides/model-training-tips/"
         )
 
 
@@ -323,7 +323,7 @@ def visualize_image_annotations(image_path: str, txt_path: str, label_map: dict[
     """
     import matplotlib.pyplot as plt
 
-    from segab_yolo.utils.plotting import colors
+    from segatt_yolo.utils.plotting import colors
 
     img = np.array(Image.open(image_path))
     img_height, img_width = img.shape[:2]
@@ -444,7 +444,7 @@ def convert_ndjson_to_yolo_if_needed(data: str | Path) -> str | Path:
     if data_str.endswith(".ndjson") or (data_str.startswith("ul://") and "/datasets/" in data_str):
         import asyncio
 
-        from segab_yolo.data.converter import convert_ndjson_to_yolo
+        from segatt_yolo.data.converter import convert_ndjson_to_yolo
 
         return asyncio.run(convert_ndjson_to_yolo(check_file(data)))
     return data
@@ -578,7 +578,7 @@ def check_cls_dataset(dataset: str | Path, split: str = "") -> dict[str, Any]:
         if data_dir.suffix != "":
             raise ValueError(
                 f'Classification datasets must be a directory (data="path/to/dir") not a file (data="{dataset}"), '
-                "See https://docs.segab_yolo.com/datasets/classify/"
+                "See https://docs.segatt_yolo.com/datasets/classify/"
             )
         LOGGER.info("")
         LOGGER.warning(f"Dataset not found, missing path {data_dir}, attempting download...")
@@ -592,7 +592,7 @@ def check_cls_dataset(dataset: str | Path, split: str = "") -> dict[str, Any]:
     if not train_set.is_dir():
         LOGGER.warning(f"Dataset 'split=train' not found at {train_set}")
         if image_files := list(data_dir.rglob("*.jpg")) + list(data_dir.rglob("*.png")):
-            from segab_yolo.data.split import split_classify_dataset
+            from segatt_yolo.data.split import split_classify_dataset
 
             LOGGER.info(f"Found {len(image_files)} images in subdirectories. Attempting to split...")
             data_dir = split_classify_dataset(data_dir, train_ratio=0.8)
@@ -658,11 +658,11 @@ class HUBDatasetStats:
         data (dict): Dataset configuration data.
 
     Methods:
-        get_json: Return dataset JSON for segab_yolo HUB.
-        process_images: Compress images for segab_yolo HUB.
+        get_json: Return dataset JSON for segatt_yolo HUB.
+        process_images: Compress images for segatt_yolo HUB.
 
     Examples:
-        >>> from segab_yolo.data.utils import HUBDatasetStats
+        >>> from segatt_yolo.data.utils import HUBDatasetStats
         >>> stats = HUBDatasetStats("path/to/coco8.zip", task="detect")  # detect dataset
         >>> stats = HUBDatasetStats("path/to/coco8-seg.zip", task="segment")  # segment dataset
         >>> stats = HUBDatasetStats("path/to/coco8-pose.zip", task="pose")  # pose dataset
@@ -672,8 +672,8 @@ class HUBDatasetStats:
         >>> stats.process_images()
 
     Notes:
-        Download *.zip files from https://github.com/segab_yolo/hub/tree/main/example_datasets
-        i.e. https://github.com/segab_yolo/hub/raw/main/example_datasets/coco8.zip for coco8.zip.
+        Download *.zip files from https://github.com/segatt_yolo/hub/tree/main/example_datasets
+        i.e. https://github.com/segatt_yolo/hub/raw/main/example_datasets/coco8.zip for coco8.zip.
     """
 
     def __init__(self, path: str = "coco8.yaml", task: str = "detect", autodownload: bool = False):
@@ -719,7 +719,7 @@ class HUBDatasetStats:
         compress_one_image(f, self.im_dir / Path(f).name)  # save to dataset-hub
 
     def get_json(self, save: bool = False, verbose: bool = False) -> dict:
-        """Return dataset JSON for segab_yolo HUB."""
+        """Return dataset JSON for segatt_yolo HUB."""
 
         def _round(labels):
             """Update labels to integer class and 4 decimal place floats."""
@@ -748,7 +748,7 @@ class HUBDatasetStats:
 
             # Get dataset statistics
             if self.task == "classify":
-                from torchvision.datasets import ImageFolder  # scope for faster 'import segab_yolo'
+                from torchvision.datasets import ImageFolder  # scope for faster 'import segatt_yolo'
 
                 dataset = ImageFolder(self.data[split])
 
@@ -762,7 +762,7 @@ class HUBDatasetStats:
                     "labels": [{Path(k).name: v} for k, v in dataset.imgs],
                 }
             else:
-                from segab_yolo.data import YOLODataset
+                from segatt_yolo.data import YOLODataset
 
                 dataset = YOLODataset(img_path=self.data[split], data=self.data, task=self.task)
                 x = np.array(
@@ -793,8 +793,8 @@ class HUBDatasetStats:
         return self.stats
 
     def process_images(self) -> Path:
-        """Compress images for segab_yolo HUB."""
-        from segab_yolo.data import YOLODataset  # ClassificationDataset
+        """Compress images for segatt_yolo HUB."""
+        from segatt_yolo.data import YOLODataset  # ClassificationDataset
 
         self.im_dir.mkdir(parents=True, exist_ok=True)  # makes dataset-hub/images/
         for split in "train", "val", "test":
@@ -821,7 +821,7 @@ def compress_one_image(f: str, f_new: str | None = None, max_dim: int = 1920, qu
 
     Examples:
         >>> from pathlib import Path
-        >>> from segab_yolo.data.utils import compress_one_image
+        >>> from segatt_yolo.data.utils import compress_one_image
         >>> for f in Path("path/to/dataset").rglob("*.jpg"):
         >>>    compress_one_image(f)
     """
@@ -845,17 +845,17 @@ def compress_one_image(f: str, f_new: str | None = None, max_dim: int = 1920, qu
 
 
 def load_dataset_cache_file(path: Path) -> dict:
-    """Load an segab_yolo *.cache dictionary from path."""
+    """Load an segatt_yolo *.cache dictionary from path."""
     import gc
 
-    gc.disable()  # reduce pickle load time https://github.com/segab_yolo/segab_yolo/pull/1585
+    gc.disable()  # reduce pickle load time https://github.com/segatt_yolo/segatt_yolo/pull/1585
     cache = np.load(str(path), allow_pickle=True).item()  # load dict
     gc.enable()
     return cache
 
 
 def save_dataset_cache_file(prefix: str, path: Path, x: dict, version: str):
-    """Save an segab_yolo dataset *.cache dictionary x to path."""
+    """Save an segatt_yolo dataset *.cache dictionary x to path."""
     x["version"] = version  # add cache version
     if is_dir_writeable(path.parent):
         if path.exists():

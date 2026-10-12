@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,11 +8,11 @@ from typing import Any
 
 import torch
 
-from segab_yolo.data import build_yolo_dataset
-from segab_yolo.models.yolo.detect import DetectionTrainer
-from segab_yolo.nn.tasks import WorldModel
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, RANK
-from segab_yolo.utils.torch_utils import unwrap_model
+from segatt_yolo.data import build_yolo_dataset
+from segatt_yolo.models.yolo.detect import DetectionTrainer
+from segatt_yolo.nn.tasks import WorldModel
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, RANK
+from segatt_yolo.utils.torch_utils import unwrap_model
 
 
 def on_pretrain_routine_end(trainer) -> None:
@@ -46,7 +46,7 @@ class WorldTrainer(DetectionTrainer):
 
     Examples:
         Initialize and train a YOLO World model
-        >>> from segab_yolo.models.yolo.world import WorldTrainer
+        >>> from segatt_yolo.models.yolo.world import WorldTrainer
         >>> args = dict(model="yolov8s-world.pt", data="coco8.yaml", epochs=3)
         >>> trainer = WorldTrainer(overrides=args)
         >>> trainer.train()

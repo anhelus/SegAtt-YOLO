@@ -14,7 +14,7 @@ _repo_root = Path(__file__).resolve().parent.parent
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from segab_yolo import YOLO
+from segatt_yolo import YOLO
 
 
 def load_config(config_path: str) -> Dict:

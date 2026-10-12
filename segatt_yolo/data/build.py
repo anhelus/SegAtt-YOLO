@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -16,15 +16,15 @@ import torch.distributed as dist
 from PIL import Image
 from torch.utils.data import Dataset, dataloader, distributed
 
-from segab_yolo.cfg import IterableSimpleNamespace
-from segab_yolo.data.dataset import (
+from segatt_yolo.cfg import IterableSimpleNamespace
+from segatt_yolo.data.dataset import (
     GroundingDataset,
     PolygonSemanticDataset,
     SemanticDataset,
     YOLODataset,
     YOLOMultiModalDataset,
 )
-from segab_yolo.data.loaders import (
+from segatt_yolo.data.loaders import (
     LOADERS,
     LoadImagesAndVideos,
     LoadPilAndNumpy,
@@ -34,10 +34,10 @@ from segab_yolo.data.loaders import (
     SourceTypes,
     autocast_list,
 )
-from segab_yolo.data.utils import IMG_FORMATS, VID_FORMATS
-from segab_yolo.utils import RANK, colorstr
-from segab_yolo.utils.checks import check_file
-from segab_yolo.utils.torch_utils import TORCH_2_0
+from segatt_yolo.data.utils import IMG_FORMATS, VID_FORMATS
+from segatt_yolo.utils import RANK, colorstr
+from segatt_yolo.utils.checks import check_file
+from segatt_yolo.utils.torch_utils import TORCH_2_0
 
 
 class InfiniteDataLoader(dataloader.DataLoader):
@@ -406,7 +406,7 @@ def check_source(
     elif isinstance(source, torch.Tensor):
         tensor = True
     else:
-        raise TypeError("Unsupported image type. For supported types see https://docs.segab_yolo.com/modes/predict")
+        raise TypeError("Unsupported image type. For supported types see https://docs.segatt_yolo.com/modes/predict")
 
     return source, webcam, screenshot, from_img, in_memory, tensor
 

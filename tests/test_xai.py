@@ -1,10 +1,10 @@
-"""Tests for XAI utilities (segab_yolo.utils.xai) and target-layer discovery (scripts.xai_predict)."""
+"""Tests for XAI utilities (segatt_yolo.utils.xai) and target-layer discovery (scripts.xai_predict)."""
 
 import numpy as np
 import pytest
 import torch
 
-from segab_yolo.utils.xai import (
+from segatt_yolo.utils.xai import (
     DetCAM_Target,
     DummyTarget,
     VanillaActivation,
@@ -178,10 +178,10 @@ class TestFindTargetLayers:
     """Backbone-final-layer discovery across model variants."""
 
     YAMLS = {
-        "yolo26": "segab_yolo/cfg/models/26/yolo26.yaml",
-        "yolo11_gam_bbone": "segab_yolo/cfg/models/11/yolo11-gam-bbone.yaml",
-        "yolo11_simam_bbone": "segab_yolo/cfg/models/11/yolo11-simam-bbone.yaml",
-        "yolo26_mod": "segab_yolo/cfg/models/26/yolo26-mod.yaml",
+        "yolo26": "segatt_yolo/cfg/models/26/yolo26.yaml",
+        "yolo11_gam_bbone": "segatt_yolo/cfg/models/11/yolo11-gam-bbone.yaml",
+        "yolo11_simam_bbone": "segatt_yolo/cfg/models/11/yolo11-simam-bbone.yaml",
+        "yolo26_mod": "segatt_yolo/cfg/models/26/yolo26-mod.yaml",
     }
 
     @pytest.fixture(autouse=True)
@@ -194,7 +194,7 @@ class TestFindTargetLayers:
     @pytest.fixture
     def models(self, request):
         """Load all model configs (once per session via caching)."""
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         key = request.param
         yaml_path = self.YAMLS[key]
@@ -216,7 +216,7 @@ class TestFindTargetLayers:
         layers = self.find_target_layers(model)
         assert len(layers) == 1
         # GAM is the last backbone layer → returned directly
-        from segab_yolo.nn.modules.attention import GAM
+        from segatt_yolo.nn.modules.attention import GAM
 
         assert isinstance(layers[0], GAM)
 
@@ -225,7 +225,7 @@ class TestFindTargetLayers:
         model, yaml_path = models
         layers = self.find_target_layers(model)
         assert len(layers) == 1
-        from segab_yolo.nn.modules.attention import SimAM
+        from segatt_yolo.nn.modules.attention import SimAM
 
         assert isinstance(layers[0], SimAM)
 
@@ -234,7 +234,7 @@ class TestFindTargetLayers:
         model, yaml_path = models
         layers = self.find_target_layers(model)
         assert len(layers) == 1
-        from segab_yolo.nn.modules.attention import GAM
+        from segatt_yolo.nn.modules.attention import GAM
 
         assert isinstance(layers[0], GAM)
 
@@ -243,7 +243,7 @@ class TestFindTargetLayers:
         # Request an explicit backbone target layer before the head.
         layers = self.find_target_layers(model, target_layer_name="C3k2")
         assert len(layers) == 1
-        from segab_yolo.nn.modules import C3k2
+        from segatt_yolo.nn.modules import C3k2
 
         assert isinstance(layers[0], C3k2)
 
@@ -252,16 +252,16 @@ class TestFindTargetLayers:
         # Explicit index should select the exact module in model.model.
         layers = self.find_target_layers(model, target_layer_index=23)
         assert len(layers) == 1
-        from segab_yolo.nn.modules import C3k2
+        from segatt_yolo.nn.modules import C3k2
 
         assert isinstance(layers[0], C3k2)
 
     def test_fallback_on_empty_model(self):
         """_fallback_target should handle a model with no Conv2d."""
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         # Minimal model: just a few layers, no Detect
-        model = YOLO("segab_yolo/cfg/models/26/yolo26.yaml")
+        model = YOLO("segatt_yolo/cfg/models/26/yolo26.yaml")
         layers = self._fallback_target(model)
         # Should find some Conv2d (the backbone has many)
         assert len(layers) == 1
@@ -278,10 +278,10 @@ class TestGenerateCamEigenCAM:
 
     @pytest.fixture
     def model_and_tensor(self):
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
         from scripts.xai_predict import find_target_layers
 
-        model = YOLO("segab_yolo/cfg/models/26/yolo26.yaml")
+        model = YOLO("segatt_yolo/cfg/models/26/yolo26.yaml")
         layers = find_target_layers(model)
         img = np.random.randint(0, 256, (100, 200, 3), dtype=np.uint8)
         img_rgb = img
@@ -291,7 +291,7 @@ class TestGenerateCamEigenCAM:
         return model, tensor, layers[0]
 
     def test_eigencam_returns_heatmap(self, model_and_tensor):
-        from segab_yolo.utils.xai import EigenCAM
+        from segatt_yolo.utils.xai import EigenCAM
 
         model, tensor, layer = model_and_tensor
         # generate_cam with eigencam

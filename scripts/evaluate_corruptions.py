@@ -19,9 +19,9 @@ import cv2
 import numpy as np
 import yaml
 from tqdm import tqdm
-from segab_yolo import YOLO
+from segatt_yolo import YOLO
 
-from segab_yolo.utils.corruptions import (
+from segatt_yolo.utils.corruptions import (
     SEVERITY_PARAMS,
     apply_corruption,
     image_generator,

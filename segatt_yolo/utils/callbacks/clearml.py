@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING
+from segatt_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -66,9 +66,9 @@ def on_pretrain_routine_start(trainer) -> None:
             PatchedMatplotlib.update_current_task(None)
         else:
             task = Task.init(
-                project_name=trainer.args.project or "segab_yolo",
+                project_name=trainer.args.project or "segatt_yolo",
                 task_name=trainer.args.name,
-                tags=["segab_yolo"],
+                tags=["segatt_yolo"],
                 output_uri=True,
                 reuse_last_task_id=False,
                 auto_connect_frameworks={"pytorch": False, "matplotlib": False},
@@ -106,7 +106,7 @@ def on_fit_epoch_end(trainer) -> None:
             title = k.split("/")[0]
             task.get_logger().report_scalar(title, k, v, iteration=trainer.epoch)
         if trainer.epoch == 0:
-            from segab_yolo.utils.torch_utils import model_info_for_loggers
+            from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
             for k, v in model_info_for_loggers(trainer).items():
                 task.get_logger().report_single_value(k, v)

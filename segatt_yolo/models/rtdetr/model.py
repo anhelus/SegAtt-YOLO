@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Interface for Baidu's RT-DETR, a Vision Transformer-based real-time object detector.
 
@@ -9,9 +9,9 @@ References:
     https://arxiv.org/pdf/2304.08069.pdf
 """
 
-from segab_yolo.engine.model import Model
-from segab_yolo.nn.tasks import RTDETRDetectionModel
-from segab_yolo.utils.torch_utils import TORCH_1_11
+from segatt_yolo.engine.model import Model
+from segatt_yolo.nn.tasks import RTDETRDetectionModel
+from segatt_yolo.utils.torch_utils import TORCH_1_11
 
 from .predict import RTDETRPredictor
 from .train import RTDETRTrainer
@@ -28,11 +28,11 @@ class RTDETR(Model):
         model (str): Path to the pre-trained model.
 
     Methods:
-        task_map: Return a task map for RT-DETR, associating tasks with corresponding segab_yolo classes.
+        task_map: Return a task map for RT-DETR, associating tasks with corresponding segatt_yolo classes.
 
     Examples:
         Initialize RT-DETR with a pre-trained model
-        >>> from segab_yolo import RTDETR
+        >>> from segatt_yolo import RTDETR
         >>> model = RTDETR("rtdetr-l.pt")
         >>> results = model("image.jpg")
     """
@@ -48,10 +48,10 @@ class RTDETR(Model):
 
     @property
     def task_map(self) -> dict:
-        """Return a task map for RT-DETR, associating tasks with corresponding segab_yolo classes.
+        """Return a task map for RT-DETR, associating tasks with corresponding segatt_yolo classes.
 
         Returns:
-            (dict): A dictionary mapping task names to segab_yolo task classes for the RT-DETR model.
+            (dict): A dictionary mapping task names to segatt_yolo task classes for the RT-DETR model.
         """
         return {
             "detect": {

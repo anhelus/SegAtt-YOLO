@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,10 +6,10 @@ import cv2
 import torch
 from PIL import Image
 
-from segab_yolo.data.augment import classify_transforms
-from segab_yolo.engine.predictor import BasePredictor
-from segab_yolo.engine.results import Results
-from segab_yolo.utils import DEFAULT_CFG, ops
+from segatt_yolo.data.augment import classify_transforms
+from segatt_yolo.engine.predictor import BasePredictor
+from segatt_yolo.engine.results import Results
+from segatt_yolo.utils import DEFAULT_CFG, ops
 
 
 class ClassificationPredictor(BasePredictor):
@@ -26,8 +26,8 @@ class ClassificationPredictor(BasePredictor):
         postprocess: Process model predictions into Results objects.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.yolo.classify import ClassificationPredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.yolo.classify import ClassificationPredictor
         >>> args = dict(model="yolo26n-cls.pt", source=ASSETS)
         >>> predictor = ClassificationPredictor(overrides=args)
         >>> predictor.predict_cli()

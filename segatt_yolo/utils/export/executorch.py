@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ from pathlib import Path
 
 import torch
 
-from segab_yolo.nn.modules import Pose, Pose26
-from segab_yolo.utils import LOGGER, YAML
-from segab_yolo.utils.checks import check_executorch_requirements
+from segatt_yolo.nn.modules import Pose, Pose26
+from segatt_yolo.utils import LOGGER, YAML
+from segatt_yolo.utils.checks import check_executorch_requirements
 
 
 def executorch_wrapper(model: torch.nn.Module) -> torch.nn.Module:

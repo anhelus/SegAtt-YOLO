@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
-from segab_yolo.models.yolo.segment import SegmentationValidator
+from segatt_yolo.models.yolo.segment import SegmentationValidator
 
 
 class FastSAMValidator(SegmentationValidator):
-    """Custom validation class for FastSAM (Segment Anything Model) segmentation in the segab_yolo YOLO framework.
+    """Custom validation class for FastSAM (Segment Anything Model) segmentation in the segatt_yolo YOLO framework.
 
     Extends the SegmentationValidator class, customizing the validation process specifically for FastSAM. This class
     sets the task to 'segment' and uses the SegmentMetrics for evaluation. Additionally, plotting features are disabled

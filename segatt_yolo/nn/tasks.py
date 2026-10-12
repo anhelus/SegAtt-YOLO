@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import contextlib
 import pickle
@@ -10,8 +10,8 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 
-from segab_yolo.nn.autobackend import check_class_names
-from segab_yolo.nn.modules import (
+from segatt_yolo.nn.autobackend import check_class_names
+from segatt_yolo.nn.modules import (
     AIFI,
     C1,
     C2,
@@ -83,9 +83,9 @@ from segab_yolo.nn.modules import (
     CoordAtt,
     EMA,
 )
-from segab_yolo.utils import DEFAULT_CFG_DICT, LOGGER, SETTINGS, WINDOWS, YAML, colorstr, emojis
-from segab_yolo.utils.checks import REMOTE_FILE_PREFIXES, check_file, check_requirements, check_suffix, check_yaml
-from segab_yolo.utils.loss import (
+from segatt_yolo.utils import DEFAULT_CFG_DICT, LOGGER, SETTINGS, WINDOWS, YAML, colorstr, emojis
+from segatt_yolo.utils.checks import REMOTE_FILE_PREFIXES, check_file, check_requirements, check_suffix, check_yaml
+from segatt_yolo.utils.loss import (
     E2ELoss,
     PoseLoss26,
     SemanticSegmentationLoss,
@@ -95,10 +95,10 @@ from segab_yolo.utils.loss import (
     v8PoseLoss,
     v8SegmentationLoss,
 )
-from segab_yolo.utils.ops import make_divisible
-from segab_yolo.utils.patches import torch_load
-from segab_yolo.utils.plotting import feature_visualization
-from segab_yolo.utils.torch_utils import (
+from segatt_yolo.utils.ops import make_divisible
+from segatt_yolo.utils.patches import torch_load
+from segatt_yolo.utils.plotting import feature_visualization
+from segatt_yolo.utils.torch_utils import (
     fuse_conv_and_bn,
     fuse_deconv_and_bn,
     initialize_weights,
@@ -111,7 +111,7 @@ from segab_yolo.utils.torch_utils import (
 
 
 class BaseModel(torch.nn.Module):
-    """Base class for all YOLO models in the segab_yolo family.
+    """Base class for all YOLO models in the segatt_yolo family.
 
     This class provides common functionality for YOLO models including forward pass handling, model fusion, information
     display, and weight loading capabilities.
@@ -218,7 +218,7 @@ class BaseModel(torch.nn.Module):
         try:
             import thop
         except ImportError:
-            thop = None  # conda support without 'segab_yolo-thop' installed
+            thop = None  # conda support without 'segatt_yolo-thop' installed
 
         c = m == self.model[-1] and isinstance(x, list)  # is final layer list, copy input as inplace fix
         flops = thop.profile(m, inputs=[x.copy() if c else x], verbose=False)[0] / 1e9 * 2 if thop else 0  # GFLOPs
@@ -578,7 +578,7 @@ class SegmentationModel(DetectionModel):
     """
 
     def __init__(self, cfg="yolo26n-seg.yaml", ch=3, nc=None, verbose=True):
-        """Initialize segab_yolo YOLO segmentation model with given config and parameters.
+        """Initialize segatt_yolo YOLO segmentation model with given config and parameters.
 
         Args:
             cfg (str | dict): Model configuration file path or dictionary.
@@ -685,7 +685,7 @@ class PoseModel(DetectionModel):
     """
 
     def __init__(self, cfg="yolo26n-pose.yaml", ch=3, nc=None, data_kpt_shape=(None, None), verbose=True):
-        """Initialize segab_yolo YOLO Pose model.
+        """Initialize segatt_yolo YOLO Pose model.
 
         Args:
             cfg (str | dict): Model configuration file path or dictionary.
@@ -743,7 +743,7 @@ class ClassificationModel(BaseModel):
         self._from_yaml(cfg, ch, nc, verbose)
 
     def _from_yaml(self, cfg, ch, nc, verbose):
-        """Set segab_yolo YOLO model configurations and define the model architecture.
+        """Set segatt_yolo YOLO model configurations and define the model architecture.
 
         Args:
             cfg (str | dict): Model configuration file path or dictionary.
@@ -849,7 +849,7 @@ class RTDETRDetectionModel(DetectionModel):
 
     def init_criterion(self):
         """Initialize the loss criterion for the RTDETRDetectionModel."""
-        from segab_yolo.models.utils.loss import RTDETRDetectionLoss
+        from segatt_yolo.models.utils.loss import RTDETRDetectionLoss
 
         return RTDETRDetectionLoss(nc=self.nc, use_vfl=True)
 
@@ -993,7 +993,7 @@ class WorldModel(DetectionModel):
         Returns:
             (torch.Tensor): Text positional embeddings.
         """
-        from segab_yolo.nn.text_model import build_text_model
+        from segatt_yolo.nn.text_model import build_text_model
 
         device = next(self.model.parameters()).device
         if not getattr(self, "clip_model", None) and cache_clip_model:
@@ -1116,7 +1116,7 @@ class YOLOEModel(DetectionModel):
         Returns:
             (torch.Tensor): Text positional embeddings.
         """
-        from segab_yolo.nn.text_model import build_text_model
+        from segatt_yolo.nn.text_model import build_text_model
 
         device = next(self.model.parameters()).device
         if not getattr(self, "clip_model", None) and cache_clip_model:
@@ -1300,7 +1300,7 @@ class YOLOEModel(DetectionModel):
             preds (torch.Tensor | list[torch.Tensor], optional): Predictions.
         """
         if not hasattr(self, "criterion"):
-            from segab_yolo.utils.loss import TVPDetectLoss
+            from segatt_yolo.utils.loss import TVPDetectLoss
 
             visual_prompt = batch.get("visuals", None) is not None  # TODO
             self.criterion = (
@@ -1352,7 +1352,7 @@ class YOLOESegModel(YOLOEModel, SegmentationModel):
             preds (torch.Tensor | list[torch.Tensor], optional): Predictions.
         """
         if not hasattr(self, "criterion"):
-            from segab_yolo.utils.loss import TVPSegmentLoss
+            from segatt_yolo.utils.loss import TVPSegmentLoss
 
             visual_prompt = batch.get("visuals", None) is not None  # TODO
             self.criterion = (
@@ -1513,10 +1513,10 @@ def torch_safe_load(weight, safe_only=False):
         (str): The loaded filename.
 
     Examples:
-        >>> from segab_yolo.nn.tasks import torch_safe_load
+        >>> from segatt_yolo.nn.tasks import torch_safe_load
         >>> ckpt, file = torch_safe_load("path/to/best.pt", safe_only=True)
     """
-    from segab_yolo.utils.downloads import attempt_download_asset
+    from segatt_yolo.utils.downloads import attempt_download_asset
 
     check_suffix(file=weight, suffix=".pt")
     file = attempt_download_asset(weight)  # search online if missing locally
@@ -1524,14 +1524,14 @@ def torch_safe_load(weight, safe_only=False):
     def _load():
         with temporary_modules(
             modules={
-                "segab_yolo.yolo.utils": "segab_yolo.utils",
-                "segab_yolo.yolo.v8": "segab_yolo.models.yolo",
-                "segab_yolo.yolo.data": "segab_yolo.data",
+                "segatt_yolo.yolo.utils": "segatt_yolo.utils",
+                "segatt_yolo.yolo.v8": "segatt_yolo.models.yolo",
+                "segatt_yolo.yolo.data": "segatt_yolo.data",
             },
             attributes={
-                "segab_yolo.nn.modules.block.Silence": "torch.nn.Identity",  # YOLOv9e
-                "segab_yolo.nn.tasks.YOLOv10DetectionModel": "segab_yolo.nn.tasks.DetectionModel",  # YOLOv10
-                "segab_yolo.utils.loss.v10DetectLoss": "segab_yolo.utils.loss.E2EDetectLoss",  # YOLOv10
+                "segatt_yolo.nn.modules.block.Silence": "torch.nn.Identity",  # YOLOv9e
+                "segatt_yolo.nn.tasks.YOLOv10DetectionModel": "segatt_yolo.nn.tasks.DetectionModel",  # YOLOv10
+                "segatt_yolo.utils.loss.v10DetectLoss": "segatt_yolo.utils.loss.E2EDetectLoss",  # YOLOv10
                 # resolve cross-platform pathlib pickle incompatibility
                 **(
                     {"pathlib.PosixPath": "pathlib.WindowsPath"}
@@ -1565,11 +1565,11 @@ def torch_safe_load(weight, safe_only=False):
         if e.name == "models":
             raise TypeError(
                 emojis(
-                    f"ERROR ❌️ {weight} appears to be an segab_yolo YOLOv5 model originally trained "
-                    f"with https://github.com/segab_yolo/yolov5.\nThis model is NOT forwards compatible with "
-                    f"YOLOv8 at https://github.com/segab_yolo/segab_yolo."
-                    f"\nRecommend fixes are to train a new model using the latest 'segab_yolo' package or to "
-                    f"run a command with an official segab_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
+                    f"ERROR ❌️ {weight} appears to be an segatt_yolo YOLOv5 model originally trained "
+                    f"with https://github.com/segatt_yolo/yolov5.\nThis model is NOT forwards compatible with "
+                    f"YOLOv8 at https://github.com/segatt_yolo/segatt_yolo."
+                    f"\nRecommend fixes are to train a new model using the latest 'segatt_yolo' package or to "
+                    f"run a command with an official segatt_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
                 )
             ) from e
         elif e.name == "numpy._core":
@@ -1578,19 +1578,19 @@ def torch_safe_load(weight, safe_only=False):
                     f"ERROR ❌️ {weight} requires numpy>=1.26.1, however numpy=={__import__('numpy').__version__} is installed."
                 )
             ) from e
-        elif e.name and e.name.startswith("segab_yolo."):
+        elif e.name and e.name.startswith("segatt_yolo."):
             raise ModuleNotFoundError(
                 emojis(
-                    f"ERROR ❌️ {weight} requires missing segab_yolo module '{e.name}'. "
-                    "Train a new model using the latest 'segab_yolo' package or run a command with an official "
-                    "segab_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
+                    f"ERROR ❌️ {weight} requires missing segatt_yolo module '{e.name}'. "
+                    "Train a new model using the latest 'segatt_yolo' package or run a command with an official "
+                    "segatt_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
                 )
             ) from e
         LOGGER.warning(
-            f"{weight} appears to require '{e.name}', which is not in segab_yolo requirements."
+            f"{weight} appears to require '{e.name}', which is not in segatt_yolo requirements."
             f"\nAutoInstall will run now for '{e.name}' but this feature will be removed in the future."
-            f"\nRecommend fixes are to train a new model using the latest 'segab_yolo' package or to "
-            f"run a command with an official segab_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
+            f"\nRecommend fixes are to train a new model using the latest 'segatt_yolo' package or to "
+            f"run a command with an official segatt_yolo model, i.e. 'yolo predict model=yolo26n.pt'"
         )
         check_requirements(e.name)  # install missing module
         ckpt = torch_load(file, map_location="cpu")
@@ -1878,7 +1878,7 @@ def yaml_model_load(path):
     path = Path(path)
     if path.stem in (f"yolov{d}{x}6" for x in "nsmlx" for d in (5, 8)):
         new_stem = re.sub(r"(\d+)([nslmx])6(.+)?$", r"\1\2-p6\3", path.stem)
-        LOGGER.warning(f"segab_yolo YOLO P6 models now use -p6 suffix. Renaming {path.stem} to {new_stem}.")
+        LOGGER.warning(f"segatt_yolo YOLO P6 models now use -p6 suffix. Renaming {path.stem} to {new_stem}.")
         path = path.with_name(new_stem + path.suffix)
 
     unified_path = re.sub(r"(\d+)([nslmx])(.+)?$", r"\1\3", str(path))  # i.e. yolov8x.yaml -> yolov8.yaml

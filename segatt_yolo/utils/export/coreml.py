@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,12 +8,12 @@ from typing import Any
 import torch
 import torch.nn as nn
 
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.checks import check_requirements
 
 
 class IOSDetectModel(nn.Module):
-    """Wrap an segab_yolo YOLO model for Apple iOS CoreML export."""
+    """Wrap an segatt_yolo YOLO model for Apple iOS CoreML export."""
 
     def __init__(self, model: nn.Module, im: torch.Tensor, mlprogram: bool = True):
         """Initialize the IOSDetectModel class with a YOLO model and example image.
@@ -39,7 +39,7 @@ class IOSDetectModel(nn.Module):
     def forward(self, x: torch.Tensor):
         """Normalize predictions of object detection model with input size-dependent factors."""
         xywh, cls = self.model(x)[0].transpose(0, 1).split((4, self.nc), 1)
-        if self.mlprogram and self.nc % 80 != 0:  # NMS bug https://github.com/segab_yolo/segab_yolo/issues/22309
+        if self.mlprogram and self.nc % 80 != 0:  # NMS bug https://github.com/segatt_yolo/segatt_yolo/issues/22309
             pad_length = int(((self.nc + 79) // 80) * 80) - self.nc  # pad class length to multiple of 80
             cls = torch.nn.functional.pad(cls, (0, pad_length, 0, 0), "constant", 0)
         return cls, xywh * self.normalize
@@ -86,7 +86,7 @@ def pipeline_coreml(
     nx = spec.description.input[0].type.imageType.width
     ny = spec.description.input[0].type.imageType.height
     nc = outs[0].type.multiArrayType.shape[-1]
-    if len(names) != nc:  # Hack fix for MLProgram NMS bug https://github.com/segab_yolo/segab_yolo/issues/22309
+    if len(names) != nc:  # Hack fix for MLProgram NMS bug https://github.com/segatt_yolo/segatt_yolo/issues/22309
         names = {**names, **{i: str(i) for i in range(len(names), nc)}}
 
     model = ct.models.MLModel(spec, weights_dir=weights_dir, skip_model_load=True)

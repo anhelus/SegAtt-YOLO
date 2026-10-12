@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Generate predictions using the Segment Anything Model (SAM).
 
 SAM is an advanced image segmentation model offering features like promptable segmentation and zero-shot performance.
 This module contains the implementation of the prediction logic and auxiliary utilities required to perform segmentation
-using SAM. It forms an integral part of the segab_yolo framework and is designed for high-performance, real-time image
+using SAM. It forms an integral part of the segatt_yolo framework and is designed for high-performance, real-time image
 segmentation tasks.
 """
 
@@ -19,12 +19,12 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from segab_yolo.data.augment import LetterBox
-from segab_yolo.engine.predictor import BasePredictor
-from segab_yolo.engine.results import Results
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, ops
-from segab_yolo.utils.metrics import box_iou, mask_iou
-from segab_yolo.utils.torch_utils import select_device, smart_inference_mode
+from segatt_yolo.data.augment import LetterBox
+from segatt_yolo.engine.predictor import BasePredictor
+from segatt_yolo.engine.results import Results
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, ops
+from segatt_yolo.utils.metrics import box_iou, mask_iou
+from segatt_yolo.utils.torch_utils import select_device, smart_inference_mode
 
 from .amg import (
     batch_iterator,
@@ -368,7 +368,7 @@ class Predictor(BasePredictor):
             >>> im = torch.rand(1, 3, 1024, 1024)  # Example input image
             >>> masks, scores, boxes = predictor.generate(im)
         """
-        import torchvision  # scope for faster 'import segab_yolo'
+        import torchvision  # scope for faster 'import segatt_yolo'
 
         self.segment_all = True
         ih, iw = im.shape[2:]
@@ -441,7 +441,7 @@ class Predictor(BasePredictor):
         """Initialize the Segment Anything Model (SAM) for inference.
 
         This method sets up the SAM model by allocating it to the appropriate device and initializing the necessary
-        parameters for image normalization and other segab_yolo compatibility settings.
+        parameters for image normalization and other segatt_yolo compatibility settings.
 
         Args:
             model (torch.nn.Module | None): A pretrained SAM model. If None, a new model is built based on config.
@@ -463,7 +463,7 @@ class Predictor(BasePredictor):
         self.mean = torch.tensor([123.675, 116.28, 103.53]).view(-1, 1, 1).to(device)
         self.std = torch.tensor([58.395, 57.12, 57.375]).view(-1, 1, 1).to(device)
 
-        # segab_yolo compatibility settings
+        # segatt_yolo compatibility settings
         self.model.format = "sam"
         self.model.stride = 32
         self.model.fp16 = self.args.half
@@ -608,7 +608,7 @@ class Predictor(BasePredictor):
             >>> print(f"Original masks: {masks.shape}, Processed masks: {new_masks.shape}")
             >>> print(f"Indices of kept masks: {keep}")
         """
-        import torchvision  # scope for faster 'import segab_yolo'
+        import torchvision  # scope for faster 'import segatt_yolo'
 
         if masks.shape[0] == 0:
             return masks

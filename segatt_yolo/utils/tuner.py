@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import numpy as np
 
-from segab_yolo.cfg import TASK2DATA, TASK2METRIC, get_cfg, get_save_dir
-from segab_yolo.utils import DEFAULT_CFG, DEFAULT_CFG_DICT, LOGGER, NUM_THREADS, checks, colorstr
+from segatt_yolo.cfg import TASK2DATA, TASK2METRIC, get_cfg, get_save_dir
+from segatt_yolo.utils import DEFAULT_CFG, DEFAULT_CFG_DICT, LOGGER, NUM_THREADS, checks, colorstr
 
 RAY_SEARCH_ALG_REQUIREMENTS = {
     "random": None,
@@ -357,13 +357,13 @@ def run_ray_tune(
         (ray.tune.ResultGrid): A ResultGrid containing the results of the hyperparameter search.
 
     Examples:
-        >>> from segab_yolo import YOLO
+        >>> from segatt_yolo import YOLO
         >>> model = YOLO("yolo26n.pt")  # Load a YOLO26n model
 
         Start tuning hyperparameters for YOLO26n training on the COCO8 dataset
         >>> result_grid = model.tune(data="coco8.yaml", use_ray=True)
     """
-    LOGGER.info("💡 Learn about RayTune at https://docs.segab_yolo.com/integrations/ray-tune")
+    LOGGER.info("💡 Learn about RayTune at https://docs.segatt_yolo.com/integrations/ray-tune")
     try:
         checks.check_requirements("ray[tune]", constrain=["pydantic>=2.0,<2.12"])
 

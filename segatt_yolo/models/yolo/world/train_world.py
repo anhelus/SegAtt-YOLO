@@ -1,15 +1,15 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from segab_yolo.data import YOLOConcatDataset, build_grounding, build_yolo_dataset
-from segab_yolo.data.utils import check_det_dataset
-from segab_yolo.models.yolo.world import WorldTrainer
-from segab_yolo.utils import DATASETS_DIR, DEFAULT_CFG, LOGGER
-from segab_yolo.utils.checks import check_file
-from segab_yolo.utils.torch_utils import unwrap_model
+from segatt_yolo.data import YOLOConcatDataset, build_grounding, build_yolo_dataset
+from segatt_yolo.data.utils import check_det_dataset
+from segatt_yolo.models.yolo.world import WorldTrainer
+from segatt_yolo.utils import DATASETS_DIR, DEFAULT_CFG, LOGGER
+from segatt_yolo.utils.checks import check_file
+from segatt_yolo.utils.torch_utils import unwrap_model
 
 
 class WorldTrainerFromScratch(WorldTrainer):
@@ -32,8 +32,8 @@ class WorldTrainerFromScratch(WorldTrainer):
         final_eval: Perform final evaluation and validation for the YOLO-World model.
 
     Examples:
-        >>> from segab_yolo.models.yolo.world.train_world import WorldTrainerFromScratch
-        >>> from segab_yolo import YOLOWorld
+        >>> from segatt_yolo.models.yolo.world.train_world import WorldTrainerFromScratch
+        >>> from segatt_yolo import YOLOWorld
         >>> data = dict(
         ...     train=dict(
         ...         yolo_data=["Objects365.yaml"],
@@ -115,7 +115,7 @@ class WorldTrainerFromScratch(WorldTrainer):
         """
         # If string, load from YAML file
         if not isinstance(data, dict):
-            from segab_yolo.utils import YAML
+            from segatt_yolo.utils import YAML
 
             return YAML.load(check_file(data))
         return data

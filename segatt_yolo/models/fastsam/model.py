@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
 
-from segab_yolo.engine.model import Model
+from segatt_yolo.engine.model import Model
 
 from .predict import FastSAMPredictor
 from .val import FastSAMValidator
@@ -27,9 +27,9 @@ class FastSAM(Model):
 
     Examples:
         Initialize FastSAM model and run prediction
-        >>> from segab_yolo import FastSAM
+        >>> from segatt_yolo import FastSAM
         >>> model = FastSAM("FastSAM-x.pt")
-        >>> results = model.predict("segab_yolo/assets/bus.jpg")
+        >>> results = model.predict("segatt_yolo/assets/bus.jpg")
 
         Run prediction with bounding box prompts
         >>> results = model.predict("image.jpg", bboxes=[[100, 100, 200, 200]])

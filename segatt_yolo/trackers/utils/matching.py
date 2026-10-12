@@ -1,17 +1,17 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import numpy as np
 import scipy
 from scipy.spatial.distance import cdist
 
-from segab_yolo.utils.metrics import batch_probiou, bbox_ioa
+from segatt_yolo.utils.metrics import batch_probiou, bbox_ioa
 
 try:
     import lap  # for linear_assignment
 
     assert lap.__version__  # verify package is not directory
 except (ImportError, AssertionError, AttributeError):
-    from segab_yolo.utils.checks import check_requirements
+    from segatt_yolo.utils.checks import check_requirements
 
     check_requirements("lap>=0.5.12")  # https://github.com/gatagat/lap
     import lap

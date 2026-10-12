@@ -192,3 +192,6 @@ metro_xai/
 # xai_config.yaml     <- REMOVED: serve per training
 # pipeline.yaml
 TECHNICAL_REPORT.md
+
+data/
+reports/

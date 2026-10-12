@@ -1,5 +1,5 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
-"""Upload utilities for segab_yolo, mirroring downloads.py patterns."""
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
+"""Upload utilities for segatt_yolo, mirroring downloads.py patterns."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 from time import sleep
 
-from segab_yolo.utils import LOGGER, TQDM
+from segatt_yolo.utils import LOGGER, TQDM
 
 
 class _ProgressReader:
@@ -56,7 +56,7 @@ def safe_upload(
         (bool): True if upload succeeded, False otherwise.
 
     Examples:
-        >>> from segab_yolo.utils.uploads import safe_upload
+        >>> from segatt_yolo.utils.uploads import safe_upload
         >>> success = safe_upload("model.pt", "https://storage.googleapis.com/...", progress=True)
     """
     import requests

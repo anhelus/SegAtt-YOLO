@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
-from segab_yolo.engine.results import Results
-from segab_yolo.models.yolo.detect.predict import DetectionPredictor
-from segab_yolo.utils import DEFAULT_CFG, ops
+from segatt_yolo.engine.results import Results
+from segatt_yolo.models.yolo.detect.predict import DetectionPredictor
+from segatt_yolo.utils import DEFAULT_CFG, ops
 
 
 class SegmentationPredictor(DetectionPredictor):
@@ -24,8 +24,8 @@ class SegmentationPredictor(DetectionPredictor):
         construct_result: Construct a single result object from a prediction.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.yolo.segment import SegmentationPredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.yolo.segment import SegmentationPredictor
         >>> args = dict(model="yolo26n-seg.pt", source=ASSETS)
         >>> predictor = SegmentationPredictor(overrides=args)
         >>> predictor.predict_cli()

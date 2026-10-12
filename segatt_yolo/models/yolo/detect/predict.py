@@ -1,8 +1,8 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.engine.predictor import BasePredictor
-from segab_yolo.engine.results import Results
-from segab_yolo.utils import nms, ops
+from segatt_yolo.engine.predictor import BasePredictor
+from segatt_yolo.engine.results import Results
+from segatt_yolo.utils import nms, ops
 
 
 class DetectionPredictor(BasePredictor):
@@ -23,8 +23,8 @@ class DetectionPredictor(BasePredictor):
         get_obj_feats: Extract object features from the feature maps.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.yolo.detect import DetectionPredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.yolo.detect import DetectionPredictor
         >>> args = dict(model="yolo26n.pt", source=ASSETS)
         >>> predictor = DetectionPredictor(overrides=args)
         >>> predictor.predict_cli()

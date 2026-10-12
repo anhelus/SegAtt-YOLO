@@ -9,22 +9,70 @@ common:
 datasets:
   tomatoes:
     source: data/tomatoes/val/images
-    model_base: runs/tomatoes
+    model_base: runs/complete/tomatoes
     models:
+      # Baseline
       - yolo11n
-      - yolo11n-gam
-      - yolo11n-gam-bbone
+
+      # Position A: Neck solo P3 (min)
+      - yolo11n-gam_min
+      - yolo11n-simam_min
+      - yolo11n-triplet_min
+      - yolo11n-coordatt_min
+      - yolo11n-eca_min
+
+      # Position B: Neck P3+P4 (full)
+      - yolo11n-gam_full
       - yolo11n-simam
-      - yolo11n-simam-bbone
+      - yolo11n-triplet
+      - yolo11n-coordatt_full
+      - yolo11n-eca_full
+
+      # Position D: Backbone P3+P4
+      - yolo11n-gam_bbone_p3p4
+      - yolo11n-simam_bbone_p3p4
+      - yolo11n-triplet_bbone_p3p4
+      - yolo11n-coordatt_bbone_p3p4
+      - yolo11n-eca_bbone_p3p4
+
+      # Legacy / Combo / Reference
+      - yolo11n-gam_bbone
+      - yolo11n-lsk_coordatt_full
+      - yolo11n-gam_coordatt_full
+      - yolo11n-simam_triplet_full
       - yolo26n
 
   lettuces:
     source: data/lettuce-omni-ul/val/images
-    model_base: runs/lettuces
+    model_base: runs/complete/lettuces
     models:
+      # Baseline
       - yolo11n
-      - yolo11n-gam
-      - yolo11n-gam-bbone
+
+      # Position A: Neck solo P3 (min)
+      - yolo11n-gam_min
+      - yolo11n-simam_min
+      - yolo11n-triplet_min
+      - yolo11n-coordatt_min
+      - yolo11n-eca_min
+
+      # Position B: Neck P3+P4 (full)
+      - yolo11n-gam_full
       - yolo11n-simam
-      - yolo11n-simam-bbone
+      - yolo11n-triplet
+      - yolo11n-coordatt_full
+      - yolo11n-eca_full
+
+      # Position D: Backbone P3+P4
+      - yolo11n-gam_bbone_p3p4
+      - yolo11n-simam_bbone_p3p4
+      - yolo11n-triplet_bbone_p3p4
+      - yolo11n-coordatt_bbone_p3p4
+      - yolo11n-eca_bbone_p3p4
+
+      # Legacy / Combo / Reference
+      - yolo11n-gam_bbone
+      - yolo11n-lsk_coordatt_full
+      - yolo11n-gam_coordatt_full
+      - yolo11n-simam_triplet_full
       - yolo26n

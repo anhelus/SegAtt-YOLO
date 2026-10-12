@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from typing import Any
 import cv2
 import numpy as np
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionResults  # Import a parent class
-from segab_yolo.utils import plt_settings
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionResults  # Import a parent class
+from segatt_yolo.utils import plt_settings
 
 
 class Analytics(BaseSolution):
@@ -52,7 +52,7 @@ class Analytics(BaseSolution):
         """Initialize Analytics class with various chart types for visual data representation."""
         super().__init__(**kwargs)
 
-        import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+        import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
         from matplotlib.backends.backend_agg import FigureCanvasAgg
         from matplotlib.figure import Figure
 
@@ -63,7 +63,7 @@ class Analytics(BaseSolution):
         # Predefined data
         self.bg_color = "#F3F3F3"  # background color of frame
         self.fg_color = "#111E68"  # foreground color of frame
-        self.title = "segab_yolo Solutions"  # window name
+        self.title = "segatt_yolo Solutions"  # window name
         self.max_points = 45  # maximum points to be drawn on window
         self.fontsize = 25  # text font size for display
         figsize = self.CFG["figsize"]  # Output size, e.g. (12.8, 7.2) -> 1280x720.

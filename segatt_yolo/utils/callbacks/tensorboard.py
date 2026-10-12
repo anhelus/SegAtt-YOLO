@@ -1,7 +1,7 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING, colorstr, torch_utils
-from segab_yolo.utils.torch_utils import smart_inference_mode
+from segatt_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING, colorstr, torch_utils
+from segatt_yolo.utils.torch_utils import smart_inference_mode
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -48,7 +48,7 @@ def _log_tensorboard_graph(trainer) -> None:
     approach for models like RTDETR that may require special handling.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer object containing the model to visualize. Must
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer object containing the model to visualize. Must
             have attributes model and args with imgsz.
 
     Notes:

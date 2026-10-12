@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from typing import Any
 
 import cv2
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.plotting import colors
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.plotting import colors
 
 
 class ObjectBlurrer(BaseSolution):

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.utils import LOGGER
+from segatt_yolo.utils import LOGGER
 
 from .base import BaseBackend
 
@@ -51,12 +51,12 @@ class TensorFlowBackend(BaseBackend):
             # Load metadata
             metadata_file = Path(weight) / "metadata.yaml"
             if metadata_file.exists():
-                from segab_yolo.utils import YAML
+                from segatt_yolo.utils import YAML
 
                 self.apply_metadata(YAML.load(metadata_file))
         elif self.format == "pb":
             LOGGER.info(f"Loading {weight} for TensorFlow GraphDef inference...")
-            from segab_yolo.utils.export.tensorflow import gd_outputs
+            from segatt_yolo.utils.export.tensorflow import gd_outputs
 
             def wrap_frozen_graph(gd, inputs, outputs):
                 """Wrap a TensorFlow frozen graph for inference by pruning to specified input/output nodes."""
@@ -74,7 +74,7 @@ class TensorFlowBackend(BaseBackend):
                 metadata_file = next(
                     Path(weight).resolve().parent.rglob(f"{Path(weight).stem}_saved_model*/metadata.yaml")
                 )
-                from segab_yolo.utils import YAML
+                from segatt_yolo.utils import YAML
 
                 self.apply_metadata(YAML.load(metadata_file))
             except StopIteration:

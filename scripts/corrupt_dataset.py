@@ -17,7 +17,7 @@ from typing import Optional
 import cv2
 from tqdm import tqdm
 
-from segab_yolo.utils.corruptions import (
+from segatt_yolo.utils.corruptions import (
     CORRUPTIONS,
     SEVERITY_PARAMS,
     apply_corruption,

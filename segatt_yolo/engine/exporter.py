@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Export a YOLO PyTorch model to other formats. TensorFlow exports authored by https://github.com/zldrobit.
 
@@ -25,10 +25,10 @@ Axelera AI              | `axelera`                 | yolo26n_axelera_model/
 DeepX                   | `deepx`                   | yolo26n_deepx_model/
 
 Requirements:
-    $ pip install "segab_yolo[export]"
+    $ pip install "segatt_yolo[export]"
 
 Python:
-    from segab_yolo import YOLO
+    from segatt_yolo import YOLO
     model = YOLO('yolo26n.pt')
     results = model.export(format='onnx')
 
@@ -76,15 +76,15 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo import __version__
-from segab_yolo.cfg import TASK2CALIBRATIONDATA, TASK2DATA, get_cfg
-from segab_yolo.data import build_dataloader, build_yolo_dataset
-from segab_yolo.data.dataset import YOLODataset
-from segab_yolo.data.utils import check_cls_dataset, check_det_dataset
-from segab_yolo.nn.autobackend import check_class_names, default_class_names
-from segab_yolo.nn.modules import C2f, Classify, Detect, RTDETRDecoder, Segment26, SemanticSegment
-from segab_yolo.nn.tasks import ClassificationModel, DetectionModel, SegmentationModel, WorldModel
-from segab_yolo.utils import (
+from segatt_yolo import __version__
+from segatt_yolo.cfg import TASK2CALIBRATIONDATA, TASK2DATA, get_cfg
+from segatt_yolo.data import build_dataloader, build_yolo_dataset
+from segatt_yolo.data.dataset import YOLODataset
+from segatt_yolo.data.utils import check_cls_dataset, check_det_dataset
+from segatt_yolo.nn.autobackend import check_class_names, default_class_names
+from segatt_yolo.nn.modules import C2f, Classify, Detect, RTDETRDecoder, Segment26, SemanticSegment
+from segatt_yolo.nn.tasks import ClassificationModel, DetectionModel, SegmentationModel, WorldModel
+from segatt_yolo.utils import (
     ARM64,
     DEFAULT_CFG,
     IS_DOCKER,
@@ -102,13 +102,13 @@ from segab_yolo.utils import (
     get_default_args,
     is_jetson,
 )
-from segab_yolo.utils.checks import IS_PYTHON_MINIMUM_3_9, check_imgsz, check_requirements, check_version, is_intel
-from segab_yolo.utils.files import file_size
-from segab_yolo.utils.metrics import batch_probiou
-from segab_yolo.utils.nms import TorchNMS
-from segab_yolo.utils.ops import Profile
-from segab_yolo.utils.patches import arange_patch
-from segab_yolo.utils.torch_utils import (
+from segatt_yolo.utils.checks import IS_PYTHON_MINIMUM_3_9, check_imgsz, check_requirements, check_version, is_intel
+from segatt_yolo.utils.files import file_size
+from segatt_yolo.utils.metrics import batch_probiou
+from segatt_yolo.utils.nms import TorchNMS
+from segatt_yolo.utils.ops import Profile
+from segatt_yolo.utils.patches import arange_patch
+from segatt_yolo.utils.torch_utils import (
     TORCH_1_11,
     TORCH_1_13,
     TORCH_2_1,
@@ -120,7 +120,7 @@ from segab_yolo.utils.torch_utils import (
 
 
 def export_formats():
-    """Return a dictionary of segab_yolo YOLO export formats."""
+    """Return a dictionary of segatt_yolo YOLO export formats."""
     x = [
         ["PyTorch", "-", ".pt", True, True, []],
         ["TorchScript", "torchscript", ".torchscript", True, True, ["batch", "optimize", "half", "nms", "dynamic"]],
@@ -254,7 +254,7 @@ class Exporter:
 
     Examples:
         Export a YOLO26 model to ONNX format
-        >>> from segab_yolo.engine.exporter import Exporter
+        >>> from segatt_yolo.engine.exporter import Exporter
         >>> exporter = Exporter()
         >>> exporter(model="yolo26n.pt")  # exports to yolo26n.onnx
 
@@ -348,7 +348,7 @@ class Exporter:
                 LOGGER.warning(f"{fmt.upper()} export does not support end2end models, disabling end2end branch.")
             if fmt == "engine" and self.args.int8:
                 # TensorRT 10.3.0 on JetPack 6 with int8 has known end2end build issues
-                # https://github.com/segab_yolo/segab_yolo/issues/23841
+                # https://github.com/segatt_yolo/segatt_yolo/issues/23841
                 try:
                     import tensorrt as trt
 
@@ -356,7 +356,7 @@ class Exporter:
                         model.end2end = False
                         LOGGER.warning(
                             "TensorRT 10.3.0 on JetPack 6 with int8 has known end2end build issues, disabling end2end branch. "
-                            "For a fix, see https://docs.segab_yolo.com/guides/nvidia-jetson/#why-does-my-tensorrt-int8-export-disable-end2end-on-jetpack-6"
+                            "For a fix, see https://docs.segatt_yolo.com/guides/nvidia-jetson/#why-does-my-tensorrt-int8-export-disable-end2end-on-jetpack-6"
                             ""
                         )
                 except ImportError:
@@ -405,7 +405,7 @@ class Exporter:
                 raise SystemError(
                     "Edge TPU export only supported on non-aarch64 Linux. See https://coral.ai/docs/edgetpu/compiler"
                 )
-            elif self.args.batch != 1:  # see github.com/segab_yolo/segab_yolo/pull/13420
+            elif self.args.batch != 1:  # see github.com/segatt_yolo/segatt_yolo/pull/13420
                 LOGGER.warning("Edge TPU export requires batch size 1, setting batch=1.")
                 self.args.batch = 1
         if isinstance(model, WorldModel):
@@ -413,9 +413,9 @@ class Exporter:
                 "YOLOWorld (original version) export is not supported to any format. "
                 "YOLOWorldv2 models (i.e. 'yolov8s-worldv2.pt') only support export to "
                 "(torchscript, onnx, openvino, engine, coreml) formats. "
-                "See https://docs.segab_yolo.com/models/yolo-world for details."
+                "See https://docs.segatt_yolo.com/models/yolo-world for details."
             )
-            model.clip_model = None  # openvino int8 export error: https://github.com/segab_yolo/segab_yolo/pull/18445
+            model.clip_model = None  # openvino int8 export error: https://github.com/segatt_yolo/segatt_yolo/pull/18445
         if self.args.int8 and not self.args.data:
             self.args.data = DEFAULT_CFG.data or TASK2DATA[getattr(model, "task", "detect")]  # assign default data
             LOGGER.warning(
@@ -428,7 +428,7 @@ class Exporter:
             if is_intel():
                 LOGGER.info(
                     "💡 ProTip: Export to OpenVINO format for best performance on Intel hardware."
-                    " Learn more at https://docs.segab_yolo.com/integrations/openvino/"
+                    " Learn more at https://docs.segatt_yolo.com/integrations/openvino/"
                 )
             SETTINGS["openvino_msg"] = False
 
@@ -449,15 +449,15 @@ class Exporter:
         model = model.fuse()
 
         if fmt == "imx":
-            from segab_yolo.utils.export.imx import FXModel
+            from segatt_yolo.utils.export.imx import FXModel
 
             model = FXModel(model, self.imgsz)
         if fmt in {"tflite", "edgetpu"}:
-            from segab_yolo.utils.export.tensorflow import tf_wrapper
+            from segatt_yolo.utils.export.tensorflow import tf_wrapper
 
             model = tf_wrapper(model)
         if fmt == "executorch":
-            from segab_yolo.utils.export.executorch import executorch_wrapper
+            from segatt_yolo.utils.export.executorch import executorch_wrapper
 
             model = executorch_wrapper(model)
         for m in model.modules():
@@ -497,14 +497,14 @@ class Exporter:
         )
         self.pretty_name = Path(self.model.yaml.get("yaml_file", self.file)).stem.replace("yolo", "YOLO")
         data = model.args["data"] if hasattr(model, "args") and isinstance(model.args, dict) else ""
-        description = f"segab_yolo {self.pretty_name} model {f'trained on {data}' if data else ''}"
+        description = f"segatt_yolo {self.pretty_name} model {f'trained on {data}' if data else ''}"
         self.metadata = {
             "description": description,
-            "author": "segab_yolo",
+            "author": "segatt_yolo",
             "date": datetime.now().isoformat(),
             "version": __version__,
-            "license": "AGPL-3.0 License (https://segab_yolo.com/license)",
-            "docs": "https://docs.segab_yolo.com",
+            "license": "AGPL-3.0 License (https://segatt_yolo.com/license)",
+            "docs": "https://docs.segatt_yolo.com",
             "stride": int(max(model.stride)),
             "task": model.task,
             "batch": self.args.batch,
@@ -607,7 +607,7 @@ class Exporter:
     @try_export
     def export_torchscript(self, prefix=colorstr("TorchScript:")):
         """Export YOLO model to TorchScript format."""
-        from segab_yolo.utils.export.torchscript import torch2torchscript
+        from segatt_yolo.utils.export.torchscript import torch2torchscript
 
         return torch2torchscript(
             model=NMSModel(self.model, self.args) if self.args.nms else self.model,
@@ -627,7 +627,7 @@ class Exporter:
         check_requirements(requirements)
         import onnx
 
-        from segab_yolo.utils.export.engine import best_onnx_opset, torch2onnx
+        from segatt_yolo.utils.export.engine import best_onnx_opset, torch2onnx
 
         opset = self.args.opset or best_onnx_opset(onnx, cuda="cuda" in self.device.type)
         LOGGER.info(f"\n{prefix} starting export with onnx {onnx.__version__} opset {opset}...")
@@ -701,7 +701,7 @@ class Exporter:
     @try_export
     def export_openvino(self, prefix=colorstr("OpenVINO:")):
         """Export YOLO model to OpenVINO format."""
-        from segab_yolo.utils.export.openvino import torch2openvino
+        from segatt_yolo.utils.export.openvino import torch2openvino
 
         # OpenVINO <= 2025.1.0 error on macOS 15.4+: https://github.com/openvinotoolkit/openvino/issues/30023
         check_requirements("openvino>=2025.2.0" if MACOS and MACOS_VERSION >= "15.4" else "openvino>=2024.0.0")
@@ -764,7 +764,7 @@ class Exporter:
     @try_export
     def export_paddle(self, prefix=colorstr("PaddlePaddle:")):
         """Export YOLO model to PaddlePaddle format."""
-        from segab_yolo.utils.export.paddle import torch2paddle
+        from segatt_yolo.utils.export.paddle import torch2paddle
 
         return torch2paddle(
             model=self.model,
@@ -777,7 +777,7 @@ class Exporter:
     @try_export
     def export_mnn(self, prefix=colorstr("MNN:")):
         """Export YOLO model to MNN format using MNN https://github.com/alibaba/MNN."""
-        from segab_yolo.utils.export.mnn import onnx2mnn
+        from segatt_yolo.utils.export.mnn import onnx2mnn
 
         return onnx2mnn(
             onnx_file=self.export_onnx(),
@@ -791,7 +791,7 @@ class Exporter:
     @try_export
     def export_ncnn(self, prefix=colorstr("NCNN:")):
         """Export YOLO model to NCNN format using PNNX https://github.com/pnnx/pnnx."""
-        from segab_yolo.utils.export.ncnn import torch2ncnn
+        from segatt_yolo.utils.export.ncnn import torch2ncnn
 
         return torch2ncnn(
             model=self.model,
@@ -807,7 +807,7 @@ class Exporter:
     def export_coreml(self, prefix=colorstr("CoreML:")):
         """Export YOLO model to CoreML format."""
         mlmodel = self.args.format.lower() == "mlmodel"  # legacy *.mlmodel export format requested
-        from segab_yolo.utils.export.coreml import IOSDetectModel, pipeline_coreml, torch2coreml
+        from segatt_yolo.utils.export.coreml import IOSDetectModel, pipeline_coreml, torch2coreml
 
         # latest numpy 2.4.0rc1 breaks coremltools exports
         check_requirements(["coremltools>=9.0", "numpy>=1.14.5,<=2.3.5"])
@@ -892,8 +892,8 @@ class Exporter:
     def export_engine(self, prefix=colorstr("TensorRT:")):
         """Export YOLO model to TensorRT format https://developer.nvidia.com/tensorrt."""
         assert self.im.device.type != "cpu", "export running on CPU but must be on GPU, i.e. use 'device=0'"
-        f_onnx = self.export_onnx()  # run before TRT import https://github.com/segab_yolo/segab_yolo/issues/7016
-        from segab_yolo.utils.export.engine import onnx2engine
+        f_onnx = self.export_onnx()  # run before TRT import https://github.com/segatt_yolo/segatt_yolo/issues/7016
+        from segatt_yolo.utils.export.engine import onnx2engine
 
         assert Path(f_onnx).exists(), f"failed to export ONNX file: {f_onnx}"
         f = self.file.with_suffix(".engine")  # TensorRT engine file
@@ -917,7 +917,7 @@ class Exporter:
     @try_export
     def export_saved_model(self, prefix=colorstr("TensorFlow SavedModel:")):
         """Export YOLO model to TensorFlow SavedModel format."""
-        from segab_yolo.utils.export.tensorflow import onnx2saved_model
+        from segatt_yolo.utils.export.tensorflow import onnx2saved_model
 
         f = Path(str(self.file).replace(self.file.suffix, "_saved_model"))
         if f.is_dir():
@@ -958,14 +958,14 @@ class Exporter:
     @try_export
     def export_pb(self, keras_model, prefix=colorstr("TensorFlow GraphDef:")):
         """Export YOLO model to TensorFlow GraphDef *.pb format https://github.com/leimao/Frozen-Graph-TensorFlow."""
-        from segab_yolo.utils.export.tensorflow import keras2pb
+        from segatt_yolo.utils.export.tensorflow import keras2pb
 
         return keras2pb(keras_model, output_file=self.file.with_suffix(".pb"), prefix=prefix)
 
     @try_export
     def export_tflite(self, prefix=colorstr("TensorFlow Lite:")):
         """Export YOLO model to TensorFlow Lite format."""
-        # BUG https://github.com/segab_yolo/segab_yolo/issues/13436
+        # BUG https://github.com/segatt_yolo/segatt_yolo/issues/13436
         import tensorflow as tf
 
         LOGGER.info(f"\n{prefix} starting export with tensorflow {tf.__version__}...")
@@ -986,7 +986,7 @@ class Exporter:
         )
         assert TORCH_2_8, "export requires torch>=2.8.0."
 
-        from segab_yolo.utils.export.axelera import torch2axelera
+        from segatt_yolo.utils.export.axelera import torch2axelera
 
         output_dir = self.file.parent / f"{self.file.stem}_axelera_model"
         return torch2axelera(
@@ -1003,7 +1003,7 @@ class Exporter:
     def export_executorch(self, prefix=colorstr("ExecuTorch:")):
         """Export YOLO model to ExecuTorch *.pte format."""
         assert TORCH_2_9, f"ExecuTorch requires torch>=2.9.0 but torch=={TORCH_VERSION} is installed"
-        from segab_yolo.utils.export.executorch import torch2executorch
+        from segatt_yolo.utils.export.executorch import torch2executorch
 
         return torch2executorch(
             model=self.model,
@@ -1016,7 +1016,7 @@ class Exporter:
     @try_export
     def export_edgetpu(self, tflite_model="", prefix=colorstr("Edge TPU:")):
         """Export YOLO model to Edge TPU format https://coral.ai/docs/edgetpu/models-intro/."""
-        from segab_yolo.utils.export.tensorflow import tflite2edgetpu
+        from segatt_yolo.utils.export.tensorflow import tflite2edgetpu
 
         output_file = tflite2edgetpu(tflite_file=tflite_model, output_dir=tflite_model.parent, prefix=prefix)
         self._add_tflite_metadata(output_file)
@@ -1025,7 +1025,7 @@ class Exporter:
     @try_export
     def export_tfjs(self, prefix=colorstr("TensorFlow.js:")):
         """Export YOLO model to TensorFlow.js format."""
-        from segab_yolo.utils.export.tensorflow import pb2tfjs
+        from segatt_yolo.utils.export.tensorflow import pb2tfjs
 
         output_dir = pb2tfjs(
             pb_file=str(self.file.with_suffix(".pb")),
@@ -1040,7 +1040,7 @@ class Exporter:
     @try_export
     def export_rknn(self, prefix=colorstr("RKNN:")):
         """Export YOLO model to RKNN format."""
-        from segab_yolo.utils.export.rknn import onnx2rknn
+        from segatt_yolo.utils.export.rknn import onnx2rknn
 
         self.args.opset = min(self.args.opset or 19, 19)  # rknn-toolkit expects opset<=19
         f_onnx = self.export_onnx()
@@ -1063,7 +1063,7 @@ class Exporter:
 
         if getattr(self.model, "end2end", False):
             raise ValueError("IMX export is not supported for end2end models.")
-        from segab_yolo.utils.export.imx import torch2imx
+        from segatt_yolo.utils.export.imx import torch2imx
 
         return torch2imx(
             model=self.model,
@@ -1080,7 +1080,7 @@ class Exporter:
     def export_deepx(self, prefix=colorstr("DeepX:")):
         """Export YOLO model to DeepX format."""
         assert LINUX and not ARM64, "DeepX export only supported on non-aarch64 Linux"
-        from segab_yolo.utils.export.deepx import onnx2deepx
+        from segatt_yolo.utils.export.deepx import onnx2deepx
 
         f = self.export_onnx()
         return onnx2deepx(

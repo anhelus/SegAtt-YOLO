@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,12 +9,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-from segab_yolo.data.utils import add_polygon_background
-from segab_yolo.models import yolo
-from segab_yolo.models.yolo.detect import DetectionTrainer
-from segab_yolo.nn.tasks import SemanticSegmentationModel
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, RANK
-from segab_yolo.utils.plotting import colors, plt_settings
+from segatt_yolo.data.utils import add_polygon_background
+from segatt_yolo.models import yolo
+from segatt_yolo.models.yolo.detect import DetectionTrainer
+from segatt_yolo.nn.tasks import SemanticSegmentationModel
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, RANK
+from segatt_yolo.utils.plotting import colors, plt_settings
 
 
 class SemanticSegmentationTrainer(DetectionTrainer):
@@ -24,7 +24,7 @@ class SemanticSegmentationTrainer(DetectionTrainer):
     validation setup.
 
     Examples:
-        >>> from segab_yolo.models.yolo.semantic import SemanticSegmentationTrainer
+        >>> from segatt_yolo.models.yolo.semantic import SemanticSegmentationTrainer
         >>> args = dict(model="yolo26n-sem.yaml", data="cityscapes8.yaml", epochs=3)
         >>> trainer = SemanticSegmentationTrainer(overrides=args)
         >>> trainer.train()

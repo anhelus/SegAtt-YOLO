@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from segab_yolo import YOLO
+from segatt_yolo import YOLO
 
 
 def _metrics_dict(model, imgsz: int, batch: int, device: str) -> dict:

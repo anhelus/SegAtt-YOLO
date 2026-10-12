@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ from typing import Any
 import numpy as np
 import torch
 
-from segab_yolo.models.yolo.detect import DetectionValidator
-from segab_yolo.utils import ops
-from segab_yolo.utils.metrics import OKS_SIGMA, PoseMetrics, kpt_iou
+from segatt_yolo.models.yolo.detect import DetectionValidator
+from segatt_yolo.utils import ops
+from segatt_yolo.utils.metrics import OKS_SIGMA, PoseMetrics, kpt_iou
 
 
 class PoseValidator(DetectionValidator):
@@ -41,7 +41,7 @@ class PoseValidator(DetectionValidator):
         eval_json: Evaluate object detection model using COCO JSON format.
 
     Examples:
-        >>> from segab_yolo.models.yolo.pose import PoseValidator
+        >>> from segatt_yolo.models.yolo.pose import PoseValidator
         >>> args = dict(model="yolo26n-pose.pt", data="coco8-pose.yaml")
         >>> validator = PoseValidator(args=args)
         >>> validator()
@@ -203,7 +203,7 @@ class PoseValidator(DetectionValidator):
             The output format is: class_id x_center y_center width height confidence keypoints where keypoints are
             normalized (x, y, visibility) values for each point.
         """
-        from segab_yolo.engine.results import Results
+        from segatt_yolo.engine.results import Results
 
         Results(
             np.zeros((shape[0], shape[1]), dtype=np.uint8),

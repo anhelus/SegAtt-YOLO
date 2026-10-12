@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # =============================================================================
 # SegAtt-YOLO Experiment Runner - Simplified
 # =============================================================================
@@ -332,7 +332,7 @@ Commands:
         --name NAME        Custom run name (default: model name)
         --scale N          Model scale: n/s/m/l/x (default: n)
 
-  pipeline           Run inference → XAI → viz pipeline
+  pipeline           Run inference â†’ XAI â†’ viz pipeline
         --dataset PATH     Dataset YAML path (required)
         --model NAME       Model to run (default: all from config)
         --limit N          Limit images (default: all)

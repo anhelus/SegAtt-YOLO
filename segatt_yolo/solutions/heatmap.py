@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from typing import Any
 import cv2
 import numpy as np
 
-from segab_yolo.solutions.object_counter import ObjectCounter
-from segab_yolo.solutions.solutions import SolutionAnnotator, SolutionResults
+from segatt_yolo.solutions.object_counter import ObjectCounter
+from segatt_yolo.solutions.solutions import SolutionAnnotator, SolutionResults
 
 
 class Heatmap(ObjectCounter):
@@ -28,7 +28,7 @@ class Heatmap(ObjectCounter):
         process: Generate and apply the heatmap effect to each frame.
 
     Examples:
-        >>> from segab_yolo.solutions import Heatmap
+        >>> from segatt_yolo.solutions import Heatmap
         >>> heatmap = Heatmap(model="yolo26n.pt", colormap=cv2.COLORMAP_JET)
         >>> frame = cv2.imread("frame.jpg")
         >>> processed_frame = heatmap.process(frame)
@@ -72,7 +72,7 @@ class Heatmap(ObjectCounter):
         self.heatmap[y0:y1, x0:x1][within_radius] += 2
 
     def process(self, im0: np.ndarray) -> SolutionResults:
-        """Generate heatmap for each frame using segab_yolo tracking.
+        """Generate heatmap for each frame using segatt_yolo tracking.
 
         Args:
             im0 (np.ndarray): Input image array for processing.

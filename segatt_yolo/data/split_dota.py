@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -12,9 +12,9 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from segab_yolo.data.utils import exif_size, img2label_paths
-from segab_yolo.utils import TQDM
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.data.utils import exif_size, img2label_paths
+from segatt_yolo.utils import TQDM
+from segatt_yolo.utils.checks import check_requirements
 
 
 def bbox_iof(polygon1: np.ndarray, bbox2: np.ndarray, eps: float = 1e-6) -> np.ndarray:

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,11 +7,11 @@ from typing import Any
 
 import torch
 
-from segab_yolo.engine.model import Model
-from segab_yolo.utils import DEFAULT_CFG_DICT
-from segab_yolo.utils.downloads import attempt_download_asset
-from segab_yolo.utils.patches import torch_load
-from segab_yolo.utils.torch_utils import model_info
+from segatt_yolo.engine.model import Model
+from segatt_yolo.utils import DEFAULT_CFG_DICT
+from segatt_yolo.utils.downloads import attempt_download_asset
+from segatt_yolo.utils.patches import torch_load
+from segatt_yolo.utils.torch_utils import model_info
 
 from .predict import NASPredictor
 from .val import NASValidator
@@ -20,7 +20,7 @@ from .val import NASValidator
 class NAS(Model):
     """YOLO-NAS model for object detection.
 
-    This class provides an interface for the YOLO-NAS models and extends the `Model` class from segab_yolo engine. It
+    This class provides an interface for the YOLO-NAS models and extends the `Model` class from segatt_yolo engine. It
     is designed to facilitate the task of object detection using pre-trained or custom-trained YOLO-NAS models.
 
     Attributes:
@@ -33,9 +33,9 @@ class NAS(Model):
         info: Log model information and return model details.
 
     Examples:
-        >>> from segab_yolo import NAS
+        >>> from segatt_yolo import NAS
         >>> model = NAS("yolo_nas_s")
-        >>> results = model.predict("segab_yolo/assets/bus.jpg")
+        >>> results = model.predict("segatt_yolo/assets/bus.jpg")
 
     Notes:
         YOLO-NAS models only support pre-trained models. Do not provide YAML configuration files.

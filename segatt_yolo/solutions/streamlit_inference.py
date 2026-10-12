@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import io
 import os
@@ -7,10 +7,10 @@ from typing import Any
 import cv2
 import torch
 
-from segab_yolo import YOLO
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.checks import check_requirements
-from segab_yolo.utils.downloads import GITHUB_ASSETS_STEMS
+from segatt_yolo import YOLO
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.downloads import GITHUB_ASSETS_STEMS
 
 torch.classes.__path__ = []  # Torch module __path__._path issue: https://github.com/datalab-to/marker/issues/442
 
@@ -19,7 +19,7 @@ class Inference:
     """A class to perform object detection, image classification, image segmentation and pose estimation inference.
 
     This class provides functionalities for loading models, configuring settings, uploading video files, and performing
-    real-time inference using Streamlit and segab_yolo YOLO models.
+    real-time inference using Streamlit and segatt_yolo YOLO models.
 
     Attributes:
         st (module): Streamlit module for UI creation.
@@ -58,7 +58,7 @@ class Inference:
         Args:
             **kwargs (Any): Additional keyword arguments for model configuration.
         """
-        check_requirements("streamlit>=1.29.0")  # scope imports for faster segab_yolo package load speeds
+        check_requirements("streamlit>=1.29.0")  # scope imports for faster segatt_yolo package load speeds
         import streamlit as st
 
         self.st = st  # Reference to the Streamlit module
@@ -78,7 +78,7 @@ class Inference:
         if self.temp_dict["model"] is not None:
             self.model_path = self.temp_dict["model"]
 
-        LOGGER.info(f"segab_yolo Solutions: ✅ {self.temp_dict}")
+        LOGGER.info(f"segatt_yolo Solutions: ✅ {self.temp_dict}")
 
     def web_ui(self) -> None:
         """Set up the Streamlit web interface with custom HTML elements."""
@@ -86,22 +86,22 @@ class Inference:
 
         # Main title of streamlit application
         main_title_cfg = """<div><h1 style="color:#111F68; text-align:center; font-size:40px; margin-top:-50px;
-        font-family: 'Archivo', sans-serif; margin-bottom:20px;">segab_yolo YOLO Streamlit Application</h1></div>"""
+        font-family: 'Archivo', sans-serif; margin-bottom:20px;">segatt_yolo YOLO Streamlit Application</h1></div>"""
 
         # Subtitle of streamlit application
         sub_title_cfg = """<div><h5 style="color:#042AFF; text-align:center; font-family: 'Archivo', sans-serif;
         margin-top:-15px; margin-bottom:50px;">Experience real-time object detection on your webcam, videos, and images
-        with the power of segab_yolo YOLO! 🚀</h5></div>"""
+        with the power of segatt_yolo YOLO! 🚀</h5></div>"""
 
         # Set html page configuration and append custom HTML
-        self.st.set_page_config(page_title="segab_yolo Streamlit App", layout="wide")
+        self.st.set_page_config(page_title="segatt_yolo Streamlit App", layout="wide")
         self.st.markdown(menu_style_cfg, unsafe_allow_html=True)
         self.st.markdown(main_title_cfg, unsafe_allow_html=True)
         self.st.markdown(sub_title_cfg, unsafe_allow_html=True)
 
     def sidebar(self) -> None:
         """Configure the Streamlit sidebar for model and inference settings."""
-        with self.st.sidebar:  # Add segab_yolo LOGO
+        with self.st.sidebar:  # Add segatt_yolo LOGO
             logo = "https://raw.githubusercontent.com/ultralytics/assets/main/logo/Ultralytics_Logotype_Original.svg"
             self.st.image(logo, width=250)
 
@@ -124,16 +124,16 @@ class Inference:
 
     def source_upload(self) -> None:
         """Handle video file uploads through the Streamlit interface."""
-        from segab_yolo.data.utils import IMG_FORMATS, VID_FORMATS  # scope import
+        from segatt_yolo.data.utils import IMG_FORMATS, VID_FORMATS  # scope import
 
         self.vid_file_name = ""
         if self.source == "video":
             vid_file = self.st.sidebar.file_uploader("Upload Video File", type=VID_FORMATS)
             if vid_file is not None:
                 g = io.BytesIO(vid_file.read())  # BytesIO Object
-                with open("segab_yolo.mp4", "wb") as out:  # Open temporary file as bytes
+                with open("segatt_yolo.mp4", "wb") as out:  # Open temporary file as bytes
                     out.write(g.read())  # Read bytes into file
-                self.vid_file_name = "segab_yolo.mp4"
+                self.vid_file_name = "segatt_yolo.mp4"
         elif self.source == "webcam":
             self.vid_file_name = 0  # Use webcam index 0
         elif self.source == "image":

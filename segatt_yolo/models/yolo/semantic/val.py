@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -12,12 +12,12 @@ import torch.distributed as dist
 import torch.nn.functional as F
 from PIL import Image
 
-from segab_yolo.data.dataset import SemanticDataset
-from segab_yolo.data.utils import add_polygon_background
-from segab_yolo.models.yolo.detect import DetectionValidator
-from segab_yolo.utils import LOGGER, RANK
-from segab_yolo.utils.metrics import ConfusionMatrix, SemanticMetrics
-from segab_yolo.utils.plotting import plot_images
+from segatt_yolo.data.dataset import SemanticDataset
+from segatt_yolo.data.utils import add_polygon_background
+from segatt_yolo.models.yolo.detect import DetectionValidator
+from segatt_yolo.utils import LOGGER, RANK
+from segatt_yolo.utils.metrics import ConfusionMatrix, SemanticMetrics
+from segatt_yolo.utils.plotting import plot_images
 
 
 class SemanticSegmentationValidator(DetectionValidator):
@@ -29,7 +29,7 @@ class SemanticSegmentationValidator(DetectionValidator):
         metrics (SemanticMetrics): Metrics calculator for semantic segmentation.
 
     Examples:
-        >>> from segab_yolo.models.yolo.semantic import SemanticSegmentationValidator
+        >>> from segatt_yolo.models.yolo.semantic import SemanticSegmentationValidator
         >>> args = dict(model="yolo26n-sem.pt", data="cityscapes8.yaml")
         >>> validator = SemanticSegmentationValidator(args=args)
         >>> validator()

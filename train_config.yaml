@@ -1,31 +1,42 @@
 models:
   # Baseline
   - yolo11
-  # Phase 1: Singoli attention (neck full P3+P4)
-  - yolo11_gam
-  - yolo11_simam
-  # Phase 1: Singoli attention (backbone)
-  - yolo11_gam_bbone
-  # Phase 1: LSK backbone
-  - yolo11_lsk_coordatt_full
-  # Phase 2: Min variants (solo P3 - small objects focus)
+
+  # ============================================================
+  # POSITION A: Neck solo P3 (min variant - small objects focus)
+  # Dopo C3k2 finale P3, prima di Detect
+  # ============================================================
   - yolo11_gam_min
-  - yolo11_coordatt_min
+  - yolo11_simam_min
   - yolo11_triplet_min
-  # Phase 3: Combo backbone+neck (best per small obj)
-  - yolo11_gam_coordatt_full
-  - yolo11_simam_triplet_full
-  - yolo11_lsk_coordatt_full
+  - yolo11_coordatt_min
+
+  # ============================================================
+  # POSITION B: Neck P3+P4 (full variant)
+  # ============================================================
+  - yolo11_gam_full
+  - yolo11_simam        # exists: yolo11_simam.yaml
+  - yolo11_triplet      # exists: yolo11_triplet.yaml
+  - yolo11_coordatt_full
+
+  # ============================================================
+  # POSITION D: Backbone fine stage P3 e P4 (dopo C3k2)
+  # ============================================================
+  - yolo11_gam_bbone_p3p4
+  - yolo11_simam_bbone_p3p4
+  - yolo11_triplet_bbone_p3p4
+  - yolo11_coordatt_bbone_p3p4
+
   # Reference
   - yolo26
 
 datasets:
   - name: tomatoes
     path: data/tomatoes/yolotomato_bboxes.yaml
-    project: runs/tomatoes
+    project: runs/complete/tomatoes
   - name: lettuces
     path: data/lettuce-omni-ul/lettuce-omni-ul.yaml
-    project: runs/lettuces
+    project: runs/complete/lettuces
 
 training:
   epochs: 100
@@ -34,3 +45,4 @@ training:
   fraction: 1.0
   device: 0
   patience: 50
+  scale: n

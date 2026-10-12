@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.utils import IS_JETSON, LOGGER, PYTHON_VERSION
-from segab_yolo.utils.checks import check_requirements, check_tensorrt, check_version
+from segatt_yolo.utils import IS_JETSON, LOGGER, PYTHON_VERSION
+from segatt_yolo.utils.checks import check_requirements, check_tensorrt, check_version
 
 from .base import BaseBackend
 
@@ -40,7 +40,7 @@ class TensorRTBackend(BaseBackend):
             import tensorrt as trt
 
         check_version(trt.__version__, ">=7.0.0", hard=True)
-        check_version(trt.__version__, "!=10.2.0", msg="https://github.com/segab_yolo/segab_yolo/pull/24367")
+        check_version(trt.__version__, "!=10.2.0", msg="https://github.com/segatt_yolo/segatt_yolo/pull/24367")
 
         if self.device.type == "cpu":
             self.device = torch.device("cuda:0")

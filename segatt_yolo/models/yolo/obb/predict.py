@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import torch
 
-from segab_yolo.engine.results import Results
-from segab_yolo.models.yolo.detect.predict import DetectionPredictor
-from segab_yolo.utils import DEFAULT_CFG, ops
+from segatt_yolo.engine.results import Results
+from segatt_yolo.models.yolo.detect.predict import DetectionPredictor
+from segatt_yolo.utils import DEFAULT_CFG, ops
 
 
 class OBBPredictor(DetectionPredictor):
@@ -20,8 +20,8 @@ class OBBPredictor(DetectionPredictor):
         model (torch.nn.Module): The loaded YOLO OBB model.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.yolo.obb import OBBPredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.yolo.obb import OBBPredictor
         >>> args = dict(model="yolo26n-obb.pt", source=ASSETS)
         >>> predictor = OBBPredictor(overrides=args)
         >>> predictor.predict_cli()

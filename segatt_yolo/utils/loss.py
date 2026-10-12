@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,10 +10,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from segab_yolo.utils.metrics import CITYSCAPES_WEIGHT, OKS_SIGMA, RLE_WEIGHT
-from segab_yolo.utils.ops import crop_mask, xywh2xyxy, xyxy2xywh
-from segab_yolo.utils.tal import RotatedTaskAlignedAssigner, TaskAlignedAssigner, dist2bbox, dist2rbox, make_anchors
-from segab_yolo.utils.torch_utils import autocast
+from segatt_yolo.utils.metrics import CITYSCAPES_WEIGHT, OKS_SIGMA, RLE_WEIGHT
+from segatt_yolo.utils.ops import crop_mask, xywh2xyxy, xyxy2xywh
+from segatt_yolo.utils.tal import RotatedTaskAlignedAssigner, TaskAlignedAssigner, dist2bbox, dist2rbox, make_anchors
+from segatt_yolo.utils.torch_utils import autocast
 
 from .metrics import bbox_iou, probiou
 from .tal import bbox2dist, rbox2dist
@@ -1046,7 +1046,7 @@ class v8OBBLoss(v8DetectionLoss):
                 "This error can occur when incorrectly training a 'OBB' model on a 'detect' dataset, "
                 "i.e. 'yolo train model=yolo26n-obb.pt data=dota8.yaml'.\nVerify your dataset is a "
                 "correctly formatted 'OBB' dataset using 'data=dota8.yaml' "
-                "as an example.\nSee https://docs.segab_yolo.com/datasets/obb/ for help."
+                "as an example.\nSee https://docs.segatt_yolo.com/datasets/obb/ for help."
             ) from e
 
         # Pboxes

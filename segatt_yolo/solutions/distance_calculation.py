@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import math
 from typing import Any
 
 import cv2
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
-from segab_yolo.utils.plotting import colors
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
+from segatt_yolo.utils.plotting import colors
 
 
 class DistanceCalculation(BaseSolution):
@@ -82,7 +82,7 @@ class DistanceCalculation(BaseSolution):
 
         Examples:
             >>> import numpy as np
-            >>> from segab_yolo.solutions import DistanceCalculation
+            >>> from segatt_yolo.solutions import DistanceCalculation
             >>> dc = DistanceCalculation()
             >>> frame = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
             >>> results = dc.process(frame)
@@ -117,7 +117,7 @@ class DistanceCalculation(BaseSolution):
         plot_im = annotator.result()
         self.display_output(plot_im)  # Display output with base class function
         if self.CFG.get("show") and self.env_check:
-            cv2.setMouseCallback("segab_yolo Solutions", self.mouse_event_for_distance)
+            cv2.setMouseCallback("segatt_yolo Solutions", self.mouse_event_for_distance)
 
         # Return SolutionResults with processed image and calculated metrics
         return SolutionResults(plot_im=plot_im, pixels_distance=pixels_distance, total_tracks=len(self.track_ids))

@@ -1,9 +1,9 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
-from segab_yolo.models.yolo.detect.predict import DetectionPredictor
-from segab_yolo.utils import DEFAULT_CFG, ops
+from segatt_yolo.models.yolo.detect.predict import DetectionPredictor
+from segatt_yolo.utils import DEFAULT_CFG, ops
 
 
 class PosePredictor(DetectionPredictor):
@@ -20,8 +20,8 @@ class PosePredictor(DetectionPredictor):
         construct_result: Construct the result object from the prediction, including keypoints.
 
     Examples:
-        >>> from segab_yolo.utils import ASSETS
-        >>> from segab_yolo.models.yolo.pose import PosePredictor
+        >>> from segatt_yolo.utils import ASSETS
+        >>> from segatt_yolo.models.yolo.pose import PosePredictor
         >>> args = dict(model="yolo26n-pose.pt", source=ASSETS)
         >>> predictor = PosePredictor(overrides=args)
         >>> predictor.predict_cli()

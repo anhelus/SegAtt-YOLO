@@ -1,29 +1,103 @@
 # Viz comparison configuration
 output_base: reports/comparison
-runs_dir: runs
+runs_dir: runs/complete
 
 datasets:
   tomatoes:
     baseline: yolo11n
     labels:
+      # Baseline
       yolo11n: YOLO11n
-      yolo11n-gam: YOLO11n-GAM
-      yolo11n-gam-bbone: YOLO11n-GAM-BBone
+      yolo11s: YOLO11s
+      # Position A: Neck solo P3 (min)
+      yolo11n-gam_min: YOLO11n-GAM-min
+      yolo11s-gam_min: YOLO11s-GAM-min
+      yolo11n-simam_min: YOLO11n-SimAM-min
+      yolo11s-simam_min: YOLO11s-SimAM-min
+      yolo11n-triplet_min: YOLO11n-Triplet-min
+      yolo11s-triplet_min: YOLO11s-Triplet-min
+      yolo11n-coordatt_min: YOLO11n-CoordAtt-min
+      yolo11s-coordatt_min: YOLO11s-CoordAtt-min
+      yolo11n-eca_min: YOLO11n-ECA-min
+      yolo11s-eca_min: YOLO11s-ECA-min
+      # Position B: Neck P3+P4 (full)
+      yolo11n-gam_full: YOLO11n-GAM-full
+      yolo11s-gam_full: YOLO11s-GAM-full
       yolo11n-simam: YOLO11n-SimAM
-      yolo11n-simam-bbone: YOLO11n-SimAM-BBone
+      yolo11s-simam: YOLO11s-SimAM
+      yolo11n-triplet: YOLO11n-Triplet
+      yolo11s-triplet: YOLO11s-Triplet
+      yolo11n-coordatt_full: YOLO11n-CoordAtt-full
+      yolo11s-coordatt_full: YOLO11s-CoordAtt-full
+      yolo11n-eca_full: YOLO11n-ECA-full
+      yolo11s-eca_full: YOLO11s-ECA-full
+      # Position D: Backbone P3+P4
+      yolo11n-gam_bbone_p3p4: YOLO11n-GAM-bbone
+      yolo11s-gam_bbone_p3p4: YOLO11s-GAM-bbone
+      yolo11n-simam_bbone_p3p4: YOLO11n-SimAM-bbone
+      yolo11s-simam_bbone_p3p4: YOLO11s-SimAM-bbone
+      yolo11n-triplet_bbone_p3p4: YOLO11n-Triplet-bbone
+      yolo11s-triplet_bbone_p3p4: YOLO11s-Triplet-bbone
+      yolo11n-coordatt_bbone_p3p4: YOLO11n-CoordAtt-bbone
+      yolo11s-coordatt_bbone_p3p4: YOLO11s-CoordAtt-bbone
+      yolo11n-eca_bbone_p3p4: YOLO11n-ECA-bbone
+      yolo11s-eca_bbone_p3p4: YOLO11s-ECA-bbone
+      # Legacy / Combo / Reference
+      yolo11n-gam_bbone: YOLO11n-GAM-bbone-old
+      yolo11n-lsk_coordatt_full: YOLO11n-LSK+CoordAtt
+      yolo11n-gam_coordatt_full: YOLO11n-GAM+CoordAtt
+      yolo11n-simam_triplet_full: YOLO11n-SimAM+Triplet
       yolo26n: YOLO26n
+      yolo26s: YOLO26s
     metrics:
       - metrics/mAP50(B)
       - metrics/mAP50-95(B)
       - metrics/precision(B)
       - metrics/recall(B)
     models:
+      # Baseline
       yolo11n: {}
-      yolo11n-gam: {}
-      yolo11n-gam-bbone: {}
+      yolo11s: {}
+      # Position A
+      yolo11n-gam_min: {}
+      yolo11s-gam_min: {}
+      yolo11n-simam_min: {}
+      yolo11s-simam_min: {}
+      yolo11n-triplet_min: {}
+      yolo11s-triplet_min: {}
+      yolo11n-coordatt_min: {}
+      yolo11s-coordatt_min: {}
+      yolo11n-eca_min: {}
+      yolo11s-eca_min: {}
+      # Position B
+      yolo11n-gam_full: {}
+      yolo11s-gam_full: {}
       yolo11n-simam: {}
-      yolo11n-simam-bbone: {}
+      yolo11s-simam: {}
+      yolo11n-triplet: {}
+      yolo11s-triplet: {}
+      yolo11n-coordatt_full: {}
+      yolo11s-coordatt_full: {}
+      yolo11n-eca_full: {}
+      yolo11s-eca_full: {}
+      # Position D
+      yolo11n-gam_bbone_p3p4: {}
+      yolo11s-gam_bbone_p3p4: {}
+      yolo11n-simam_bbone_p3p4: {}
+      yolo11s-simam_bbone_p3p4: {}
+      yolo11n-triplet_bbone_p3p4: {}
+      yolo11s-triplet_bbone_p3p4: {}
+      yolo11n-coordatt_bbone_p3p4: {}
+      yolo11s-coordatt_bbone_p3p4: {}
+      yolo11n-eca_bbone_p3p4: {}
+      yolo11s-eca_bbone_p3p4: {}
+      # Legacy
+      yolo11n-gam_bbone: {}
+      yolo11n-lsk_coordatt_full: {}
+      yolo11n-gam_coordatt_full: {}
+      yolo11n-simam_triplet_full: {}
       yolo26n: {}
+      yolo26s: {}
     timing:
       enabled: true
       source: data/tomatoes/val/images
@@ -31,24 +105,98 @@ datasets:
   lettuces:
     baseline: yolo11n
     labels:
+      # Baseline
       yolo11n: YOLO11n
-      yolo11n-gam: YOLO11n-GAM
-      yolo11n-gam-bbone: YOLO11n-GAM-BBone
+      yolo11s: YOLO11s
+      # Position A: Neck solo P3 (min)
+      yolo11n-gam_min: YOLO11n-GAM-min
+      yolo11s-gam_min: YOLO11s-GAM-min
+      yolo11n-simam_min: YOLO11n-SimAM-min
+      yolo11s-simam_min: YOLO11s-SimAM-min
+      yolo11n-triplet_min: YOLO11n-Triplet-min
+      yolo11s-triplet_min: YOLO11s-Triplet-min
+      yolo11n-coordatt_min: YOLO11n-CoordAtt-min
+      yolo11s-coordatt_min: YOLO11s-CoordAtt-min
+      yolo11n-eca_min: YOLO11n-ECA-min
+      yolo11s-eca_min: YOLO11s-ECA-min
+      # Position B: Neck P3+P4 (full)
+      yolo11n-gam_full: YOLO11n-GAM-full
+      yolo11s-gam_full: YOLO11s-GAM-full
       yolo11n-simam: YOLO11n-SimAM
-      yolo11n-simam-bbone: YOLO11n-SimAM-BBone
+      yolo11s-simam: YOLO11s-SimAM
+      yolo11n-triplet: YOLO11n-Triplet
+      yolo11s-triplet: YOLO11s-Triplet
+      yolo11n-coordatt_full: YOLO11n-CoordAtt-full
+      yolo11s-coordatt_full: YOLO11s-CoordAtt-full
+      yolo11n-eca_full: YOLO11n-ECA-full
+      yolo11s-eca_full: YOLO11s-ECA-full
+      # Position D: Backbone P3+P4
+      yolo11n-gam_bbone_p3p4: YOLO11n-GAM-bbone
+      yolo11s-gam_bbone_p3p4: YOLO11s-GAM-bbone
+      yolo11n-simam_bbone_p3p4: YOLO11n-SimAM-bbone
+      yolo11s-simam_bbone_p3p4: YOLO11s-SimAM-bbone
+      yolo11n-triplet_bbone_p3p4: YOLO11n-Triplet-bbone
+      yolo11s-triplet_bbone_p3p4: YOLO11s-Triplet-bbone
+      yolo11n-coordatt_bbone_p3p4: YOLO11n-CoordAtt-bbone
+      yolo11s-coordatt_bbone_p3p4: YOLO11s-CoordAtt-bbone
+      yolo11n-eca_bbone_p3p4: YOLO11n-ECA-bbone
+      yolo11s-eca_bbone_p3p4: YOLO11s-ECA-bbone
+      # Legacy / Combo / Reference
+      yolo11n-gam_bbone: YOLO11n-GAM-bbone-old
+      yolo11n-lsk_coordatt_full: YOLO11n-LSK+CoordAtt
+      yolo11n-gam_coordatt_full: YOLO11n-GAM+CoordAtt
+      yolo11n-simam_triplet_full: YOLO11n-SimAM+Triplet
       yolo26n: YOLO26n
+      yolo26s: YOLO26s
     metrics:
       - metrics/mAP50(B)
       - metrics/mAP50-95(B)
       - metrics/precision(B)
       - metrics/recall(B)
     models:
+      # Baseline
       yolo11n: {}
-      yolo11n-gam: {}
-      yolo11n-gam-bbone: {}
+      yolo11s: {}
+      # Position A
+      yolo11n-gam_min: {}
+      yolo11s-gam_min: {}
+      yolo11n-simam_min: {}
+      yolo11s-simam_min: {}
+      yolo11n-triplet_min: {}
+      yolo11s-triplet_min: {}
+      yolo11n-coordatt_min: {}
+      yolo11s-coordatt_min: {}
+      yolo11n-eca_min: {}
+      yolo11s-eca_min: {}
+      # Position B
+      yolo11n-gam_full: {}
+      yolo11s-gam_full: {}
       yolo11n-simam: {}
-      yolo11n-simam-bbone: {}
+      yolo11s-simam: {}
+      yolo11n-triplet: {}
+      yolo11s-triplet: {}
+      yolo11n-coordatt_full: {}
+      yolo11s-coordatt_full: {}
+      yolo11n-eca_full: {}
+      yolo11s-eca_full: {}
+      # Position D
+      yolo11n-gam_bbone_p3p4: {}
+      yolo11s-gam_bbone_p3p4: {}
+      yolo11n-simam_bbone_p3p4: {}
+      yolo11s-simam_bbone_p3p4: {}
+      yolo11n-triplet_bbone_p3p4: {}
+      yolo11s-triplet_bbone_p3p4: {}
+      yolo11n-coordatt_bbone_p3p4: {}
+      yolo11s-coordatt_bbone_p3p4: {}
+      yolo11n-eca_bbone_p3p4: {}
+      yolo11s-eca_bbone_p3p4: {}
+      # Legacy
+      yolo11n-gam_bbone: {}
+      yolo11n-lsk_coordatt_full: {}
+      yolo11n-gam_coordatt_full: {}
+      yolo11n-simam_triplet_full: {}
       yolo26n: {}
+      yolo26s: {}
     timing:
       enabled: true
       source: data/lettuce-omni-ul/val/images

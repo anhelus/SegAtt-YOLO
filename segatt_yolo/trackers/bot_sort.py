@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from typing import Any
 import numpy as np
 import torch
 
-from segab_yolo.utils.ops import xywh2xyxy
-from segab_yolo.utils.plotting import save_one_box
+from segatt_yolo.utils.ops import xywh2xyxy
+from segatt_yolo.utils.plotting import save_one_box
 
 from .basetrack import TrackState
 from .byte_tracker import BYTETracker, STrack
@@ -241,7 +241,7 @@ class ReID:
         Args:
             model (str): Path to the YOLO model for re-identification.
         """
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         self.model = YOLO(model)
         self.model(embed=[len(self.model.model.model) - 2 if ".pt" in model else -1], verbose=False, save=False)  # init

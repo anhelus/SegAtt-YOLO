@@ -1,15 +1,15 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import torch
 from PIL import Image
 
-from segab_yolo.models.yolo.segment import SegmentationPredictor
-from segab_yolo.utils import DEFAULT_CFG
-from segab_yolo.utils.metrics import box_iou
-from segab_yolo.utils.ops import scale_masks
-from segab_yolo.utils.torch_utils import TORCH_1_10
+from segatt_yolo.models.yolo.segment import SegmentationPredictor
+from segatt_yolo.utils import DEFAULT_CFG
+from segatt_yolo.utils.metrics import box_iou
+from segatt_yolo.utils.ops import scale_masks
+from segatt_yolo.utils.torch_utils import TORCH_1_10
 
 from .utils import adjust_bboxes_to_image_border
 
@@ -160,7 +160,7 @@ class FastSAMPredictor(SegmentationPredictor):
         Returns:
             (torch.Tensor): Similarity matrix between given images and texts with shape (M, N).
         """
-        from segab_yolo.nn.text_model import CLIP
+        from segatt_yolo.nn.text_model import CLIP
 
         if not hasattr(self, "clip"):
             self.clip = CLIP("ViT-B/32", device=self.device)

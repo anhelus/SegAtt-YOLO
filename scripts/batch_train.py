@@ -7,11 +7,13 @@ Typical usage::
 
     python scripts/batch_train.py --config train_config.yaml
     python scripts/batch_train.py --config train_config.yaml --model yolo11n-ema
+    python scripts/batch_train.py --config train_config.yaml --model yolo11 --scale s
 """
 
 import argparse
 import os
 import sys
+import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -21,13 +23,79 @@ _repo_root = Path(__file__).resolve().parent.parent
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from segab_yolo import YOLO
+from segatt_yolo import YOLO
 
 
 def load_config(config_path: str) -> Dict:
     """Load training configuration from YAML file."""
     with open(config_path, "r") as f:
         return yaml.safe_load(f)
+
+
+def _model_yaml_path(model_name: str) -> Path:
+    """Resolve model YAML path (supports both model name and explicit paths)."""
+    repo_root = Path(__file__).resolve().parent.parent
+    if model_name.endswith((".yaml", ".yml")):
+        p = Path(model_name)
+        return p if p.is_absolute() else repo_root / p
+    return repo_root / "segatt_yolo" / "cfg" / "models" / "11" / f"{model_name}.yaml"
+
+
+def _yaml_with_scale(yaml_path: Path, scale: str) -> str:
+    """
+    Load YAML, inject scale, write to temp file with scale in filename, return temp file path.
+    Caller must clean up the temp file.
+    Filename must match guess_model_scale() regex: yolo<ver><scale>_*
+    """
+    with open(yaml_path, "r") as f:
+        cfg = yaml.safe_load(f)
+    cfg["scale"] = scale
+    # Filename must be like yolo11s_<random>.yaml for guess_model_scale() to extract 's'
+    stem = yaml_path.stem  # e.g., "yolo11"
+    tmp = tempfile.NamedTemporaryFile(mode="w", prefix=f"{stem}{scale}_", suffix=".yaml", delete=False)
+    yaml.safe_dump(cfg, tmp, sort_keys=False)
+    tmp.close()
+    return tmp.name
+
+
+def _target_folder_name(run_name: str, scale: str) -> str:
+    """
+    Convert training folder name to XAI/Infer/Viz config folder name.
+    
+    Training names (from train_config.yaml):
+    - yolo11 -> yolo11n
+    - yolo11_gam_min -> yolo11n-gam_min
+    - yolo11_gam_full -> yolo11n-gam_full
+    - yolo11_simam -> yolo11n-simam
+    - yolo11_gam_bbone_p3p4 -> yolo11n-gam_bbone_p3p4
+    - yolo26 -> yolo26n
+    
+    Pattern: insert scale after base model (yolo11/yolo26), 
+    first underscore becomes hyphen, rest stay underscore.
+    """
+    # Handle yolo11* variants
+    if run_name.startswith("yolo11"):
+        rest = run_name[6:]  # after "yolo11"
+        if not rest:
+            return f"yolo11{scale}"
+        # First underscore -> hyphen, rest stay underscore
+        parts = rest.split('_', 1)
+        if len(parts) == 1:
+            return f"yolo11{scale}{rest}"
+        return f"yolo11{scale}-{parts[1]}"
+    
+    # Handle yolo26
+    if run_name.startswith("yolo26"):
+        rest = run_name[6:]
+        if not rest:
+            return f"yolo26{scale}"
+        parts = rest.split('_', 1)
+        if len(parts) == 1:
+            return f"yolo26{scale}{rest}"
+        return f"yolo26{scale}-{parts[1]}"
+    
+    # Fallback: just append scale
+    return f"{run_name}{scale}"
 
 
 def validate_config(config: Dict) -> None:
@@ -52,6 +120,8 @@ def batch_run(
     imgsz_override: Optional[int] = None,
     device_override: Optional[str] = None,
     name_override: Optional[str] = None,
+    scale_override: Optional[str] = None,
+    auto_rename: bool = False,
 ) -> None:
     """Run training over all specified model variants and datasets."""
     models = config["models"]
@@ -64,6 +134,7 @@ def batch_run(
     fraction = training_cfg.get("fraction", 1.0)
     device = device_override if device_override is not None else training_cfg.get("device", None)
     patience = training_cfg.get("patience", 50)
+    scale = scale_override if scale_override is not None else training_cfg.get("scale", "n")
 
     from tqdm import tqdm as tqdm_bar
 
@@ -110,8 +181,7 @@ def batch_run(
             sep = "=" * 70
             if verbose:
                 print(f"\n{sep}", flush=True)
-                print(f"  [{trained}/{total}] Training: dataset={ds_name}  model={model_name}", flush=True)
-                print(f"  YOLO('{model_name}.yaml').train(data={ds_path}, project={project})", flush=True)
+                print(f"  [{trained}/{total}] Training: dataset={ds_name}  model={model_name}  scale={scale}", flush=True)
                 print(f"{sep}\n", flush=True)
 
             if dry_run:
@@ -121,22 +191,39 @@ def batch_run(
                 continue
 
             try:
-                model = YOLO(f"{model_name}.yaml")
-                run_name = name_override if name_override is not None else model_name
-                model.train(
-                    data=ds_path,
-                    project=abs_project,
-                    name=run_name,
-                    epochs=epochs,
-                    batch=batch,
-                    imgsz=imgsz,
-                    fraction=fraction,
-                    device=device,
-                    patience=patience,
-                    exist_ok=True,
-                )
-                if verbose:
-                    print(f"  ok {ds_name}/{model_name}", flush=True)
+                # Resolve model YAML and inject scale via temp file
+                yaml_path = _model_yaml_path(model_name)
+                scaled_yaml = _yaml_with_scale(yaml_path, scale)
+                try:
+                    model = YOLO(scaled_yaml)
+                    run_name = name_override if name_override is not None else model_name
+                    model.train(
+                        data=ds_path,
+                        project=abs_project,
+                        name=run_name,
+                        epochs=epochs,
+                        batch=batch,
+                        imgsz=imgsz,
+                        fraction=fraction,
+                        device=device,
+                        patience=patience,
+                        exist_ok=True,
+                    )
+                    if verbose:
+                        print(f"  ok {ds_name}/{model_name} (scale={scale})", flush=True)
+                    
+                    # Auto-rename folder for XAI/Infer/Viz compatibility
+                    if auto_rename:
+                        src = Path(abs_project) / run_name
+                        target_name = _target_folder_name(run_name, scale)
+                        dst = Path(abs_project) / target_name
+                        if src.exists() and not dst.exists():
+                            import shutil
+                            shutil.copytree(src, dst)
+                            if verbose:
+                                print(f"  📁 Auto-renamed: {src.name} -> {dst.name}", flush=True)
+                finally:
+                    os.unlink(scaled_yaml)
             except Exception as e:
                 if verbose:
                     print(f"  fail {ds_name}/{model_name}: {e}", flush=True)
@@ -207,6 +294,13 @@ def parse_args() -> argparse.Namespace:
         help="Custom run name (subdirectory under project). Defaults to model name.",
     )
     parser.add_argument(
+        "--scale",
+        type=str,
+        default=None,
+        choices=["n", "s", "m", "l", "x"],
+        help="Model scale (n/s/m/l/x). Overrides config training.scale. Default: n",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print commands without executing.",
@@ -215,6 +309,11 @@ def parse_args() -> argparse.Namespace:
         "--verbose",
         action="store_true",
         help="Print detailed output instead of progress bar",
+    )
+    parser.add_argument(
+        "--auto-rename",
+        action="store_true",
+        help="Automatically copy trained model folder with scale suffix for XAI/Infer/Viz compatibility (e.g., yolo11_gam_min -> yolo11n-gam_min)",
     )
     return parser.parse_args()
 
@@ -236,6 +335,8 @@ def main() -> None:
         imgsz_override=args.imgsz,
         device_override=args.device,
         name_override=args.name,
+        scale_override=args.scale,
+        auto_rename=args.auto_rename,
     )
 
 

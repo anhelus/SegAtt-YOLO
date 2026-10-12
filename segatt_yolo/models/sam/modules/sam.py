@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
@@ -10,8 +10,8 @@ import torch.nn.functional as F
 from torch import nn
 from torch.nn.init import trunc_normal_
 
-from segab_yolo.nn.modules import MLP
-from segab_yolo.utils import LOGGER
+from segatt_yolo.nn.modules import MLP
+from segatt_yolo.utils import LOGGER
 
 from .blocks import SAM2TwoWayTransformer, TwoWayTransformer
 from .decoders import MaskDecoder, SAM2MaskDecoder

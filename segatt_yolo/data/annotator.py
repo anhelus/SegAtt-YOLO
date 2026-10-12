@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from segab_yolo import SAM, YOLO
+from segatt_yolo import SAM, YOLO
 
 
 def auto_annotate(
@@ -38,8 +38,8 @@ def auto_annotate(
             based on the input data path.
 
     Examples:
-        >>> from segab_yolo.data.annotator import auto_annotate
-        >>> auto_annotate(data="segab_yolo/assets", det_model="yolo26n.pt", sam_model="mobile_sam.pt")
+        >>> from segatt_yolo.data.annotator import auto_annotate
+        >>> auto_annotate(data="segatt_yolo/assets", det_model="yolo26n.pt", sam_model="mobile_sam.pt")
     """
     det_model = YOLO(det_model)
     sam_model = SAM(sam_model)

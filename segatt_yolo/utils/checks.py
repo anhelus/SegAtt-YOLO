@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ import cv2
 import numpy as np
 import torch
 
-from segab_yolo.utils import (
+from segatt_yolo.utils import (
     ARM64,
     ASSETS,
     ASSETS_URL,
@@ -69,8 +69,8 @@ def parse_requirements(file_path=ROOT.parent / "requirements.txt", package=""):
             `specifier` attributes.
 
     Examples:
-        >>> from segab_yolo.utils.checks import parse_requirements
-        >>> parse_requirements(package="segab_yolo")
+        >>> from segatt_yolo.utils.checks import parse_requirements
+        >>> parse_requirements(package="segatt_yolo")
     """
     if package:
         requires = [x for x in metadata.distribution(package).requires if "extra == " not in x]
@@ -226,7 +226,7 @@ def check_version(
     if not current:  # if current is '' or None
         LOGGER.warning(f"invalid check_version({current}, {required}) requested, please check values.")
         return True
-    elif not current[0].isdigit():  # current is package name rather than version string, i.e. current='segab_yolo'
+    elif not current[0].isdigit():  # current is package name rather than version string, i.e. current='segatt_yolo'
         try:
             name = current  # assigned package name to 'name' arg
             current = metadata.version(current)  # get version string from package name
@@ -276,7 +276,7 @@ def check_version(
     return result
 
 
-def check_latest_pypi_version(package_name="segab_yolo"):
+def check_latest_pypi_version(package_name="segatt_yolo"):
     """Return the latest version of a PyPI package without downloading or installing it.
 
     Args:
@@ -297,20 +297,20 @@ def check_latest_pypi_version(package_name="segab_yolo"):
 
 
 def check_pip_update_available():
-    """Check if a new version of the segab_yolo package is available on PyPI.
+    """Check if a new version of the segatt_yolo package is available on PyPI.
 
     Returns:
         (bool): True if an update is available, False otherwise.
     """
     if ONLINE and IS_PIP_PACKAGE:
         try:
-            from segab_yolo import __version__
+            from segatt_yolo import __version__
 
             latest = check_latest_pypi_version()
             if check_version(__version__, f"<{latest}"):  # check if current version is < latest version
                 LOGGER.info(
-                    f"New https://pypi.org/project/segab_yolo/{latest} available 😃 "
-                    f"Update with 'pip install -U segab_yolo'"
+                    f"New https://pypi.org/project/segatt_yolo/{latest} available 😃 "
+                    f"Update with 'pip install -U segatt_yolo'"
                 )
                 return True
         except Exception:
@@ -329,7 +329,7 @@ def check_font(font="Arial.ttf"):
     Returns:
         (Path | str): Resolved font file path.
     """
-    from matplotlib import font_manager  # scope for faster 'import segab_yolo'
+    from matplotlib import font_manager  # scope for faster 'import segatt_yolo'
 
     # Check USER_CONFIG_DIR
     name = Path(font).name
@@ -389,7 +389,7 @@ def check_apt_requirements(requirements):
     # Install missing packages if any
     if missing_packages:
         LOGGER.info(
-            f"{prefix} segab_yolo requirement{'s' * (len(missing_packages) > 1)} {missing_packages} not found, attempting AutoUpdate..."
+            f"{prefix} segatt_yolo requirement{'s' * (len(missing_packages) > 1)} {missing_packages} not found, attempting AutoUpdate..."
         )
         # Optionally update package list first
         cmd = (["sudo"] if is_sudo_available() else []) + ["apt", "update"]
@@ -405,7 +405,7 @@ def check_apt_requirements(requirements):
 
 @TryExcept()
 def check_requirements(requirements=ROOT.parent / "requirements.txt", exclude=(), install=True, cmds="", constrain=()):
-    """Check if installed dependencies meet segab_yolo YOLO models requirements and attempt to auto-update if needed.
+    """Check if installed dependencies meet segatt_yolo YOLO models requirements and attempt to auto-update if needed.
 
     Args:
         requirements (Path | str | list[str|tuple] | tuple[str]): Path to a requirements.txt file, a single package
@@ -418,16 +418,16 @@ def check_requirements(requirements=ROOT.parent / "requirements.txt", exclude=()
             satisfied, preventing the resolver from upgrading those packages during install.
 
     Examples:
-        >>> from segab_yolo.utils.checks import check_requirements
+        >>> from segatt_yolo.utils.checks import check_requirements
 
         Check a requirements.txt file
         >>> check_requirements("path/to/requirements.txt")
 
         Check a single package
-        >>> check_requirements("segab_yolo>=8.3.200", cmds="--index-url https://download.pytorch.org/whl/cpu")
+        >>> check_requirements("segatt_yolo>=8.3.200", cmds="--index-url https://download.pytorch.org/whl/cpu")
 
         Check multiple packages
-        >>> check_requirements(["numpy", "segab_yolo"])
+        >>> check_requirements(["numpy", "segatt_yolo"])
 
         Check with interchangeable packages
         >>> check_requirements([("onnxruntime", "onnxruntime-gpu"), "numpy"])
@@ -495,7 +495,7 @@ def check_requirements(requirements=ROOT.parent / "requirements.txt", exclude=()
         if install and AUTOINSTALL:  # check environment variable
             # Note uv fails on arm64 macOS and Raspberry Pi runners
             n = len(pkgs)  # number of packages updates
-            LOGGER.info(f"{prefix} segab_yolo requirement{'s' * (n > 1)} {pkgs} not found, attempting AutoUpdate...")
+            LOGGER.info(f"{prefix} segatt_yolo requirement{'s' * (n > 1)} {pkgs} not found, attempting AutoUpdate...")
             try:
                 t = time.time()
                 assert ONLINE, "AutoUpdate skipped (offline)"
@@ -613,8 +613,8 @@ def check_yolov5u_filename(file: str, verbose: bool = True) -> str:
             if file != original_file and verbose:
                 LOGGER.info(
                     f"PRO TIP 💡 Replace 'model={original_file}' with new 'model={file}'.\nYOLOv5 'u' models are "
-                    f"trained with https://github.com/segab_yolo/segab_yolo and feature improved performance vs "
-                    f"standard YOLOv5 models trained with https://github.com/segab_yolo/yolov5.\n"
+                    f"trained with https://github.com/segatt_yolo/segatt_yolo and feature improved performance vs "
+                    f"standard YOLOv5 models trained with https://github.com/segatt_yolo/yolov5.\n"
                 )
     return file
 
@@ -656,8 +656,8 @@ def check_file(file, suffix="", download=True, download_dir=".", hard=True):
         or file.lower().startswith("grpc://")
     ):  # file exists or gRPC Triton images
         return file
-    elif download and file.lower().startswith("ul://"):  # segab_yolo Platform URI
-        from segab_yolo.utils.callbacks.platform import resolve_platform_uri
+    elif download and file.lower().startswith("ul://"):  # segatt_yolo Platform URI
+        from segatt_yolo.utils.callbacks.platform import resolve_platform_uri
 
         url = resolve_platform_uri(file, hard=hard)  # Convert to signed HTTPS URL
         if url is None:
@@ -665,7 +665,7 @@ def check_file(file, suffix="", download=True, download_dir=".", hard=True):
         # Use URI path for unique directory structure: ul://user/project/model -> user/project/model/filename.pt
         uri_path = Path(file[5:])  # Remove "ul://"
         if uri_path.is_absolute() or ".." in uri_path.parts:
-            raise ValueError(f"Unsafe segab_yolo Platform URI path: {file}")
+            raise ValueError(f"Unsafe segatt_yolo Platform URI path: {file}")
         local_file = Path(download_dir) / uri_path / url2file(url)
         # Always re-download NDJSON datasets (cheap, ensures fresh data after updates)
         if local_file.suffix == ".ndjson":
@@ -759,7 +759,7 @@ def check_yolo(verbose=True, device=""):
     """
     import psutil  # scoped as slow import
 
-    from segab_yolo.utils.torch_utils import select_device
+    from segatt_yolo.utils.torch_utils import select_device
 
     if IS_COLAB:
         shutil.rmtree("sample_data", ignore_errors=True)  # remove colab /sample_data directory
@@ -794,8 +794,8 @@ def collect_system_info():
     """
     import psutil  # scoped as slow import
 
-    from segab_yolo.utils import ENVIRONMENT  # scope to avoid circular import
-    from segab_yolo.utils.torch_utils import get_cpu_info, get_gpu_info
+    from segatt_yolo.utils import ENVIRONMENT  # scope to avoid circular import
+    from segatt_yolo.utils.torch_utils import get_cpu_info, get_gpu_info
 
     gib = 1 << 30  # bytes per GiB
     cuda = torch.cuda.is_available()
@@ -819,7 +819,7 @@ def collect_system_info():
     LOGGER.info("\n" + "\n".join(f"{k:<23}{v}" for k, v in info_dict.items()) + "\n")
 
     package_info = {}
-    for r in parse_requirements(package=get_distribution_name("segab_yolo")):
+    for r in parse_requirements(package=get_distribution_name("segatt_yolo")):
         try:
             current = metadata.version(r.name)
             is_met = "✅ " if check_version(current, str(r.specifier), name=r.name, hard=True) else "❌ "
@@ -859,12 +859,12 @@ def check_amp(model):
         (bool): Returns True if the AMP functionality works correctly with YOLO model, else False.
 
     Examples:
-        >>> from segab_yolo import YOLO
-        >>> from segab_yolo.utils.checks import check_amp
+        >>> from segatt_yolo import YOLO
+        >>> from segatt_yolo.utils.checks import check_amp
         >>> model = YOLO("yolo26n.pt").model.cuda()
         >>> check_amp(model)
     """
-    from segab_yolo.utils.torch_utils import autocast
+    from segatt_yolo.utils.torch_utils import autocast
 
     device = next(model.parameters()).device  # get model device
     prefix = colorstr("AMP: ")
@@ -898,7 +898,7 @@ def check_amp(model):
     LOGGER.info(f"{prefix}running Automatic Mixed Precision (AMP) checks...")
     warning_msg = "Setting 'amp=True'. If you experience zero-mAP or NaN losses you can disable AMP with amp=False."
     try:
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         assert amp_allclose(YOLO("yolo26n.pt"), im)
         LOGGER.info(f"{prefix}checks passed ✅")
@@ -907,7 +907,7 @@ def check_amp(model):
     except (AttributeError, ModuleNotFoundError):
         LOGGER.warning(
             f"{prefix}checks skipped. "
-            f"Unable to load YOLO26n for AMP checks due to possible segab_yolo package modifications. {warning_msg}"
+            f"Unable to load YOLO26n for AMP checks due to possible segatt_yolo package modifications. {warning_msg}"
         )
     except AssertionError:
         LOGGER.error(
@@ -919,23 +919,23 @@ def check_amp(model):
 
 
 def check_multiple_install():
-    """Check if there are multiple segab_yolo installations."""
+    """Check if there are multiple segatt_yolo installations."""
     import sys
 
     try:
-        result = subprocess.run([sys.executable, "-m", "pip", "show", "segab_yolo"], capture_output=True, text=True)
+        result = subprocess.run([sys.executable, "-m", "pip", "show", "segatt_yolo"], capture_output=True, text=True)
         install_msg = (
             f"Install your local copy in editable mode with 'pip install -e {ROOT.parent}' to avoid "
-            "issues. See https://docs.segab_yolo.com/quickstart/"
+            "issues. See https://docs.segatt_yolo.com/quickstart/"
         )
         if result.returncode != 0:
             if "not found" in result.stderr.lower():  # Package not pip-installed but locally imported
-                LOGGER.warning(f"segab_yolo not found via pip but importing from: {ROOT}. {install_msg}")
+                LOGGER.warning(f"segatt_yolo not found via pip but importing from: {ROOT}. {install_msg}")
             return
-        yolo_path = (Path(re.findall(r"location:\s+(.+)", result.stdout, flags=re.I)[-1]) / "segab_yolo").resolve()
+        yolo_path = (Path(re.findall(r"location:\s+(.+)", result.stdout, flags=re.I)[-1]) / "segatt_yolo").resolve()
         if not yolo_path.samefile(ROOT.resolve()):
             LOGGER.warning(
-                f"Multiple segab_yolo installations detected. The `yolo` command uses: {yolo_path}, "
+                f"Multiple segatt_yolo installations detected. The `yolo` command uses: {yolo_path}, "
                 f"but current session imports from: {ROOT}. This may cause version conflicts. {install_msg}"
             )
     except Exception:
@@ -952,7 +952,7 @@ def print_args(args: dict | None = None, show_file=True, show_func=False):
     """
 
     def strip_auth(v):
-        """Clean longer segab_yolo HUB URLs by stripping potential authentication information."""
+        """Clean longer segatt_yolo HUB URLs by stripping potential authentication information."""
         return clean_url(v) if (isinstance(v, str) and v.startswith("http") and len(v) > 100) else v
 
     x = inspect.currentframe().f_back  # previous frame
@@ -1027,7 +1027,7 @@ def is_intel():
     Returns:
         (bool): True if Intel hardware is detected, False otherwise.
     """
-    from segab_yolo.utils.torch_utils import get_cpu_info
+    from segatt_yolo.utils.torch_utils import get_cpu_info
 
     # Check CPU
     if "intel" in get_cpu_info().lower():

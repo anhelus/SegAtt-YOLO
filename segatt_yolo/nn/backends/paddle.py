@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.utils import ARM64, LOGGER
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils import ARM64, LOGGER
+from segatt_yolo.utils.checks import check_requirements
 
 from .base import BaseBackend
 
@@ -61,7 +61,7 @@ class PaddleBackend(BaseBackend):
         # Load metadata
         metadata_file = (w if w.is_dir() else w.parent) / "metadata.yaml"
         if metadata_file.exists():
-            from segab_yolo.utils import YAML
+            from segatt_yolo.utils import YAML
 
             self.apply_metadata(YAML.load(metadata_file))
 

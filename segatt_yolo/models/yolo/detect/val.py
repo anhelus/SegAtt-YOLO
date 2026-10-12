@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,12 +10,12 @@ import numpy as np
 import torch
 import torch.distributed as dist
 
-from segab_yolo.data import build_dataloader, build_yolo_dataset, converter
-from segab_yolo.engine.validator import BaseValidator
-from segab_yolo.utils import LOGGER, RANK, nms, ops
-from segab_yolo.utils.checks import check_requirements
-from segab_yolo.utils.metrics import ConfusionMatrix, DetMetrics, box_iou
-from segab_yolo.utils.plotting import plot_images
+from segatt_yolo.data import build_dataloader, build_yolo_dataset, converter
+from segatt_yolo.engine.validator import BaseValidator
+from segatt_yolo.utils import LOGGER, RANK, nms, ops
+from segatt_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.metrics import ConfusionMatrix, DetMetrics, box_iou
+from segatt_yolo.utils.plotting import plot_images
 
 
 class DetectionValidator(BaseValidator):
@@ -36,7 +36,7 @@ class DetectionValidator(BaseValidator):
         stats (dict[str, list[torch.Tensor]]): Dictionary for storing statistics during validation.
 
     Examples:
-        >>> from segab_yolo.models.yolo.detect import DetectionValidator
+        >>> from segatt_yolo.models.yolo.detect import DetectionValidator
         >>> args = dict(model="yolo26n.pt", data="coco8.yaml")
         >>> validator = DetectionValidator(args=args)
         >>> validator()
@@ -397,7 +397,7 @@ class DetectionValidator(BaseValidator):
             shape (tuple[int, int]): Shape of the original image (height, width).
             file (Path): File path to save the detections.
         """
-        from segab_yolo.engine.results import Results
+        from segatt_yolo.engine.results import Results
 
         Results(
             np.zeros((shape[0], shape[1]), dtype=np.uint8),

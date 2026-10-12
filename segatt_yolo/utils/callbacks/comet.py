@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ from typing import Any
 import cv2
 import numpy as np
 
-from segab_yolo.utils import LOGGER, RANK, SETTINGS, TESTS_RUNNING, ops
-from segab_yolo.utils.metrics import ClassifyMetrics, DetMetrics, OBBMetrics, PoseMetrics, SegmentMetrics
+from segatt_yolo.utils import LOGGER, RANK, SETTINGS, TESTS_RUNNING, ops
+from segatt_yolo.utils.metrics import ClassifyMetrics, DetMetrics, OBBMetrics, PoseMetrics, SegmentMetrics
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -25,7 +25,7 @@ try:
     # Ensures certain logging functions only run for supported tasks
     COMET_SUPPORTED_TASKS = ["detect", "segment"]
 
-    # Names of plots created by segab_yolo that are logged to Comet
+    # Names of plots created by segatt_yolo that are logged to Comet
     CONFUSION_MATRIX_PLOT_NAMES = "confusion_matrix", "confusion_matrix_normalized"
     EVALUATION_PLOT_NAMES = "F1_curve", "P_curve", "R_curve", "PR_curve"
     LABEL_PLOT_NAMES = ["labels"]
@@ -57,8 +57,8 @@ def _get_comet_mode() -> str:
 
 
 def _get_comet_model_name() -> str:
-    """Return the Comet model name from environment variable or default to 'segab_yolo'."""
-    return os.getenv("COMET_MODEL_NAME", "segab_yolo")
+    """Return the Comet model name from environment variable or default to 'segatt_yolo'."""
+    return os.getenv("COMET_MODEL_NAME", "segatt_yolo")
 
 
 def _get_eval_batch_logging_interval() -> int:
@@ -116,7 +116,7 @@ def _resume_or_create_experiment(args: SimpleNamespace) -> None:
                 "max_image_predictions": _get_max_image_predictions_to_log(),
             }
         )
-        experiment.log_other("Created from", "segab_yolo")
+        experiment.log_other("Created from", "segatt_yolo")
 
     except Exception as e:
         LOGGER.warning(f"Comet installed but not initialized correctly, not logging this run. {e}")
@@ -126,7 +126,7 @@ def _fetch_trainer_metadata(trainer) -> dict:
     """Return metadata for YOLO training including epoch and asset saving status.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The YOLO trainer object containing training state and config.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The YOLO trainer object containing training state and config.
 
     Returns:
         (dict): Dictionary containing current epoch, step, save assets flag, and final epoch flag.
@@ -439,11 +439,11 @@ def _log_plots(experiment, trainer) -> None:
 
     Args:
         experiment (comet_ml.CometExperiment): The Comet ML experiment to log plots to.
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer object containing validation metrics and save
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer object containing validation metrics and save
             directory information.
 
     Examples:
-        >>> from segab_yolo.utils.callbacks.comet import _log_plots
+        >>> from segatt_yolo.utils.callbacks.comet import _log_plots
         >>> _log_plots(experiment, trainer)
     """
     plot_filenames = None
@@ -562,7 +562,7 @@ def on_fit_epoch_end(trainer) -> None:
     experiment.log_metrics(trainer.metrics, step=curr_step, epoch=curr_epoch)
     experiment.log_metrics(trainer.lr, step=curr_step, epoch=curr_epoch)
     if curr_epoch == 1:
-        from segab_yolo.utils.torch_utils import model_info_for_loggers
+        from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
         experiment.log_metrics(model_info_for_loggers(trainer), step=curr_step, epoch=curr_epoch)
 

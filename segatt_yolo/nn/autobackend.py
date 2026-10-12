@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from segab_yolo.utils.checks import check_suffix
-from segab_yolo.utils.downloads import is_url
+from segatt_yolo.utils.checks import check_suffix
+from segatt_yolo.utils.downloads import is_url
 
 from .backends import (
     AxeleraBackend,
@@ -56,7 +56,7 @@ def check_class_names(names: list | dict) -> dict[int, str]:
                 f"{min(names.keys())}-{max(names.keys())} defined in your dataset YAML."
             )
         if isinstance(names[0], str) and names[0].startswith("n0"):  # imagenet class codes, i.e. 'n01440764'
-            from segab_yolo.utils import ROOT, YAML
+            from segatt_yolo.utils import ROOT, YAML
 
             names_map = YAML.load(ROOT / "cfg/datasets/ImageNet.yaml")["map"]  # human-readable names
             names = {k: names_map[v] for k, v in names.items()}
@@ -74,8 +74,8 @@ def default_class_names(data: str | Path | None = None) -> dict[int, str]:
     """
     if data:
         try:
-            from segab_yolo.utils import YAML
-            from segab_yolo.utils.checks import check_yaml
+            from segatt_yolo.utils import YAML
+            from segatt_yolo.utils.checks import check_yaml
 
             return YAML.load(check_yaml(data))["names"]
         except Exception:
@@ -84,7 +84,7 @@ def default_class_names(data: str | Path | None = None) -> dict[int, str]:
 
 
 class AutoBackend(nn.Module):
-    """Handle dynamic backend selection for running inference using segab_yolo YOLO models.
+    """Handle dynamic backend selection for running inference using segatt_yolo YOLO models.
 
     The AutoBackend class is designed to provide an abstraction layer for various inference engines. It supports a wide
     range of formats, each with specific naming conventions as outlined below:
@@ -200,14 +200,14 @@ class AutoBackend(nn.Module):
         backend_kwargs = {"device": device, "fp16": fp16}
 
         if format == "tfjs":
-            raise NotImplementedError("segab_yolo TF.js inference is not currently supported.")
+            raise NotImplementedError("segatt_yolo TF.js inference is not currently supported.")
         if format not in self._BACKEND_MAP:
-            from segab_yolo.engine.exporter import export_formats
+            from segatt_yolo.engine.exporter import export_formats
 
             raise TypeError(
                 f"model='{model}' is not a supported model format. "
-                f"segab_yolo supports: {export_formats()['Format']}\n"
-                f"See https://docs.segab_yolo.com/modes/predict for help."
+                f"segatt_yolo supports: {export_formats()['Format']}\n"
+                f"See https://docs.segatt_yolo.com/modes/predict for help."
             )
         if format == "pt":
             backend_kwargs["fuse"] = fuse
@@ -300,7 +300,7 @@ class AutoBackend(nn.Module):
         Args:
             imgsz (tuple[int, int, int, int]): Dummy input shape in (batch, channels, height, width) format.
         """
-        from segab_yolo.utils.nms import non_max_suppression
+        from segatt_yolo.utils.nms import non_max_suppression
 
         if self.format in {"pt", "torchscript", "onnx", "engine", "saved_model", "pb", "triton"} and (
             self.device.type != "cpu" or self.format == "triton"
@@ -327,7 +327,7 @@ class AutoBackend(nn.Module):
             >>> fmt = AutoBackend._model_type("path/to/model.onnx")
             >>> assert fmt == "onnx"
         """
-        from segab_yolo.engine.exporter import export_formats
+        from segatt_yolo.engine.exporter import export_formats
 
         sf = export_formats()["Suffix"]
         if not is_url(p) and not isinstance(p, str):

@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates. All Rights Reserved
 
@@ -24,8 +24,8 @@ import torch.nn.functional as F
 import torch.utils.checkpoint as checkpoint
 from torch import Tensor
 
-from segab_yolo.models.sam.modules.blocks import PatchEmbed
-from segab_yolo.models.sam.modules.utils import (
+from segatt_yolo.models.sam.modules.blocks import PatchEmbed
+from segatt_yolo.models.sam.modules.utils import (
     apply_rotary_enc,
     compute_axial_cis,
     concat_rel_pos,
@@ -33,7 +33,7 @@ from segab_yolo.models.sam.modules.utils import (
     window_partition,
     window_unpartition,
 )
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.checks import check_requirements
 
 from .model_misc import LayerScale
 

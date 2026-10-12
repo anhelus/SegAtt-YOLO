@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
-Module provides functionalities for hyperparameter tuning of the segab_yolo YOLO models for object detection, instance
+Module provides functionalities for hyperparameter tuning of the segatt_yolo YOLO models for object detection, instance
 segmentation, image classification, pose estimation, and multi-object tracking.
 
 Hyperparameter tuning is the process of systematically searching for the optimal set of hyperparameters
@@ -9,7 +9,7 @@ where small changes in hyperparameters can lead to significant differences in mo
 
 Examples:
     Tune hyperparameters for YOLO26n on COCO8 at imgsz=640 and epochs=10 for 300 tuning iterations.
-    >>> from segab_yolo import YOLO
+    >>> from segatt_yolo import YOLO
     >>> model = YOLO("yolo26n.pt")
     >>> model.tune(data="coco8.yaml", epochs=10, iterations=300, optimizer="AdamW", plots=False, save=False, val=False)
 """
@@ -29,11 +29,11 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.cfg import CFG_INT_KEYS, get_cfg, get_save_dir
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, YAML, callbacks, colorstr, remove_colorstr
-from segab_yolo.utils.checks import check_requirements
-from segab_yolo.utils.patches import torch_load
-from segab_yolo.utils.plotting import plot_tune_results
+from segatt_yolo.cfg import CFG_INT_KEYS, get_cfg, get_save_dir
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, YAML, callbacks, colorstr, remove_colorstr
+from segatt_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.patches import torch_load
+from segatt_yolo.utils.plotting import plot_tune_results
 
 
 class Tuner:
@@ -59,7 +59,7 @@ class Tuner:
 
     Examples:
         Tune hyperparameters for YOLO26n on COCO8 at imgsz=640 and epochs=10 for 300 tuning iterations.
-        >>> from segab_yolo import YOLO
+        >>> from segatt_yolo import YOLO
         >>> model = YOLO("yolo26n.pt")
         >>> model.tune(
         >>>     data="coco8.yaml",
@@ -76,7 +76,7 @@ class Tuner:
         >>>     epochs=10,
         >>>     iterations=300,
         >>>     mongodb_uri="mongodb+srv://user:pass@cluster.mongodb.net/",
-        >>>     mongodb_db="segab_yolo",
+        >>>     mongodb_db="segatt_yolo",
         >>>     mongodb_collection="tune_results"
         >>> )
 
@@ -121,7 +121,7 @@ class Tuner:
             "close_mosaic": (0.0, 10.0),  # close dataloader mosaic (epochs)
         }
         mongodb_uri = args.pop("mongodb_uri", None)
-        mongodb_db = args.pop("mongodb_db", "segab_yolo")
+        mongodb_db = args.pop("mongodb_db", "segatt_yolo")
         mongodb_collection = args.pop("mongodb_collection", "tuner_results")
 
         self.args = get_cfg(overrides=args)
@@ -140,7 +140,7 @@ class Tuner:
 
         LOGGER.info(
             f"{self.prefix}Initialized Tuner instance with 'tune_dir={self.tune_dir}'\n"
-            f"{self.prefix}💡 Learn about tuning at https://docs.segab_yolo.com/guides/hyperparameter-tuning"
+            f"{self.prefix}💡 Learn about tuning at https://docs.segatt_yolo.com/guides/hyperparameter-tuning"
         )
 
     def _connect(self, uri: str = "", max_retries: int = 3):
@@ -507,7 +507,7 @@ class Tuner:
                     launch = [
                         __import__("sys").executable,
                         "-m",
-                        "segab_yolo.cfg.__init__",
+                        "segatt_yolo.cfg.__init__",
                     ]  # workaround yolo not found
                     cmd = [*launch, "train", *(f"{k}={v}" for k, v in train_args.items())]
                     subprocess.run(cmd, check=True)

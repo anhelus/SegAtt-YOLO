@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from . import USER_CONFIG_DIR
 from .torch_utils import TORCH_1_9
 
 if TYPE_CHECKING:
-    from segab_yolo.engine.trainer import BaseTrainer
+    from segatt_yolo.engine.trainer import BaseTrainer
 
 
 def find_free_network_port() -> int:
@@ -38,7 +38,7 @@ def generate_ddp_file(trainer: BaseTrainer) -> str:
     contains the necessary configuration to initialize the trainer in a distributed environment.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer containing training configuration and arguments.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer containing training configuration and arguments.
             Must have args attribute and be a class instance.
 
     Returns:
@@ -61,13 +61,13 @@ def generate_ddp_file(trainer: BaseTrainer) -> str:
         overrides["augmentations"] = [A.to_dict(t) for t in overrides["augmentations"]]
 
     content = f"""
-# segab_yolo Multi-GPU training temp file (should be automatically deleted after use)
+# segatt_yolo Multi-GPU training temp file (should be automatically deleted after use)
 from pathlib import Path, PosixPath  # For model arguments stored as Path instead of str
 overrides = {overrides}
 
 if __name__ == "__main__":
     from {module} import {name}
-    from segab_yolo.utils import DEFAULT_CFG_DICT
+    from segatt_yolo.utils import DEFAULT_CFG_DICT
 
     # Deserialize augmentations from dicts back to Albumentations transform objects
     if overrides.get("augmentations") is not None:
@@ -97,7 +97,7 @@ def generate_ddp_command(trainer: BaseTrainer) -> tuple[list[str], str]:
     """Generate command for distributed training.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer containing configuration for distributed training.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer containing configuration for distributed training.
 
     Returns:
         cmd (list[str]): The command to execute for distributed training.
@@ -130,7 +130,7 @@ def ddp_cleanup(trainer: BaseTrainer, file: str) -> None:
     temporary file for DDP training, and deletes it if so.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The trainer used for distributed training.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The trainer used for distributed training.
         file (str): Path to the file that might need to be deleted.
 
     Examples:

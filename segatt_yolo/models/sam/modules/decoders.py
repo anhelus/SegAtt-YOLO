@@ -1,11 +1,11 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 import torch
 from torch import nn
 
-from segab_yolo.nn.modules import MLP, LayerNorm2d
+from segatt_yolo.nn.modules import MLP, LayerNorm2d
 
 
 class MaskDecoder(nn.Module):

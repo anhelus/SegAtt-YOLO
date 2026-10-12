@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ from typing import Any
 import cv2
 import numpy as np
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.checks import check_imshow
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.checks import check_imshow
 
 
 class ParkingPtsSelection:
@@ -71,7 +71,7 @@ class ParkingPtsSelection:
 
         self.tk, self.filedialog, self.messagebox = tk, filedialog, messagebox
         self.master = self.tk.Tk()  # Reference to the main application window
-        self.master.title("segab_yolo Parking Zones Points Selector")
+        self.master.title("segatt_yolo Parking Zones Points Selector")
         self.master.resizable(False, False)
 
         self.canvas = self.tk.Canvas(self.master, bg="white")  # Canvas widget for displaying images
@@ -194,7 +194,7 @@ class ParkingManagement(BaseSolution):
         process: Process the input image for parking lot management and visualization.
 
     Examples:
-        >>> from segab_yolo.solutions import ParkingManagement
+        >>> from segatt_yolo.solutions import ParkingManagement
         >>> parking_manager = ParkingManagement(model="yolo26n.pt", json_file="parking_regions.json")
         >>> print(f"Occupied spaces: {parking_manager.pr_info['Occupancy']}")
         >>> print(f"Available spaces: {parking_manager.pr_info['Available']}")

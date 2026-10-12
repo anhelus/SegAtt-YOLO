@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -25,10 +25,10 @@ import cv2
 import numpy as np
 import torch
 
-from segab_yolo import __version__
-from segab_yolo.utils.git import GitRepo
-from segab_yolo.utils.patches import imread, imshow, imwrite, torch_save  # for patches
-from segab_yolo.utils.tqdm import TQDM  # noqa
+from segatt_yolo import __version__
+from segatt_yolo.utils.git import GitRepo
+from segatt_yolo.utils.patches import imread, imshow, imwrite, torch_save  # for patches
+from segatt_yolo.utils.tqdm import TQDM  # noqa
 
 # PyTorch Multi-GPU DDP Constants
 RANK = int(os.getenv("RANK", -1))
@@ -44,7 +44,7 @@ DEFAULT_CFG_PATH = ROOT / "cfg/default.yaml"
 NUM_THREADS = min(8, max(1, os.cpu_count() - 1))  # number of YOLO multiprocessing threads
 AUTOINSTALL = str(os.getenv("YOLO_AUTOINSTALL", True)).lower() == "true"  # global auto-install mode
 VERBOSE = str(os.getenv("YOLO_VERBOSE", True)).lower() == "true"  # global verbose mode
-LOGGING_NAME = "segab_yolo"
+LOGGING_NAME = "segatt_yolo"
 MACOS, LINUX, WINDOWS = (platform.system() == x for x in ["Darwin", "Linux", "Windows"])  # environment booleans
 MACOS_VERSION = platform.mac_ver()[0] if MACOS else None
 NOT_MACOS14 = not (MACOS and MACOS_VERSION.startswith("14."))
@@ -69,15 +69,15 @@ RKNN_CHIPS = frozenset(
     }
 )  # Rockchip processors available for export
 HELP_MSG = """
-    Examples for running segab_yolo:
+    Examples for running segatt_yolo:
 
-    1. Install the segab_yolo package:
+    1. Install the segatt_yolo package:
 
-        pip install segab_yolo
+        pip install segatt_yolo
 
     2. Use the Python SDK:
 
-        from segab_yolo import YOLO
+        from segatt_yolo import YOLO
 
         # Load a model
         model = YOLO("yolo26n.yaml")  # build a new model from scratch
@@ -86,19 +86,19 @@ HELP_MSG = """
         # Use the model
         results = model.train(data="coco8.yaml", epochs=3)  # train the model
         results = model.val()  # evaluate model performance on the validation set
-        results = model("https://segab_yolo.com/images/bus.jpg")  # predict on an image
+        results = model("https://segatt_yolo.com/images/bus.jpg")  # predict on an image
         success = model.export(format="onnx")  # export the model to ONNX format
 
     3. Use the command line interface (CLI):
 
-        segab_yolo 'yolo' CLI commands use the following syntax:
+        segatt_yolo 'yolo' CLI commands use the following syntax:
 
             yolo TASK MODE ARGS
 
             Where   TASK (optional) is one of [detect, segment, classify, pose, obb]
                     MODE (required) is one of [train, val, predict, export, track, benchmark]
                     ARGS (optional) are any number of custom "arg=value" pairs like "imgsz=320" that override defaults.
-                        See all ARGS at https://docs.segab_yolo.com/usage/cfg or with "yolo cfg"
+                        See all ARGS at https://docs.segatt_yolo.com/usage/cfg or with "yolo cfg"
 
         - Train a detection model for 10 epochs with an initial learning_rate of 0.01
             yolo detect train data=coco8.yaml model=yolo26n.pt epochs=10 lr0=0.01
@@ -120,9 +120,9 @@ HELP_MSG = """
             yolo copy-cfg
             yolo cfg
 
-    Docs: https://docs.segab_yolo.com
-    Community: https://community.segab_yolo.com
-    GitHub: https://github.com/segab_yolo/segab_yolo
+    Docs: https://docs.segatt_yolo.com
+    Community: https://community.segatt_yolo.com
+    GitHub: https://github.com/segatt_yolo/segatt_yolo
     """
 
 # Settings and Environment Variables
@@ -179,7 +179,7 @@ class DataExportMixin:
         Returns:
             (polars.DataFrame): Polars DataFrame containing the summary data.
         """
-        import polars as pl  # scope for faster 'import segab_yolo'
+        import polars as pl  # scope for faster 'import segatt_yolo'
 
         return pl.DataFrame(self.summary(normalize=normalize, decimals=decimals))
 
@@ -327,10 +327,10 @@ class IterableSimpleNamespace(SimpleNamespace):
         name = self.__class__.__name__
         raise AttributeError(
             f"""
-            '{name}' object has no attribute '{attr}'. This may be caused by a modified or out of date segab_yolo
-            'default.yaml' file.\nPlease update your code with 'pip install -U segab_yolo' and if necessary replace
+            '{name}' object has no attribute '{attr}'. This may be caused by a modified or out of date segatt_yolo
+            'default.yaml' file.\nPlease update your code with 'pip install -U segatt_yolo' and if necessary replace
             {DEFAULT_CFG_PATH} with the latest version from
-            https://github.com/segab_yolo/segab_yolo/blob/main/segab_yolo/cfg/default.yaml
+            https://github.com/segatt_yolo/segatt_yolo/blob/main/segatt_yolo/cfg/default.yaml
             """
         )
 
@@ -369,13 +369,13 @@ def plt_settings(rcparams=None, backend="Agg"):
 
         def wrapper(*args, **kwargs):
             """Set rc parameters and backend, call the original function, and restore the settings."""
-            import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+            import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
             # Prepend Arial Unicode for non-Latin text (CJK, Arabic, etc.); matplotlib falls back if missing
             if "font.sans-serif" not in rcparams and not wrapper._fonts_registered:
                 from matplotlib import font_manager
 
-                # Register any fonts in segab_yolo config dir (e.g. Arial.Unicode.ttf) with matplotlib
+                # Register any fonts in segatt_yolo config dir (e.g. Arial.Unicode.ttf) with matplotlib
                 known = {f.fname for f in font_manager.fontManager.ttflist}
                 for f in USER_CONFIG_DIR.glob("*.ttf"):
                     if str(f) not in known:
@@ -412,7 +412,7 @@ def plt_settings(rcparams=None, backend="Agg"):
 def set_logging(name="LOGGING_NAME", verbose=True):
     """Set up logging with UTF-8 encoding and configurable verbosity.
 
-    This function configures logging for the segab_yolo library, setting the appropriate logging level and formatter
+    This function configures logging for the segatt_yolo library, setting the appropriate logging level and formatter
     based on the verbosity flag and the current process rank. It handles special cases for Windows environments where
     UTF-8 encoding might not be the default.
 
@@ -424,8 +424,8 @@ def set_logging(name="LOGGING_NAME", verbose=True):
         (logging.Logger): Configured logger object.
 
     Examples:
-        >>> set_logging(name="segab_yolo", verbose=True)
-        >>> logger = logging.getLogger("segab_yolo")
+        >>> set_logging(name="segatt_yolo", verbose=True)
+        >>> logger = logging.getLogger("segatt_yolo")
         >>> logger.info("This is an info message")
 
     Notes:
@@ -498,7 +498,7 @@ class ThreadingLocked:
         lock (threading.Lock): A lock object used to manage access to the decorated function.
 
     Examples:
-        >>> from segab_yolo.utils import ThreadingLocked
+        >>> from segatt_yolo.utils import ThreadingLocked
         >>> @ThreadingLocked()
         ... def my_function():
         ...    # Your code here
@@ -898,7 +898,7 @@ def get_ubuntu_version():
             return None
 
 
-def get_user_config_dir(sub_dir="segab_yolo"):
+def get_user_config_dir(sub_dir="segatt_yolo"):
     """Return a writable config dir, preferring YOLO_CONFIG_DIR and being OS-aware.
 
     Args:
@@ -954,7 +954,7 @@ IS_RASPBERRYPI = is_raspberrypi()
 IS_DEBIAN, IS_DEBIAN_BOOKWORM, IS_DEBIAN_TRIXIE = is_debian([None, "bookworm", "trixie"])
 IS_UBUNTU = is_ubuntu()
 GIT = GitRepo()
-USER_CONFIG_DIR = get_user_config_dir()  # segab_yolo settings dir
+USER_CONFIG_DIR = get_user_config_dir()  # segatt_yolo settings dir
 SETTINGS_FILE = USER_CONFIG_DIR / "settings.json"
 
 
@@ -1031,7 +1031,7 @@ def remove_colorstr(input_string):
 
 
 class TryExcept(contextlib.ContextDecorator):
-    """segab_yolo TryExcept class for handling exceptions gracefully.
+    """segatt_yolo TryExcept class for handling exceptions gracefully.
 
     This class can be used as a decorator or context manager to catch exceptions and optionally print warning messages.
     It allows code to continue execution even when exceptions occur, which is useful for non-critical operations.
@@ -1309,7 +1309,7 @@ class JSONDict(dict):
 
 
 class SettingsManager(JSONDict):
-    """SettingsManager class for managing and persisting segab_yolo settings.
+    """SettingsManager class for managing and persisting segatt_yolo settings.
 
     This class extends JSONDict to provide JSON persistence for settings, ensuring thread-safe operations and default
     values. It validates settings on initialization and provides methods to update or reset settings. The settings
@@ -1339,7 +1339,7 @@ class SettingsManager(JSONDict):
         import hashlib
         import uuid
 
-        from segab_yolo.utils.torch_utils import torch_distributed_zero_first
+        from segatt_yolo.utils.torch_utils import torch_distributed_zero_first
 
         root = GIT.root or Path()
         datasets_root = (root.parent if GIT.root and is_dir_writeable(root.parent) else root).resolve()
@@ -1353,12 +1353,12 @@ class SettingsManager(JSONDict):
             "runs_dir": str(root / "runs"),  # Experiment runs directory
             "uuid": hashlib.sha256(str(uuid.getnode()).encode()).hexdigest(),  # SHA-256 anonymized UUID hash
             "sync": True,  # Enable synchronization
-            "api_key": "",  # segab_yolo API Key
+            "api_key": "",  # segatt_yolo API Key
             "openai_api_key": "",  # OpenAI API Key
             "clearml": True,  # ClearML integration
             "comet": True,  # Comet integration
             "dvc": True,  # DVC integration
-            "hub": True,  # segab_yolo HUB integration
+            "hub": True,  # segatt_yolo HUB integration
             "mlflow": True,  # MLflow integration
             "neptune": True,  # Neptune integration
             "raytune": True,  # Ray Tune integration
@@ -1369,16 +1369,16 @@ class SettingsManager(JSONDict):
         }
 
         self.help_msg = (
-            f"\nView segab_yolo Settings with 'yolo settings' or at '{self.file}'"
+            f"\nView segatt_yolo Settings with 'yolo settings' or at '{self.file}'"
             "\nUpdate Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. "
-            "For help see https://docs.segab_yolo.com/quickstart/#segab_yolo-settings."
+            "For help see https://docs.segatt_yolo.com/quickstart/#segatt_yolo-settings."
         )
 
         with torch_distributed_zero_first(LOCAL_RANK):
             super().__init__(self.file)
 
             if not self.file.exists() or not self:  # Check if file doesn't exist or is empty
-                LOGGER.info(f"Creating new segab_yolo Settings v{version} file ✅ {self.help_msg}")
+                LOGGER.info(f"Creating new segatt_yolo Settings v{version} file ✅ {self.help_msg}")
                 self.reset()
 
             self._validate_settings()
@@ -1391,14 +1391,14 @@ class SettingsManager(JSONDict):
 
         if not (correct_keys and correct_types and correct_version):
             LOGGER.warning(
-                "segab_yolo settings reset to default values. This may be due to a possible problem "
-                f"with your settings or a recent segab_yolo package update. {self.help_msg}"
+                "segatt_yolo settings reset to default values. This may be due to a possible problem "
+                f"with your settings or a recent segatt_yolo package update. {self.help_msg}"
             )
             self.reset()
 
         if self.get("datasets_dir") == self.get("runs_dir"):
             LOGGER.warning(
-                f"segab_yolo setting 'datasets_dir: {self.get('datasets_dir')}' "
+                f"segatt_yolo setting 'datasets_dir: {self.get('datasets_dir')}' "
                 f"must be different than 'runs_dir: {self.get('runs_dir')}'. "
                 f"Please change one to avoid possible issues during training. {self.help_msg}"
             )
@@ -1414,11 +1414,11 @@ class SettingsManager(JSONDict):
                 kwargs.update(arg)
         for k, v in kwargs.items():
             if k not in self.defaults:
-                raise KeyError(f"No segab_yolo setting '{k}'. {self.help_msg}")
+                raise KeyError(f"No segatt_yolo setting '{k}'. {self.help_msg}")
             t = type(self.defaults[k])
             if not isinstance(v, t):
                 raise TypeError(
-                    f"segab_yolo setting '{k}' must be '{t.__name__}' type, not '{type(v).__name__}'. {self.help_msg}"
+                    f"segatt_yolo setting '{k}' must be '{t.__name__}' type, not '{type(v).__name__}'. {self.help_msg}"
                 )
         super().update(*args, **kwargs)
 
@@ -1447,19 +1447,19 @@ def url2file(url):
     return Path(clean_url(url)).name or "download"
 
 
-def vscode_msg(ext="segab_yolo.segab_yolo-snippets") -> str:
-    """Display a message to install segab_yolo-Snippets for VS Code if not already installed."""
+def vscode_msg(ext="segatt_yolo.segatt_yolo-snippets") -> str:
+    """Display a message to install segatt_yolo-Snippets for VS Code if not already installed."""
     path = (USER_CONFIG_DIR.parents[2] if WINDOWS else USER_CONFIG_DIR.parents[1]) / ".vscode/extensions"
     obs_file = path / ".obsolete"  # file tracks uninstalled extensions, while source directory remains
     installed = any(path.glob(f"{ext}*")) and ext not in (obs_file.read_text("utf-8") if obs_file.exists() else "")
-    url = "https://docs.segab_yolo.com/integrations/vscode"
-    return "" if installed else f"{colorstr('VS Code:')} view segab_yolo VS Code Extension ⚡ at {url}"
+    url = "https://docs.segatt_yolo.com/integrations/vscode"
+    return "" if installed else f"{colorstr('VS Code:')} view segatt_yolo VS Code Extension ⚡ at {url}"
 
 
 # Run below code on utils init ------------------------------------------------------------------------------------
 
 # Check first-install steps
-PREFIX = colorstr("segab_yolo: ")
+PREFIX = colorstr("segatt_yolo: ")
 SETTINGS = SettingsManager()  # initialize settings
 PERSISTENT_CACHE = JSONDict(USER_CONFIG_DIR / "persistent_cache.json")  # initialize persistent cache
 DATASETS_DIR = Path(SETTINGS["datasets_dir"])  # global datasets directory

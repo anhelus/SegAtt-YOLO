@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import SETTINGS
+from segatt_yolo.utils import SETTINGS
 
 try:
     assert SETTINGS["raytune"] is True  # verify integration is enabled
@@ -19,10 +19,10 @@ def on_fit_epoch_end(trainer):
     hyperparameter tuning optimization. Only executes when within an active Ray Tune session.
 
     Args:
-        trainer (segab_yolo.engine.trainer.BaseTrainer): The segab_yolo trainer object containing metrics and epochs.
+        trainer (segatt_yolo.engine.trainer.BaseTrainer): The segatt_yolo trainer object containing metrics and epochs.
 
     Examples:
-        >>> # Called automatically by the segab_yolo training loop
+        >>> # Called automatically by the segatt_yolo training loop
         >>> on_fit_epoch_end(trainer)
 
     References:

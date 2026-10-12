@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,11 +8,11 @@ from typing import Any
 import numpy as np
 import torch
 
-from segab_yolo.models.yolo.detect import DetectionValidator
-from segab_yolo.utils import LOGGER, ops
-from segab_yolo.utils.metrics import OBBMetrics, batch_probiou
-from segab_yolo.utils.nms import TorchNMS
-from segab_yolo.utils.plotting import plot_images
+from segatt_yolo.models.yolo.detect import DetectionValidator
+from segatt_yolo.utils import LOGGER, ops
+from segatt_yolo.utils.metrics import OBBMetrics, batch_probiou
+from segatt_yolo.utils.nms import TorchNMS
+from segatt_yolo.utils.plotting import plot_images
 
 
 class OBBValidator(DetectionValidator):
@@ -37,7 +37,7 @@ class OBBValidator(DetectionValidator):
         eval_json: Evaluate YOLO output in JSON format and return performance statistics.
 
     Examples:
-        >>> from segab_yolo.models.yolo.obb import OBBValidator
+        >>> from segatt_yolo.models.yolo.obb import OBBValidator
         >>> args = dict(model="yolo26n-obb.pt", data="dota8.yaml")
         >>> validator = OBBValidator(args=args)
         >>> validator(model=args["model"])
@@ -221,7 +221,7 @@ class OBBValidator(DetectionValidator):
         """
         import numpy as np
 
-        from segab_yolo.engine.results import Results
+        from segatt_yolo.engine.results import Results
 
         Results(
             np.zeros((shape[0], shape[1]), dtype=np.uint8),

@@ -1,5 +1,5 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
-"""segab_yolo YOLO inference backends.
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
+"""segatt_yolo YOLO inference backends.
 
 This package provides modular inference backends for various deep learning frameworks and hardware accelerators.
 Each backend implements the `BaseBackend` interface and can be used independently or through the unified

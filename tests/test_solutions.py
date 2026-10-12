@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-# Tests segab_yolo Solutions: https://docs.segab_yolo.com/solutions/,
+# Tests segatt_yolo Solutions: https://docs.segatt_yolo.com/solutions/,
 # Includes all solutions except DistanceCalculation and the Security Alarm System.
 
 import os
@@ -11,10 +11,10 @@ import numpy as np
 import pytest
 
 from tests import MODEL
-from segab_yolo import solutions
-from segab_yolo.utils import ASSETS_URL, IS_RASPBERRYPI, TORCH_VERSION, checks
-from segab_yolo.utils.downloads import safe_download
-from segab_yolo.utils.torch_utils import TORCH_2_4
+from segatt_yolo import solutions
+from segatt_yolo.utils import ASSETS_URL, IS_RASPBERRYPI, TORCH_VERSION, checks
+from segatt_yolo.utils.downloads import safe_download
+from segatt_yolo.utils.torch_utils import TORCH_2_4
 
 # Predefined argument values
 SHOW = False
@@ -177,7 +177,7 @@ def process_video(solution, video_path: str, needs_frame_count: bool = False):
     ],
 )
 def test_solution(name, solution_class, needs_frame_count, video_key, kwargs_update, tmp_path, solution_assets):
-    """Test individual segab_yolo solution with video processing and parameter validation."""
+    """Test individual segatt_yolo solution with video processing and parameter validation."""
     # Get video path from persistent cache (no copying needed, read-only access)
     video_path = str(solution_assets(video_key)) if video_key else None
 
@@ -276,17 +276,17 @@ def test_streamlit_handle_video_upload_creates_file():
     fake_file.read = fake_file.getvalue
     if fake_file is not None:
         g = io.BytesIO(fake_file.read())
-        with open("segab_yolo.mp4", "wb") as out:
+        with open("segatt_yolo.mp4", "wb") as out:
             out.write(g.read())
-        output_path = "segab_yolo.mp4"
+        output_path = "segatt_yolo.mp4"
     else:
         output_path = None
-    assert output_path == "segab_yolo.mp4", f"Expected output_path 'segab_yolo.mp4', got {output_path}"
-    assert os.path.exists("segab_yolo.mp4"), "segab_yolo.mp4 file not created"
-    with open("segab_yolo.mp4", "rb") as f:
+    assert output_path == "segatt_yolo.mp4", f"Expected output_path 'segatt_yolo.mp4', got {output_path}"
+    assert os.path.exists("segatt_yolo.mp4"), "segatt_yolo.mp4 file not created"
+    with open("segatt_yolo.mp4", "rb") as f:
         content = f.read()
         assert content == b"fake video content", f"File content mismatch: {content}"
-    os.remove("segab_yolo.mp4")
+    os.remove("segatt_yolo.mp4")
 
 
 @pytest.mark.skipif(not TORCH_2_4, reason=f"VisualAISearch requires torch>=2.4 (found torch=={TORCH_VERSION})")
@@ -325,7 +325,7 @@ def test_similarity_search_complete(tmp_path):
 
 def test_distance_calculation_process_method():
     """Test DistanceCalculation.process() computes distance between selected boxes."""
-    from segab_yolo.solutions.solutions import SolutionResults
+    from segatt_yolo.solutions.solutions import SolutionResults
 
     dc = solutions.DistanceCalculation()
     dc.boxes, dc.track_ids, dc.clss, dc.confs = (

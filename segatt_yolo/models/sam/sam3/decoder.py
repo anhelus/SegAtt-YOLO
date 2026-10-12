@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates. All Rights Reserved
 """
@@ -13,9 +13,9 @@ import torch
 from torch import nn
 from torchvision.ops.roi_align import RoIAlign
 
-from segab_yolo.nn.modules.transformer import MLP
-from segab_yolo.nn.modules.utils import _get_clones, inverse_sigmoid
-from segab_yolo.utils.ops import xywh2xyxy
+from segatt_yolo.nn.modules.transformer import MLP
+from segatt_yolo.nn.modules.utils import _get_clones, inverse_sigmoid
+from segatt_yolo.utils.ops import xywh2xyxy
 
 from .model_misc import gen_sineembed_for_position
 

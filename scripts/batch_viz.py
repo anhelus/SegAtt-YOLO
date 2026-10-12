@@ -68,16 +68,19 @@ def collect_results(config: dict, dataset_filter: str = None) -> pl.DataFrame:
                                 "metrics/precision(B)", "metrics/recall(B)",
                             ]
                         })
-                except Exception:
-                    pass
-
-            rows.append(row)
+                        rows.append(row)  # Only add if we have metrics
+                    else:
+                        print(f"  [SKIP] {model_key}: empty results.csv")
+                except Exception as e:
+                    print(f"  [SKIP] {model_key}: error reading results.csv: {e}")
+            else:
+                print(f"  [SKIP] {model_key}: no results.csv at {results_csv}")
 
     return pl.DataFrame(rows)
 
 
 def timed_inference(model_path: str, source: str, num_warmup: int = 10, num_iter: int = 50) -> dict:
-    from segab_yolo import YOLO
+    from segatt_yolo import YOLO
     model = YOLO(model_path)
     first_img = None
     for ext in ("*.jpg", "*.jpeg", "*.png", "*.bmp"):
@@ -208,7 +211,15 @@ def generate_heatmap(df: pl.DataFrame, config: dict, dataset_filter: str = None)
 
         out_path = output / f"{ds_name}_heatmap{suffix}.png"
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        fig.savefig(out_path, dpi=150, bbox_inches="tight")
+        try:
+            fig.savefig(out_path, dpi=150, bbox_inches="tight")
+        except OSError as e:
+            # Try alternative path
+            alt_path = Path.cwd() / out_path
+            alt_path.parent.mkdir(parents=True, exist_ok=True)
+            fig.savefig(alt_path, dpi=150, bbox_inches="tight")
+            out_path = alt_path
+            print(f"  [WARN] Saved to alternative path: {out_path}")
         plt.close(fig)
         print(f"  Heatmap saved: {out_path}")
 
@@ -231,7 +242,8 @@ def generate_barplot(df: pl.DataFrame, config: dict, dataset_filter: str = None)
         fps_vals = []
         for mk in model_keys:
             row = ds_df.filter(pl.col("model_key") == mk)
-            fps_vals.append(row["fps"].to_list()[0] if row.height > 0 else 0)
+            val = row["fps"].to_list()[0] if row.height > 0 else None
+            fps_vals.append(val if val is not None else 0)
 
         baseline_name = ds_cfg.get("baseline")
         colors = []
@@ -258,7 +270,14 @@ def generate_barplot(df: pl.DataFrame, config: dict, dataset_filter: str = None)
 
         out_path = output / f"{ds_name}_fps_barplot.png"
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        fig.savefig(out_path, dpi=150, bbox_inches="tight")
+        try:
+            fig.savefig(out_path, dpi=150, bbox_inches="tight")
+        except OSError as e:
+            alt_path = Path.cwd() / out_path
+            alt_path.parent.mkdir(parents=True, exist_ok=True)
+            fig.savefig(alt_path, dpi=150, bbox_inches="tight")
+            out_path = alt_path
+            print(f"  [WARN] Saved to alternative path: {out_path}")
         plt.close(fig)
         print(f"  FPS barplot saved: {out_path}")
 
@@ -274,8 +293,16 @@ def generate_csv(df: pl.DataFrame, config: dict, dataset_filter: str = None):
             continue
         out_path = output / f"{ds_name}_comparison.csv"
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        cols = [c for c in ds_df.columns if c not in ("dataset", "model_path")]
-        ds_df.select(cols).write_csv(out_path)
+        try:
+            cols = [c for c in ds_df.columns if c not in ("dataset", "model_path")]
+            ds_df.select(cols).write_csv(out_path)
+        except Exception as e:
+            alt_path = Path.cwd() / out_path
+            alt_path.parent.mkdir(parents=True, exist_ok=True)
+            cols = [c for c in ds_df.columns if c not in ("dataset", "model_path")]
+            ds_df.select(cols).write_csv(alt_path)
+            out_path = alt_path
+            print(f"  [WARN] Saved to alternative path: {out_path}")
         print(f"  CSV saved: {out_path}")
 
 

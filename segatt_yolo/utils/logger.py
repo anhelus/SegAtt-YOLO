@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 import logging
 import shutil
@@ -8,8 +8,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from segab_yolo.utils import LOGGER, MACOS, RANK
-from segab_yolo.utils.checks import check_requirements
+from segatt_yolo.utils import LOGGER, MACOS, RANK
+from segatt_yolo.utils.checks import check_requirements
 
 
 class ConsoleLogger:
@@ -92,10 +92,10 @@ class ConsoleLogger:
         sys.stdout = self._ConsoleCapture(self.original_stdout, self._queue_log)
         sys.stderr = self._ConsoleCapture(self.original_stderr, self._queue_log)
 
-        # Hook segab_yolo logger
+        # Hook segatt_yolo logger
         try:
             self._log_handler = self._LogHandler(self._queue_log)
-            logging.getLogger("segab_yolo").addHandler(self._log_handler)
+            logging.getLogger("segatt_yolo").addHandler(self._log_handler)
         except Exception:
             pass
 
@@ -116,7 +116,7 @@ class ConsoleLogger:
         # Remove logging handler to prevent memory leak
         if self._log_handler:
             try:
-                logging.getLogger("segab_yolo").removeHandler(self._log_handler)
+                logging.getLogger("segatt_yolo").removeHandler(self._log_handler)
             except Exception:
                 pass
             self._log_handler = None

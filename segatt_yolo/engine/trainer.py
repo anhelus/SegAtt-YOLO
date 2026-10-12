@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Train a model on a dataset.
 
@@ -24,12 +24,12 @@ import torch
 from torch import distributed as dist
 from torch import nn, optim
 
-from segab_yolo import __version__
-from segab_yolo.cfg import get_cfg, get_save_dir
-from segab_yolo.data.utils import check_cls_dataset, check_det_dataset, convert_ndjson_to_yolo_if_needed
-from segab_yolo.nn.tasks import load_checkpoint
-from segab_yolo.optim import MuSGD
-from segab_yolo.utils import (
+from segatt_yolo import __version__
+from segatt_yolo.cfg import get_cfg, get_save_dir
+from segatt_yolo.data.utils import check_cls_dataset, check_det_dataset, convert_ndjson_to_yolo_if_needed
+from segatt_yolo.nn.tasks import load_checkpoint
+from segatt_yolo.optim import MuSGD
+from segatt_yolo.utils import (
     DEFAULT_CFG,
     GIT,
     LOCAL_RANK,
@@ -42,12 +42,12 @@ from segab_yolo.utils import (
     colorstr,
     emojis,
 )
-from segab_yolo.utils.autobatch import check_train_batch_size
-from segab_yolo.utils.checks import check_amp, check_file, check_imgsz, check_model_file_from_stem, print_args
-from segab_yolo.utils.dist import ddp_cleanup, generate_ddp_command
-from segab_yolo.utils.files import get_latest_run
-from segab_yolo.utils.plotting import plot_results
-from segab_yolo.utils.torch_utils import (
+from segatt_yolo.utils.autobatch import check_train_batch_size
+from segatt_yolo.utils.checks import check_amp, check_file, check_imgsz, check_model_file_from_stem, print_args
+from segatt_yolo.utils.dist import ddp_cleanup, generate_ddp_command
+from segatt_yolo.utils.files import get_latest_run
+from segatt_yolo.utils.plotting import plot_results
+from segatt_yolo.utils.torch_utils import (
     TORCH_2_4,
     EarlyStopping,
     ModelEMA,
@@ -319,7 +319,7 @@ class BaseTrainer:
             elif not v.requires_grad and v.dtype.is_floating_point:  # only floating point Tensor can require gradients
                 LOGGER.warning(
                     f"setting 'requires_grad=True' for frozen layer '{k}'. "
-                    "See segab_yolo.engine.trainer for customization of frozen layers."
+                    "See segatt_yolo.engine.trainer for customization of frozen layers."
                 )
                 v.requires_grad = True
         if not any(v.requires_grad for v in self.model.parameters()):
@@ -559,7 +559,7 @@ class BaseTrainer:
                 self.scheduler.last_epoch = self.epoch  # do not move
                 self.stop |= epoch >= self.epochs  # stop if exceeded epochs
             self.run_callbacks("on_fit_epoch_end")
-            # clear if memory utilization > 50%; always clear on MPS due to leak https://github.com/segab_yolo/segab_yolo/issues/22621
+            # clear if memory utilization > 50%; always clear on MPS due to leak https://github.com/segatt_yolo/segatt_yolo/issues/22621
             self._clear_memory(None if self.device.type == "mps" else 0.5)
 
             # Early Stopping
@@ -624,7 +624,7 @@ class BaseTrainer:
 
     def read_results_csv(self):
         """Read results.csv into a dictionary using polars."""
-        import polars as pl  # scope for faster 'import segab_yolo'
+        import polars as pl  # scope for faster 'import segatt_yolo'
 
         try:
             return pl.read_csv(self.csv, infer_schema_length=None).to_dict(as_series=False)
@@ -671,8 +671,8 @@ class BaseTrainer:
                     "message": GIT.message,
                     "origin": GIT.origin,
                 },
-                "license": "AGPL-3.0 (https://segab_yolo.com/license)",
-                "docs": "https://docs.segab_yolo.com",
+                "license": "AGPL-3.0 (https://segatt_yolo.com/license)",
+                "docs": "https://docs.segatt_yolo.com",
             },
             buffer,
         )
@@ -1041,7 +1041,7 @@ class BaseTrainer:
         else:
             raise NotImplementedError(
                 f"Optimizer '{name}' not found in list of available optimizers {optimizers}. "
-                "Request support for addition optimizers at https://github.com/segab_yolo/segab_yolo."
+                "Request support for addition optimizers at https://github.com/segatt_yolo/segatt_yolo."
             )
 
         num_params = [len(g[0]), len(g[1]), len(g[2])]  # number of param groups

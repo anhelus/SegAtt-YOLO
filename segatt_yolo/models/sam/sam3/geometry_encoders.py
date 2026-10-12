@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 # Copyright (c) Meta Platforms, Inc. and affiliates. All Rights Reserved
 
@@ -6,8 +6,8 @@ import torch
 import torch.nn as nn
 import torchvision
 
-from segab_yolo.nn.modules.utils import _get_clones
-from segab_yolo.utils.ops import xywh2xyxy
+from segatt_yolo.nn.modules.utils import _get_clones
+from segatt_yolo.utils.ops import xywh2xyxy
 
 
 def is_right_padded(mask: torch.Tensor):

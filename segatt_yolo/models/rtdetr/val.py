@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ from typing import Any
 
 import torch
 
-from segab_yolo.data import YOLODataset
-from segab_yolo.data.augment import Compose, Format, v8_transforms
-from segab_yolo.models.yolo.detect import DetectionValidator
-from segab_yolo.utils import colorstr, ops
+from segatt_yolo.data import YOLODataset
+from segatt_yolo.data.augment import Compose, Format, v8_transforms
+from segatt_yolo.models.yolo.detect import DetectionValidator
+from segatt_yolo.utils import colorstr, ops
 
 __all__ = ("RTDETRValidator",)  # tuple or list
 
@@ -118,7 +118,7 @@ class RTDETRValidator(DetectionValidator):
 
     Examples:
         Initialize and run RT-DETR validation
-        >>> from segab_yolo.models.rtdetr import RTDETRValidator
+        >>> from segatt_yolo.models.rtdetr import RTDETRValidator
         >>> args = dict(model="rtdetr-l.pt", data="coco8.yaml")
         >>> validator = RTDETRValidator(args=args)
         >>> validator()

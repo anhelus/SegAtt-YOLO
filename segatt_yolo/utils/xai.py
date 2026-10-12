@@ -11,8 +11,8 @@ from typing import List, Optional, Tuple
 import torch
 import numpy as np
 import cv2
-from segab_yolo.data.augment import LetterBox
-from segab_yolo.utils import LOGGER
+from segatt_yolo.data.augment import LetterBox
+from segatt_yolo.utils import LOGGER
 from pytorch_grad_cam import GradCAM, GradCAMPlusPlus, EigenCAM
 from torchvision.ops import box_iou
 

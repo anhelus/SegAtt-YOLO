@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -17,10 +17,10 @@ import numpy as np
 import torch
 from PIL import Image, ImageOps
 
-from segab_yolo.data.utils import FORMATS_HELP_MSG, IMG_FORMATS, VID_FORMATS
-from segab_yolo.utils import IS_COLAB, IS_KAGGLE, LOGGER, ops
-from segab_yolo.utils.checks import check_requirements
-from segab_yolo.utils.patches import imread
+from segatt_yolo.data.utils import FORMATS_HELP_MSG, IMG_FORMATS, VID_FORMATS
+from segatt_yolo.utils import IS_COLAB, IS_KAGGLE, LOGGER, ops
+from segatt_yolo.utils.checks import check_requirements
+from segatt_yolo.utils.patches import imread
 
 
 @dataclass
@@ -224,7 +224,7 @@ class LoadStreams:
 
 
 class LoadScreenshots:
-    """segab_yolo screenshot dataloader for capturing and processing screen images.
+    """segatt_yolo screenshot dataloader for capturing and processing screen images.
 
     This class manages the loading of screenshot images for processing with YOLO. It is suitable for use with `yolo
     predict source=screen`.
@@ -355,7 +355,7 @@ class LoadImagesAndVideos:
             path = [p.strip() for p in path]
         files = []
         for p in sorted(path) if isinstance(path, (list, tuple)) else [path]:
-            a = str(Path(p).absolute())  # do not use .resolve() https://github.com/segab_yolo/segab_yolo/issues/2912
+            a = str(Path(p).absolute())  # do not use .resolve() https://github.com/segatt_yolo/segatt_yolo/issues/2912
             if "*" in a:
                 files.extend(sorted(glob.glob(a, recursive=True)))  # glob
             elif os.path.isdir(a):
@@ -624,7 +624,7 @@ class LoadTensor:
 
 
 def autocast_list(source: list[Any]) -> list[Image.Image | np.ndarray]:
-    """Convert a list of sources into a list of numpy arrays or PIL images for segab_yolo prediction."""
+    """Convert a list of sources into a list of numpy arrays or PIL images for segatt_yolo prediction."""
     files = []
     for im in source:
         if isinstance(im, (str, Path)):  # filename or uri
@@ -635,8 +635,8 @@ def autocast_list(source: list[Any]) -> list[Image.Image | np.ndarray]:
             files.append(im)
         else:
             raise TypeError(
-                f"type {type(im).__name__} is not a supported segab_yolo prediction source type. \n"
-                f"See https://docs.segab_yolo.com/modes/predict for supported source types."
+                f"type {type(im).__name__} is not a supported segatt_yolo prediction source type. \n"
+                f"See https://docs.segatt_yolo.com/modes/predict for supported source types."
             )
 
     return files

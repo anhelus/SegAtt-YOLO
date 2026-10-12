@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -8,12 +8,12 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.nn.modules import Detect, Pose, Pose26
-from segab_yolo.utils import LINUX, LOGGER, MACOS
-from segab_yolo.utils.checks import check_apt_requirements, check_requirements, check_version, is_sudo_available
-from segab_yolo.utils.downloads import attempt_download_asset
-from segab_yolo.utils.files import spaces_in_path
-from segab_yolo.utils.tal import make_anchors
+from segatt_yolo.nn.modules import Detect, Pose, Pose26
+from segatt_yolo.utils import LINUX, LOGGER, MACOS
+from segatt_yolo.utils.checks import check_apt_requirements, check_requirements, check_version, is_sudo_available
+from segatt_yolo.utils.downloads import attempt_download_asset
+from segatt_yolo.utils.files import spaces_in_path
+from segatt_yolo.utils.tal import make_anchors
 
 
 def tf_wrapper(model: torch.nn.Module) -> torch.nn.Module:
@@ -111,7 +111,7 @@ def onnx2saved_model(
         ">=2.0.0",
         name="tensorflow",
         verbose=True,
-        msg="https://github.com/segab_yolo/segab_yolo/issues/5161",
+        msg="https://github.com/segatt_yolo/segatt_yolo/issues/5161",
     )
 
     output_dir = Path(output_dir)
@@ -148,7 +148,7 @@ def onnx2saved_model(
         input_onnx_file_path=onnx_file,
         output_folder_path=str(output_dir),
         not_use_onnxsim=True,
-        verbosity="error",  # note INT8-FP16 activation bug https://github.com/segab_yolo/segab_yolo/issues/15873
+        verbosity="error",  # note INT8-FP16 activation bug https://github.com/segatt_yolo/segatt_yolo/issues/15873
         output_integer_quantized_tflite=int8,
         custom_input_op_name_np_data_path=np_data,
         enable_batchmatmul_unfold=not int8,  # fix lower no. of detected objects on GPU delegate

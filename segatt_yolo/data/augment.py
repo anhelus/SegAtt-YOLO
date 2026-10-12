@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -13,20 +13,20 @@ import torch
 from PIL import Image
 from torch.nn import functional as F
 
-from segab_yolo.data.utils import polygons2masks, polygons2masks_overlap
-from segab_yolo.utils import LOGGER, IterableSimpleNamespace, colorstr
-from segab_yolo.utils.checks import check_version
-from segab_yolo.utils.instance import Instances
-from segab_yolo.utils.metrics import bbox_ioa
-from segab_yolo.utils.ops import segment2box, xywh2xyxy, xyxyxyxy2xywhr
-from segab_yolo.utils.torch_utils import TORCHVISION_0_10, TORCHVISION_0_11, TORCHVISION_0_13
+from segatt_yolo.data.utils import polygons2masks, polygons2masks_overlap
+from segatt_yolo.utils import LOGGER, IterableSimpleNamespace, colorstr
+from segatt_yolo.utils.checks import check_version
+from segatt_yolo.utils.instance import Instances
+from segatt_yolo.utils.metrics import bbox_ioa
+from segatt_yolo.utils.ops import segment2box, xywh2xyxy, xyxyxyxy2xywhr
+from segatt_yolo.utils.torch_utils import TORCHVISION_0_10, TORCHVISION_0_11, TORCHVISION_0_13
 
 DEFAULT_MEAN = (0.0, 0.0, 0.0)
 DEFAULT_STD = (1.0, 1.0, 1.0)
 
 
 class BaseTransform:
-    """Base class for image transformations in the segab_yolo library.
+    """Base class for image transformations in the segatt_yolo library.
 
     This class provides a unified interface for applying transformations to images, object instances, and semantic
     segmentation masks. Subclasses should override `apply_image`, `apply_instances`, and/or `apply_semantic` for simple
@@ -441,7 +441,7 @@ class Mosaic(BaseMixTransform):
         _cat_labels: Concatenate labels and clips mosaic border instances.
 
     Examples:
-        >>> from segab_yolo.data.augment import Mosaic
+        >>> from segatt_yolo.data.augment import Mosaic
         >>> dataset = YourDataset(...)  # Your image dataset
         >>> mosaic_aug = Mosaic(dataset, imgsz=640, p=0.5, n=4)
         >>> augmented_labels = mosaic_aug(original_labels)
@@ -776,7 +776,7 @@ class MixUp(BaseMixTransform):
         apply_instances: Concatenate instances for MixUp.
 
     Examples:
-        >>> from segab_yolo.data.augment import MixUp
+        >>> from segatt_yolo.data.augment import MixUp
         >>> dataset = YourDataset(...)  # Your image dataset
         >>> mixup = MixUp(dataset, p=0.5)
         >>> augmented_labels = mixup(original_labels)
@@ -786,7 +786,7 @@ class MixUp(BaseMixTransform):
         """Initialize the MixUp augmentation object.
 
         MixUp is an image augmentation technique that combines two images by taking a weighted sum of their pixel values
-        and labels. This implementation is designed for use with the segab_yolo YOLO framework.
+        and labels. This implementation is designed for use with the segatt_yolo YOLO framework.
 
         Args:
             dataset (Any): The dataset to which MixUp augmentation will be applied.
@@ -880,7 +880,7 @@ class CutMix(BaseMixTransform):
         _rand_bbox: Generate random bounding box coordinates for the cut region.
 
     Examples:
-        >>> from segab_yolo.data.augment import CutMix
+        >>> from segatt_yolo.data.augment import CutMix
         >>> dataset = YourDataset(...)  # Your image dataset
         >>> cutmix = CutMix(dataset, p=0.5)
         >>> augmented_labels = cutmix(original_labels)
@@ -1412,7 +1412,7 @@ class RandomHSV(BaseTransform):
 
     Examples:
         >>> import numpy as np
-        >>> from segab_yolo.data.augment import RandomHSV
+        >>> from segatt_yolo.data.augment import RandomHSV
         >>> augmenter = RandomHSV(hgain=0.5, sgain=0.5, vgain=0.5)
         >>> image = np.random.randint(0, 255, (100, 100, 3), dtype=np.uint8)
         >>> labels = {"img": image}
@@ -1462,7 +1462,7 @@ class RandomHSV(BaseTransform):
 
             r = np.random.uniform(-1, 1, 3) * [self.hgain, self.sgain, self.vgain]  # random gains
             x = np.arange(0, 256, dtype=r.dtype)
-            # lut_hue = ((x * (r[0] + 1)) % 180).astype(dtype)   # original hue implementation from segab_yolo<=8.3.78
+            # lut_hue = ((x * (r[0] + 1)) % 180).astype(dtype)   # original hue implementation from segatt_yolo<=8.3.78
             lut_hue = ((x + r[0] * 180) % 180).astype(dtype)
             lut_sat = np.clip(x * (r[1] + 1), 0, 255).astype(dtype)
             lut_val = np.clip(x * (r[2] + 1), 0, 255).astype(dtype)
@@ -1868,7 +1868,7 @@ class CopyPaste(BaseMixTransform):
         apply_instances: Concatenate selected instances for CopyPaste.
 
     Examples:
-        >>> from segab_yolo.data.augment import CopyPaste
+        >>> from segatt_yolo.data.augment import CopyPaste
         >>> dataset = YourDataset(...)  # Your image dataset
         >>> copypaste = CopyPaste(dataset, p=0.5)
         >>> augmented_labels = copypaste(original_labels)
@@ -2706,8 +2706,8 @@ def v8_transforms(dataset, imgsz: int, hyp: IterableSimpleNamespace, stretch: bo
         (Compose): A composition of image transformations to be applied to the dataset.
 
     Examples:
-        >>> from segab_yolo.data.dataset import YOLODataset
-        >>> from segab_yolo.utils import IterableSimpleNamespace
+        >>> from segatt_yolo.data.dataset import YOLODataset
+        >>> from segatt_yolo.utils import IterableSimpleNamespace
         >>> dataset = YOLODataset(img_path="path/to/images", imgsz=640)
         >>> hyp = IterableSimpleNamespace(mosaic=1.0, copy_paste=0.5, degrees=10.0, translate=0.2, scale=0.9)
         >>> transforms = v8_transforms(dataset, imgsz=640, hyp=hyp)
@@ -2793,7 +2793,7 @@ def classify_transforms(
         >>> img = Image.open("path/to/image.jpg")
         >>> transformed_img = transforms(img)
     """
-    import torchvision.transforms as T  # scope for faster 'import segab_yolo'
+    import torchvision.transforms as T  # scope for faster 'import segatt_yolo'
 
     scale_size = size if isinstance(size, (tuple, list)) and len(size) == 2 else (size, size)
 
@@ -2859,7 +2859,7 @@ def classify_augmentations(
         >>> augmented_image = transforms(original_image)
     """
     # Transforms to apply if Albumentations not installed
-    import torchvision.transforms as T  # scope for faster 'import segab_yolo'
+    import torchvision.transforms as T  # scope for faster 'import segatt_yolo'
 
     if not isinstance(size, int):
         raise TypeError(f"classify_augmentations() size {size} must be integer, not (list, tuple)")
@@ -3080,7 +3080,7 @@ class ToTensor:
         """Initialize the ToTensor object for converting images to PyTorch tensors.
 
         This class is designed to be used as part of a transformation pipeline for image preprocessing in the
-        segab_yolo YOLO framework. It converts numpy arrays or PIL Images to PyTorch tensors, with an option for
+        segatt_yolo YOLO framework. It converts numpy arrays or PIL Images to PyTorch tensors, with an option for
         half-precision (float16) conversion.
 
         Args:

@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from typing import Any
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
-from segab_yolo.utils import LOGGER
-from segab_yolo.utils.plotting import colors
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionAnnotator, SolutionResults
+from segatt_yolo.utils import LOGGER
+from segatt_yolo.utils.plotting import colors
 
 
 class SecurityAlarm(BaseSolution):
@@ -98,11 +98,11 @@ class SecurityAlarm(BaseSolution):
         message["Subject"] = "Security Alert"
 
         # Add the text message body
-        message_body = f"segab_yolo alert: {records} object(s) detected."
+        message_body = f"segatt_yolo alert: {records} object(s) detected."
         message.attach(MIMEText(message_body))
 
         # Attach the image
-        image_attachment = MIMEImage(img_bytes, name="segab_yolo.jpg")
+        image_attachment = MIMEImage(img_bytes, name="segatt_yolo.jpg")
         message.attach(image_attachment)
 
         # Send the email

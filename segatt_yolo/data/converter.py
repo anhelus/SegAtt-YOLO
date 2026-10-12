@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -15,10 +15,10 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from segab_yolo.utils import ASSETS_URL, DATASETS_DIR, LOGGER, NUM_THREADS, TQDM, YAML, clean_url
-from segab_yolo.utils.checks import check_file
-from segab_yolo.utils.downloads import download, zip_directory
-from segab_yolo.utils.files import increment_path
+from segatt_yolo.utils import ASSETS_URL, DATASETS_DIR, LOGGER, NUM_THREADS, TQDM, YAML, clean_url
+from segatt_yolo.utils.checks import check_file
+from segatt_yolo.utils.downloads import download, zip_directory
+from segatt_yolo.utils.files import increment_path
 
 
 def coco91_to_coco80_class() -> list[int]:
@@ -246,7 +246,7 @@ def convert_coco(
         lvis (bool, optional): Whether to convert data in lvis dataset way.
 
     Examples:
-        >>> from segab_yolo.data.converter import convert_coco
+        >>> from segatt_yolo.data.converter import convert_coco
 
         Convert COCO annotations to YOLO format
         >>> convert_coco("coco/annotations/", use_segments=True, use_keypoints=False, cls91to80=False)
@@ -359,7 +359,7 @@ def convert_segment_masks_to_yolo_seg(masks_dir: str, output_dir: str, classes: 
         classes (int): Total number of classes in the dataset, e.g., 80 for COCO.
 
     Examples:
-        >>> from segab_yolo.data.converter import convert_segment_masks_to_yolo_seg
+        >>> from segatt_yolo.data.converter import convert_segment_masks_to_yolo_seg
 
         The classes here is the total classes in the dataset, for COCO dataset we have 80 classes
         >>> convert_segment_masks_to_yolo_seg("path/to/masks_directory", "path/to/output/directory", classes=80)
@@ -413,7 +413,7 @@ def convert_segment_masks_to_yolo_seg(masks_dir: str, output_dir: str, classes: 
                             yolo_format.append(round(point[0] / img_width, 6))  # Rounding to 6 decimal places
                             yolo_format.append(round(point[1] / img_height, 6))
                         yolo_format_data.append(yolo_format)
-            # Save segab_yolo YOLO format data to file
+            # Save segatt_yolo YOLO format data to file
             output_path = Path(output_dir) / f"{mask_path.stem}.txt"
             with open(output_path, "w", encoding="utf-8") as file:
                 for item in yolo_format_data:
@@ -432,7 +432,7 @@ def convert_dota_to_yolo_obb(dota_root_path: str):
         dota_root_path (str): The root directory path of the DOTA dataset.
 
     Examples:
-        >>> from segab_yolo.data.converter import convert_dota_to_yolo_obb
+        >>> from segatt_yolo.data.converter import convert_dota_to_yolo_obb
         >>> convert_dota_to_yolo_obb("path/to/DOTA")
 
     Notes:
@@ -604,9 +604,9 @@ def yolo_bbox2segment(im_dir: str | Path, save_dir: str | Path | None = None, sa
                 ├─ ...
                 └─ NNN.txt
     """
-    from segab_yolo import SAM
-    from segab_yolo.data import YOLODataset
-    from segab_yolo.utils.ops import xywh2xyxy
+    from segatt_yolo import SAM
+    from segatt_yolo.data import YOLODataset
+    from segatt_yolo.utils.ops import xywh2xyxy
 
     # NOTE: add placeholder to pass class index check
     dataset = YOLODataset(im_dir, data=dict(names=list(range(1000)), channels=3))
@@ -652,7 +652,7 @@ def create_synthetic_coco_dataset():
     images efficiently.
 
     Examples:
-        >>> from segab_yolo.data.converter import create_synthetic_coco_dataset
+        >>> from segatt_yolo.data.converter import create_synthetic_coco_dataset
         >>> create_synthetic_coco_dataset()
 
     Notes:
@@ -720,7 +720,7 @@ def convert_to_multispectral(path: str | Path, n_channels: int = 10, replace: bo
     """
     from scipy.interpolate import interp1d
 
-    from segab_yolo.data.utils import IMG_FORMATS
+    from segatt_yolo.data.utils import IMG_FORMATS
 
     path = Path(path)
     if path.is_dir():
@@ -773,7 +773,7 @@ def _infer_ndjson_kpt_shape(image_records: list) -> list:
             break
 
     if not kpt_lengths or len(set(kpt_lengths)) != 1:
-        raise ValueError("Pose dataset missing required 'kpt_shape'. See https://docs.segab_yolo.com/datasets/pose/")
+        raise ValueError("Pose dataset missing required 'kpt_shape'. See https://docs.segatt_yolo.com/datasets/pose/")
 
     n = kpt_lengths[0]
 
@@ -785,11 +785,11 @@ def _infer_ndjson_kpt_shape(image_records: list) -> list:
     if n % 2 == 0 and n % 3 != 0:
         return [n // 2, 2]
 
-    raise ValueError("Pose dataset missing required 'kpt_shape'. See https://docs.segab_yolo.com/datasets/pose/")
+    raise ValueError("Pose dataset missing required 'kpt_shape'. See https://docs.segatt_yolo.com/datasets/pose/")
 
 
 async def convert_ndjson_to_yolo(ndjson_path: str | Path, output_path: str | Path | None = None) -> Path:
-    """Convert NDJSON dataset format to segab_yolo YOLO dataset structure.
+    """Convert NDJSON dataset format to segatt_yolo YOLO dataset structure.
 
     This function converts datasets stored in NDJSON (Newline Delimited JSON) format to the standard YOLO format. For
     detection/segmentation/pose/obb tasks, it creates separate directories for images and labels. For classification
@@ -817,11 +817,11 @@ async def convert_ndjson_to_yolo(ndjson_path: str | Path, output_path: str | Pat
         >>> yaml_path = await convert_ndjson_to_yolo("dataset.ndjson", output_path="./converted_datasets")
 
         Use with YOLO training
-        >>> from segab_yolo import YOLO
+        >>> from segatt_yolo import YOLO
         >>> model = YOLO("yolo26n.pt")
-        >>> model.train(data="https://github.com/segab_yolo/assets/releases/download/v0.0.0/coco8-ndjson.ndjson")
+        >>> model.train(data="https://github.com/segatt_yolo/assets/releases/download/v0.0.0/coco8-ndjson.ndjson")
     """
-    from segab_yolo.utils.checks import check_requirements
+    from segatt_yolo.utils.checks import check_requirements
 
     check_requirements("aiohttp")
     import aiohttp

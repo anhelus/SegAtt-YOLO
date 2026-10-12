@@ -1,5 +1,5 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
-"""Base callbacks for segab_yolo training, validation, prediction, and export processes."""
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
+"""Base callbacks for segatt_yolo training, validation, prediction, and export processes."""
 
 from collections import defaultdict
 from copy import deepcopy
@@ -177,7 +177,7 @@ default_callbacks = {
 
 
 def get_default_callbacks():
-    """Get the default callbacks for segab_yolo training, validation, prediction, and export processes.
+    """Get the default callbacks for segatt_yolo training, validation, prediction, and export processes.
 
     Returns:
         (dict): Dictionary of default callbacks for various training events. Each key represents an event during the
@@ -205,14 +205,14 @@ def add_integration_callbacks(instance):
             type of instance determines which callbacks are loaded.
 
     Examples:
-        >>> from segab_yolo.engine.trainer import BaseTrainer
+        >>> from segatt_yolo.engine.trainer import BaseTrainer
         >>> trainer = BaseTrainer()
         >>> add_integration_callbacks(trainer)
     """
     from .hub import callbacks as hub_cb
     from .platform import callbacks as platform_cb
 
-    # Load segab_yolo callbacks
+    # Load segatt_yolo callbacks
     callbacks_list = [hub_cb, platform_cb]
 
     # Load training callbacks

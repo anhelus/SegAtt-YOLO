@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -6,10 +6,10 @@ from copy import copy
 from pathlib import Path
 from typing import Any
 
-from segab_yolo.models import yolo
-from segab_yolo.nn.tasks import PoseModel
-from segab_yolo.utils import DEFAULT_CFG, RANK
-from segab_yolo.utils.torch_utils import unwrap_model
+from segatt_yolo.models import yolo
+from segatt_yolo.nn.tasks import PoseModel
+from segatt_yolo.utils import DEFAULT_CFG, RANK
+from segatt_yolo.utils.torch_utils import unwrap_model
 
 
 class PoseTrainer(yolo.detect.DetectionTrainer):
@@ -32,7 +32,7 @@ class PoseTrainer(yolo.detect.DetectionTrainer):
         get_dataset: Retrieve the dataset and ensure it contains required kpt_shape key.
 
     Examples:
-        >>> from segab_yolo.models.yolo.pose import PoseTrainer
+        >>> from segatt_yolo.models.yolo.pose import PoseTrainer
         >>> args = dict(model="yolo26n-pose.pt", data="coco8-pose.yaml", epochs=3)
         >>> trainer = PoseTrainer(overrides=args)
         >>> trainer.train()
@@ -113,5 +113,5 @@ class PoseTrainer(yolo.detect.DetectionTrainer):
         """
         data = super().get_dataset()
         if "kpt_shape" not in data:
-            raise KeyError(f"No `kpt_shape` in the {self.args.data}. See https://docs.segab_yolo.com/datasets/pose/")
+            raise KeyError(f"No `kpt_shape` in the {self.args.data}. See https://docs.segatt_yolo.com/datasets/pose/")
         return data

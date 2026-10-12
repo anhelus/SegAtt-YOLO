@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -13,18 +13,18 @@ import torch
 from PIL import Image, ImageDraw, ImageFont
 from PIL import __version__ as pil_version
 
-from segab_yolo.utils import IS_COLAB, IS_KAGGLE, LOGGER, TryExcept, ops, plt_settings, threaded
-from segab_yolo.utils.checks import check_font, check_version, is_ascii
-from segab_yolo.utils.files import increment_path
+from segatt_yolo.utils import IS_COLAB, IS_KAGGLE, LOGGER, TryExcept, ops, plt_settings, threaded
+from segatt_yolo.utils.checks import check_font, check_version, is_ascii
+from segatt_yolo.utils.files import increment_path
 
 
 class Colors:
-    """segab_yolo color palette for visualization and plotting.
+    """segatt_yolo color palette for visualization and plotting.
 
-    This class provides methods to work with the segab_yolo color palette, including converting hex color codes to RGB
+    This class provides methods to work with the segatt_yolo color palette, including converting hex color codes to RGB
     values and accessing predefined color schemes for object detection and pose estimation.
 
-    ## segab_yolo Color Palette
+    ## segatt_yolo Color Palette
 
     | Index | Color                                                             | HEX       | RGB               |
     |-------|-------------------------------------------------------------------|-----------|-------------------|
@@ -74,10 +74,10 @@ class Colors:
     | 18    | <i class="fa-solid fa-square fa-2xl" style="color: #ff0000;"></i> | `#ff0000` | (255, 0, 0)       |
     | 19    | <i class="fa-solid fa-square fa-2xl" style="color: #ffffff;"></i> | `#ffffff` | (255, 255, 255)   |
 
-    !!! note "segab_yolo Brand Colors"
+    !!! note "segatt_yolo Brand Colors"
 
-        For segab_yolo brand colors see [https://www.segab_yolo.com/brand](https://www.segab_yolo.com/brand).
-        Please use the official segab_yolo colors for all marketing materials.
+        For segatt_yolo brand colors see [https://www.segatt_yolo.com/brand](https://www.segatt_yolo.com/brand).
+        Please use the official segatt_yolo colors for all marketing materials.
 
     Attributes:
         palette (list[tuple]): List of RGB color tuples for general use.
@@ -85,7 +85,7 @@ class Colors:
         pose_palette (np.ndarray): A specific color palette array for pose estimation with dtype np.uint8.
 
     Examples:
-        >>> from segab_yolo.utils.plotting import Colors
+        >>> from segatt_yolo.utils.plotting import Colors
         >>> colors = Colors()
         >>> colors(5, True)  # Returns BGR format: (221, 111, 255)
         >>> colors(5, False)  # Returns RGB format: (255, 111, 221)
@@ -166,7 +166,7 @@ colors = Colors()  # create instance for 'from utils.plots import colors'
 
 
 class Annotator:
-    """segab_yolo Annotator for train/val mosaics and JPGs and predictions annotations.
+    """segatt_yolo Annotator for train/val mosaics and JPGs and predictions annotations.
 
     Attributes:
         im (Image.Image | np.ndarray): The image to annotate.
@@ -180,7 +180,7 @@ class Annotator:
         light_colors (set): Set of colors considered light for text contrast.
 
     Examples:
-        >>> from segab_yolo.utils.plotting import Annotator
+        >>> from segatt_yolo.utils.plotting import Annotator
         >>> im0 = cv2.imread("test.png")
         >>> annotator = Annotator(im0, line_width=10)
         >>> annotator.box_label([10, 10, 100, 100], "person", (255, 0, 0))
@@ -287,7 +287,7 @@ class Annotator:
             (tuple): Text color for label.
 
         Examples:
-            >>> from segab_yolo.utils.plotting import Annotator
+            >>> from segatt_yolo.utils.plotting import Annotator
             >>> im0 = cv2.imread("test.png")
             >>> annotator = Annotator(im0, line_width=10)
             >>> annotator.get_txt_color(color=(104, 31, 17))  # return (255, 255, 255)
@@ -309,7 +309,7 @@ class Annotator:
             txt_color (tuple, optional): The color of the text.
 
         Examples:
-            >>> from segab_yolo.utils.plotting import Annotator
+            >>> from segatt_yolo.utils.plotting import Annotator
             >>> im0 = cv2.imread("test.png")
             >>> annotator = Annotator(im0, line_width=10)
             >>> annotator.box_label(box=[10, 20, 30, 40], label="person")
@@ -570,7 +570,7 @@ class Annotator:
             area (float): Area enclosed by the bounding box.
 
         Examples:
-            >>> from segab_yolo.utils.plotting import Annotator
+            >>> from segatt_yolo.utils.plotting import Annotator
             >>> im0 = cv2.imread("test.png")
             >>> annotator = Annotator(im0, line_width=10)
             >>> annotator.get_bbox_dimension(bbox=[10, 20, 30, 40])
@@ -593,7 +593,7 @@ def plot_labels(boxes, cls, names=(), save_dir=Path(""), on_plot=None):
         save_dir (Path, optional): Directory to save the plot.
         on_plot (Callable, optional): Function to call after plot is saved.
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
     import polars
     from matplotlib.colors import LinearSegmentedColormap
 
@@ -670,7 +670,7 @@ def save_one_box(
         (np.ndarray): The cropped image.
 
     Examples:
-        >>> from segab_yolo.utils.plotting import save_one_box
+        >>> from segatt_yolo.utils.plotting import save_one_box
         >>> xyxy = [50, 50, 150, 150]
         >>> im = cv2.imread("image.jpg")
         >>> cropped_im = save_one_box(xyxy, im, file="cropped.jpg", square=True)
@@ -688,7 +688,7 @@ def save_one_box(
     if save:
         file.parent.mkdir(parents=True, exist_ok=True)  # make directory
         f = str(increment_path(file).with_suffix(".jpg"))
-        # cv2.imwrite(f, crop)  # save BGR, https://github.com/segab_yolo/yolov5/issues/7007 chroma subsampling issue
+        # cv2.imwrite(f, crop)  # save BGR, https://github.com/segatt_yolo/yolov5/issues/7007 chroma subsampling issue
         crop = crop.squeeze(-1) if grayscale else crop[..., ::-1] if BGR else crop
         Image.fromarray(crop).save(f, quality=95, subsampling=0)  # save RGB
     return crop
@@ -904,10 +904,10 @@ def plot_results(file: str = "path/to/results.csv", dir: str = "", on_plot: Call
         on_plot (Callable, optional): Callback function to be executed after plotting. Takes filename as an argument.
 
     Examples:
-        >>> from segab_yolo.utils.plotting import plot_results
+        >>> from segatt_yolo.utils.plotting import plot_results
         >>> plot_results("path/to/results.csv")
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
     import polars as pl
     from scipy.ndimage import gaussian_filter1d
 
@@ -965,7 +965,7 @@ def plt_color_scatter(v, f, bins: int = 20, cmap: str = "viridis", alpha: float 
         >>> f = np.random.rand(100)
         >>> plt_color_scatter(v, f)
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
     # Calculate 2D histogram and corresponding colors
     hist, xedges, yedges = np.histogram2d(v, f, bins=bins)
@@ -994,7 +994,7 @@ def plot_tune_results(results_file: str = "tune_results.ndjson", exclude_zero_fi
     """
     import json
 
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
     from scipy.ndimage import gaussian_filter1d
 
     def _save_one_file(file):
@@ -1075,7 +1075,7 @@ def feature_visualization(x, module_type: str, stage: int, n: int = 32, save_dir
         n (int, optional): Maximum number of feature maps to plot.
         save_dir (Path, optional): Directory to save results.
     """
-    import matplotlib.pyplot as plt  # scope for faster 'import segab_yolo'
+    import matplotlib.pyplot as plt  # scope for faster 'import segatt_yolo'
 
     for m in {"Detect", "Segment", "Pose", "Classify", "OBB", "RTDETRDecoder"}:  # all model heads
         if m in module_type:

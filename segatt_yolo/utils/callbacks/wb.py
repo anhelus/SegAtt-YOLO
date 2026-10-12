@@ -1,7 +1,7 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import SETTINGS, TESTS_RUNNING
-from segab_yolo.utils.torch_utils import model_info_for_loggers
+from segatt_yolo.utils import SETTINGS, TESTS_RUNNING
+from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -33,7 +33,7 @@ def _custom_table(x, y, classes, title="Precision Recall Curve", x_title="Recall
     Returns:
         (wandb.Object): A wandb object suitable for logging, showcasing the crafted metric visualization.
     """
-    import polars as pl  # scope for faster 'import segab_yolo'
+    import polars as pl  # scope for faster 'import segatt_yolo'
     import polars.selectors as cs
 
     df = pl.DataFrame({"class": classes, "y": y, "x": x}).with_columns(cs.numeric().round(3))
@@ -135,7 +135,7 @@ def on_pretrain_routine_start(trainer):
         latest_run = Path(trainer.save_dir) / "wandb" / "latest-run"
         resuming = trainer.args.resume and latest_run.exists()
         wb.init(
-            project=str(trainer.args.project).replace("/", "-") if trainer.args.project else "segab_yolo",
+            project=str(trainer.args.project).replace("/", "-") if trainer.args.project else "segatt_yolo",
             name=name,
             config=vars(trainer.args),
             id=latest_run.resolve().name.split("-", 2)[2]

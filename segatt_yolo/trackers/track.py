@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from functools import partial
 from pathlib import Path
 
 import torch
 
-from segab_yolo.utils import YAML, IterableSimpleNamespace
-from segab_yolo.utils.checks import check_yaml
+from segatt_yolo.utils import YAML, IterableSimpleNamespace
+from segatt_yolo.utils.checks import check_yaml
 
 from .bot_sort import BOTSORT
 from .byte_tracker import BYTETracker
@@ -19,7 +19,7 @@ def on_predict_start(predictor: object, persist: bool = False) -> None:
     """Initialize trackers for object tracking during prediction.
 
     Args:
-        predictor (segab_yolo.engine.predictor.BasePredictor): The predictor object to initialize trackers for.
+        predictor (segatt_yolo.engine.predictor.BasePredictor): The predictor object to initialize trackers for.
         persist (bool, optional): Whether to persist the trackers if they already exist.
 
     Examples:
@@ -43,7 +43,7 @@ def on_predict_start(predictor: object, persist: bool = False) -> None:
     if hasattr(predictor, "_hook"):
         predictor._hook.remove()
     if cfg.tracker_type == "botsort" and cfg.with_reid and cfg.model == "auto":
-        from segab_yolo.nn.modules.head import Detect
+        from segatt_yolo.nn.modules.head import Detect
 
         if not (
             isinstance(predictor.model.model, torch.nn.Module)

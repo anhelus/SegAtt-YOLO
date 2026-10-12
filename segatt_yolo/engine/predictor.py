@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Run prediction on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
@@ -47,18 +47,18 @@ import cv2
 import numpy as np
 import torch
 
-from segab_yolo.cfg import get_cfg, get_save_dir
-from segab_yolo.data import load_inference_source
-from segab_yolo.data.augment import LetterBox
-from segab_yolo.nn.autobackend import AutoBackend
-from segab_yolo.utils import DEFAULT_CFG, LOGGER, MACOS, WINDOWS, callbacks, colorstr, ops
-from segab_yolo.utils.checks import check_imgsz, check_imshow
-from segab_yolo.utils.files import increment_path
-from segab_yolo.utils.torch_utils import attempt_compile, select_device, smart_inference_mode
+from segatt_yolo.cfg import get_cfg, get_save_dir
+from segatt_yolo.data import load_inference_source
+from segatt_yolo.data.augment import LetterBox
+from segatt_yolo.nn.autobackend import AutoBackend
+from segatt_yolo.utils import DEFAULT_CFG, LOGGER, MACOS, WINDOWS, callbacks, colorstr, ops
+from segatt_yolo.utils.checks import check_imgsz, check_imshow
+from segatt_yolo.utils.files import increment_path
+from segatt_yolo.utils.torch_utils import attempt_compile, select_device, smart_inference_mode
 
 STREAM_WARNING = """
 Inference results will accumulate in RAM unless `stream=True` is passed, which can cause out-of-memory errors for large
-sources or long-running streams and videos. See https://docs.segab_yolo.com/modes/predict/ for help.
+sources or long-running streams and videos. See https://docs.segatt_yolo.com/modes/predict/ for help.
 
 Example:
     results = model(source=..., stream=True)  # generator of Results objects
@@ -218,7 +218,7 @@ class BasePredictor:
             **kwargs (Any): Additional keyword arguments for the inference method.
 
         Returns:
-            (list[segab_yolo.engine.results.Results] | generator): Results objects or generator of Results objects.
+            (list[segatt_yolo.engine.results.Results] | generator): Results objects or generator of Results objects.
         """
         self.stream = stream
         if stream:
@@ -287,7 +287,7 @@ class BasePredictor:
             **kwargs (Any): Additional keyword arguments for the inference method.
 
         Yields:
-            (segab_yolo.engine.results.Results): Results objects.
+            (segatt_yolo.engine.results.Results): Results objects.
         """
         if self.args.verbose:
             LOGGER.info("")

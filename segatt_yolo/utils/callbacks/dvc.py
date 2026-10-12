@@ -1,8 +1,8 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from pathlib import Path
 
-from segab_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING, checks
+from segatt_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING, checks
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -140,7 +140,7 @@ def on_fit_epoch_end(trainer) -> None:
             live.log_metric(metric, value)
 
         if trainer.epoch == 0:
-            from segab_yolo.utils.torch_utils import model_info_for_loggers
+            from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
             for metric, value in model_info_for_loggers(trainer).items():
                 live.log_metric(metric, value, plot=False)
@@ -164,7 +164,7 @@ def on_train_end(trainer) -> None:
 
     Examples:
         >>> # Inside a custom training loop
-        >>> from segab_yolo.utils.callbacks.dvc import on_train_end
+        >>> from segatt_yolo.utils.callbacks.dvc import on_train_end
         >>> on_train_end(trainer)  # Log final metrics and artifacts
     """
     if live:

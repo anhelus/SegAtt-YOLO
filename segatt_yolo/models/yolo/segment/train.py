@@ -1,13 +1,13 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
 from copy import copy
 from pathlib import Path
 
-from segab_yolo.models import yolo
-from segab_yolo.nn.tasks import SegmentationModel
-from segab_yolo.utils import DEFAULT_CFG, RANK
+from segatt_yolo.models import yolo
+from segatt_yolo.nn.tasks import SegmentationModel
+from segatt_yolo.utils import DEFAULT_CFG, RANK
 
 
 class SegmentationTrainer(yolo.detect.DetectionTrainer):
@@ -20,7 +20,7 @@ class SegmentationTrainer(yolo.detect.DetectionTrainer):
         loss_names (tuple[str]): Names of the loss components used during training.
 
     Examples:
-        >>> from segab_yolo.models.yolo.segment import SegmentationTrainer
+        >>> from segatt_yolo.models.yolo.segment import SegmentationTrainer
         >>> args = dict(model="yolo26n-seg.pt", data="coco8-seg.yaml", epochs=3)
         >>> trainer = SegmentationTrainer(overrides=args)
         >>> trainer.train()

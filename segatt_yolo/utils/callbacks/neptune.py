@@ -1,6 +1,6 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING
+from segatt_yolo.utils import LOGGER, SETTINGS, TESTS_RUNNING
 
 try:
     assert not TESTS_RUNNING  # do not log pytest
@@ -69,9 +69,9 @@ def on_pretrain_routine_start(trainer) -> None:
     try:
         global run
         run = neptune.init_run(
-            project=trainer.args.project or "segab_yolo",
+            project=trainer.args.project or "segatt_yolo",
             name=trainer.args.name,
-            tags=["segab_yolo"],
+            tags=["segatt_yolo"],
         )
         run["Configuration/Hyperparameters"] = {k: "" if v is None else v for k, v in vars(trainer.args).items()}
     except Exception as e:
@@ -89,7 +89,7 @@ def on_train_epoch_end(trainer) -> None:
 def on_fit_epoch_end(trainer) -> None:
     """Log model info and validation metrics at the end of each fit epoch."""
     if run and trainer.epoch == 0:
-        from segab_yolo.utils.torch_utils import model_info_for_loggers
+        from segatt_yolo.utils.torch_utils import model_info_for_loggers
 
         run["Configuration/Model"] = model_info_for_loggers(trainer)
     _log_scalars(trainer.metrics, trainer.epoch + 1)

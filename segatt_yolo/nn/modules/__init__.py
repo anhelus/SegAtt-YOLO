@@ -1,13 +1,13 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
-segab_yolo neural network modules.
+segatt_yolo neural network modules.
 
-This module provides access to various neural network components used in segab_yolo models, including convolution
+This module provides access to various neural network components used in segatt_yolo models, including convolution
 blocks, attention mechanisms, transformer components, and detection/segmentation heads.
 
 Examples:
     Visualize a module with Netron
-    >>> from segab_yolo.nn.modules import Conv
+    >>> from segatt_yolo.nn.modules import Conv
     >>> import torch
     >>> import subprocess
     >>> x = torch.ones(1, 128, 40, 40)

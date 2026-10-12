@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -10,36 +10,36 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from segab_yolo import __version__
-from segab_yolo.hub.utils import HELP_MSG, HUB_WEB_ROOT, PREFIX
-from segab_yolo.utils import IS_COLAB, LOGGER, SETTINGS, TQDM, checks
-from segab_yolo.utils.errors import HUBModelError
+from segatt_yolo import __version__
+from segatt_yolo.hub.utils import HELP_MSG, HUB_WEB_ROOT, PREFIX
+from segatt_yolo.utils import IS_COLAB, LOGGER, SETTINGS, TQDM, checks
+from segatt_yolo.utils.errors import HUBModelError
 
 AGENT_NAME = f"python-{__version__}-colab" if IS_COLAB else f"python-{__version__}-local"
 
 
 class HUBTrainingSession:
-    """HUB training session for segab_yolo HUB YOLO models.
+    """HUB training session for segatt_yolo HUB YOLO models.
 
-    This class encapsulates the functionality for interacting with segab_yolo HUB during model training, including
+    This class encapsulates the functionality for interacting with segatt_yolo HUB during model training, including
     model creation, metrics tracking, and checkpoint uploading.
 
     Attributes:
         model_id (str): Identifier for the YOLO model being trained.
-        model_url (str): URL for the model in segab_yolo HUB.
+        model_url (str): URL for the model in segatt_yolo HUB.
         rate_limits (dict[str, int]): Rate limits for different API calls in seconds.
         timers (dict[str, Any]): Timers for rate limiting.
         metrics_queue (dict[str, Any]): Queue for the model's metrics.
         metrics_upload_failed_queue (dict[str, Any]): Queue for metrics that failed to upload.
-        model (Any): Model data fetched from segab_yolo HUB.
+        model (Any): Model data fetched from segatt_yolo HUB.
         model_file (str): Path to the model file.
         train_args (dict[str, Any]): Arguments for training the model.
-        client (Any): Client for interacting with segab_yolo HUB.
+        client (Any): Client for interacting with segatt_yolo HUB.
         filename (str): Filename of the model.
 
     Examples:
         Create a training session with a model URL
-        >>> session = HUBTrainingSession("https://hub.segab_yolo.com/models/example-model")
+        >>> session = HUBTrainingSession("https://hub.segatt_yolo.com/models/example-model")
         >>> session.upload_metrics()
     """
 
@@ -60,7 +60,7 @@ class HUBTrainingSession:
         self.rate_limits = {"metrics": 3, "ckpt": 900, "heartbeat": 300}  # rate limits (seconds)
         self.metrics_queue = {}  # holds metrics for each epoch until upload
         self.metrics_upload_failed_queue = {}  # holds metrics for each epoch if upload failed
-        self.timers = {}  # holds timers in segab_yolo/utils/callbacks/hub.py
+        self.timers = {}  # holds timers in segatt_yolo/utils/callbacks/hub.py
         self.model = None
         self.model_url = None
         self.model_file = None
@@ -86,7 +86,7 @@ class HUBTrainingSession:
             if identifier.startswith(f"{HUB_WEB_ROOT}/models/") and not self.client.authenticated:
                 LOGGER.warning(
                     f"{PREFIX}Please log in using 'yolo login API_KEY'. "
-                    "You can find your API Key at: https://hub.segab_yolo.com/settings?tab=api+keys."
+                    "You can find your API Key at: https://hub.segatt_yolo.com/settings?tab=api+keys."
                 )
 
     @classmethod
@@ -111,7 +111,7 @@ class HUBTrainingSession:
             return None
 
     def load_model(self, model_id: str):
-        """Load an existing model from segab_yolo HUB using the provided model identifier.
+        """Load an existing model from segatt_yolo HUB using the provided model identifier.
 
         Args:
             model_id (str): The identifier of the model to load.
@@ -168,7 +168,7 @@ class HUBTrainingSession:
         self.model.create_model(payload)
 
         if not self.model.id:
-            raise HUBModelError(f"❌ Failed to create model '{self.filename}' on segab_yolo HUB. Please try again.")
+            raise HUBModelError(f"❌ Failed to create model '{self.filename}' on segatt_yolo HUB. Please try again.")
 
         self.model_url = f"{HUB_WEB_ROOT}/models/{self.model.id}"
 
@@ -182,8 +182,8 @@ class HUBTrainingSession:
         """Parse the given identifier to determine the type and extract relevant components.
 
         The method supports different identifier formats:
-            - A HUB model URL https://hub.segab_yolo.com/models/MODEL
-            - A HUB model URL with API Key https://hub.segab_yolo.com/models/MODEL?api_key=APIKEY
+            - A HUB model URL https://hub.segatt_yolo.com/models/MODEL
+            - A HUB model URL with API Key https://hub.segatt_yolo.com/models/MODEL?api_key=APIKEY
             - A local filename that ends with '.pt' or '.yaml'
 
         Args:
@@ -210,7 +210,7 @@ class HUBTrainingSession:
         return api_key, model_id, filename
 
     def _set_train_args(self):
-        """Initialize training arguments and create a model entry on the segab_yolo HUB.
+        """Initialize training arguments and create a model entry on the segatt_yolo HUB.
 
         This method sets up training arguments based on the model's state and updates them with any additional arguments
         provided. It handles different states of the model, such as whether it's resumable, pretrained, or requires
@@ -357,7 +357,7 @@ class HUBTrainingSession:
                 return "Unable to read JSON."
 
     def upload_metrics(self):
-        """Upload model metrics to segab_yolo HUB."""
+        """Upload model metrics to segatt_yolo HUB."""
         return self.request_queue(self.model.upload_metrics, metrics=self.metrics_queue.copy(), thread=True)
 
     def upload_model(
@@ -368,7 +368,7 @@ class HUBTrainingSession:
         map: float = 0.0,
         final: bool = False,
     ) -> None:
-        """Upload a model checkpoint to segab_yolo HUB.
+        """Upload a model checkpoint to segatt_yolo HUB.
 
         Args:
             epoch (int): The current training epoch.
@@ -384,8 +384,8 @@ class HUBTrainingSession:
                 LOGGER.warning(
                     f"{PREFIX} Model 'best.pt' not found, copying 'last.pt' to 'best.pt' and uploading. "
                     "This often happens when resuming training in transient environments like Google Colab. "
-                    "For more reliable training, consider using segab_yolo HUB Cloud. "
-                    "Learn more at https://docs.segab_yolo.com/hub/cloud-training."
+                    "For more reliable training, consider using segatt_yolo HUB Cloud. "
+                    "Learn more at https://docs.segatt_yolo.com/hub/cloud-training."
                 )
                 shutil.copy(last, weights)  # copy last.pt to best.pt
             else:

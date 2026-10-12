@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 Check a model's accuracy on a test or val split of a dataset.
 
@@ -36,13 +36,13 @@ import numpy as np
 import torch
 import torch.distributed as dist
 
-from segab_yolo.cfg import get_cfg, get_save_dir
-from segab_yolo.data.utils import check_cls_dataset, check_det_dataset, convert_ndjson_to_yolo_if_needed
-from segab_yolo.nn.autobackend import AutoBackend
-from segab_yolo.utils import LOCAL_RANK, LOGGER, RANK, TQDM, callbacks, colorstr, emojis
-from segab_yolo.utils.checks import check_imgsz
-from segab_yolo.utils.ops import Profile
-from segab_yolo.utils.torch_utils import (
+from segatt_yolo.cfg import get_cfg, get_save_dir
+from segatt_yolo.data.utils import check_cls_dataset, check_det_dataset, convert_ndjson_to_yolo_if_needed
+from segatt_yolo.nn.autobackend import AutoBackend
+from segatt_yolo.utils import LOCAL_RANK, LOGGER, RANK, TQDM, callbacks, colorstr, emojis
+from segatt_yolo.utils.checks import check_imgsz
+from segatt_yolo.utils.ops import Profile
+from segatt_yolo.utils.torch_utils import (
     attempt_compile,
     select_device,
     smart_inference_mode,

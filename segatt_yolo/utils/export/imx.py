@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -12,12 +12,12 @@ from shutil import which
 import numpy as np
 import torch
 
-from segab_yolo.nn.modules import Detect, Pose, Segment
-from segab_yolo.utils import IS_DEBIAN_BOOKWORM, IS_DEBIAN_TRIXIE, IS_RASPBERRYPI, IS_UBUNTU, LOGGER, WINDOWS
-from segab_yolo.utils.checks import check_apt_requirements, check_requirements
-from segab_yolo.utils.patches import onnx_export_patch
-from segab_yolo.utils.tal import make_anchors
-from segab_yolo.utils.torch_utils import copy_attr
+from segatt_yolo.nn.modules import Detect, Pose, Segment
+from segatt_yolo.utils import IS_DEBIAN_BOOKWORM, IS_DEBIAN_TRIXIE, IS_RASPBERRYPI, IS_UBUNTU, LOGGER, WINDOWS
+from segatt_yolo.utils.checks import check_apt_requirements, check_requirements
+from segatt_yolo.utils.patches import onnx_export_patch
+from segatt_yolo.utils.tal import make_anchors
+from segatt_yolo.utils.torch_utils import copy_attr
 
 # Configuration for Model Compression Toolkit (MCT) quantization
 MCT_CONFIG = {
@@ -239,7 +239,7 @@ def torch2imx(
         ValueError: If the model is not a supported YOLOv8n or YOLO11n variant.
 
     Examples:
-        >>> from segab_yolo import YOLO
+        >>> from segatt_yolo import YOLO
         >>> model = YOLO("yolo11n.pt")
         >>> path = torch2imx(model, "output_dir/", conf=0.25, iou=0.7, max_det=300)
 

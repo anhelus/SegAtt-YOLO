@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """Block modules."""
 
 from __future__ import annotations
@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from segab_yolo.utils.torch_utils import fuse_conv_and_bn
+from segatt_yolo.utils.torch_utils import fuse_conv_and_bn
 
 from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad
 from .transformer import TransformerBlock
@@ -81,10 +81,10 @@ class DFL(nn.Module):
 
 
 class Proto(nn.Module):
-    """segab_yolo YOLO models mask Proto module for segmentation models."""
+    """segatt_yolo YOLO models mask Proto module for segmentation models."""
 
     def __init__(self, c1: int, c_: int = 256, c2: int = 32):
-        """Initialize the segab_yolo YOLO models mask Proto module with specified number of protos and masks.
+        """Initialize the segatt_yolo YOLO models mask Proto module with specified number of protos and masks.
 
         Args:
             c1 (int): Input channels.
@@ -1506,7 +1506,7 @@ class C2fPSA(C2f):
 
     Examples:
         >>> import torch
-        >>> from segab_yolo.nn.modules.block import C2fPSA
+        >>> from segatt_yolo.nn.modules.block import C2fPSA
         >>> model = C2fPSA(c1=64, c2=64, n=3, e=0.5)
         >>> x = torch.randn(1, 64, 128, 128)
         >>> output = model(x)
@@ -1542,7 +1542,7 @@ class SCDown(nn.Module):
 
     Examples:
         >>> import torch
-        >>> from segab_yolo.nn.modules.block import SCDown
+        >>> from segatt_yolo.nn.modules.block import SCDown
         >>> model = SCDown(c1=64, c2=128, k=3, s=2)
         >>> x = torch.randn(1, 64, 128, 128)
         >>> y = model(x)
@@ -1604,7 +1604,7 @@ class TorchVision(nn.Module):
             truncate (int): Number of layers to truncate.
             split (bool): Whether to split the output.
         """
-        import torchvision  # scope for faster 'import segab_yolo'
+        import torchvision  # scope for faster 'import segatt_yolo'
 
         super().__init__()
         if hasattr(torchvision.models, "get_model"):
@@ -1978,10 +1978,10 @@ class SAVPE(nn.Module):
 
 
 class Proto26(Proto):
-    """segab_yolo YOLO26 models mask Proto module for segmentation models."""
+    """segatt_yolo YOLO26 models mask Proto module for segmentation models."""
 
     def __init__(self, ch: tuple = (), c_: int = 256, c2: int = 32, nc: int = 80):
-        """Initialize the segab_yolo YOLO models mask Proto module with specified number of protos and masks.
+        """Initialize the segatt_yolo YOLO models mask Proto module with specified number of protos and masks.
 
         Args:
             ch (tuple): Tuple of channel sizes from backbone feature maps.

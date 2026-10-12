@@ -1,4 +1,4 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from segab_yolo.utils import LOGGER
+from segatt_yolo.utils import LOGGER
 
 from .base import BaseBackend
 
@@ -33,7 +33,7 @@ class DeepXBackend(BaseBackend):
         except ImportError as e:
             raise ImportError(
                 "DeepX inference requires the DeepX DX-Runtime and `dx_engine` Python package. "
-                "See https://docs.segab_yolo.com/integrations/deepx/#runtime-installation for installation instructions."
+                "See https://docs.segatt_yolo.com/integrations/deepx/#runtime-installation for installation instructions."
             ) from e
 
         LOGGER.info(f"Loading {weight} for DeepX inference...")
@@ -48,7 +48,7 @@ class DeepXBackend(BaseBackend):
         # Load metadata
         metadata_file = found.parent / "metadata.yaml"
         if metadata_file.exists():
-            from segab_yolo.utils import YAML
+            from segatt_yolo.utils import YAML
 
             self.apply_metadata(YAML.load(metadata_file))
 

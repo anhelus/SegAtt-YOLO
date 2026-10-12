@@ -1,12 +1,12 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
-from segab_yolo.utils import emojis
+from segatt_yolo.utils import emojis
 
 
 class HUBModelError(Exception):
-    """Exception raised when a model cannot be found or retrieved from segab_yolo HUB.
+    """Exception raised when a model cannot be found or retrieved from segatt_yolo HUB.
 
-    This custom exception is used specifically for handling errors related to model fetching in segab_yolo YOLO. The
+    This custom exception is used specifically for handling errors related to model fetching in segatt_yolo YOLO. The
     error message is processed to include emojis for better user experience.
 
     Attributes:
@@ -26,7 +26,7 @@ class HUBModelError(Exception):
     def __init__(self, message: str = "Model not found. Please check model URL and try again."):
         """Initialize a HUBModelError exception.
 
-        This exception is raised when a requested model is not found or cannot be retrieved from segab_yolo HUB. The
+        This exception is raised when a requested model is not found or cannot be retrieved from segatt_yolo HUB. The
         message is processed to include emojis for better user experience.
 
         Args:

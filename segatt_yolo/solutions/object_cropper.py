@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from pathlib import Path
 from typing import Any
 
-from segab_yolo.solutions.solutions import BaseSolution, SolutionResults
-from segab_yolo.utils.plotting import save_one_box
+from segatt_yolo.solutions.solutions import BaseSolution, SolutionResults
+from segatt_yolo.utils.plotting import save_one_box
 
 
 class ObjectCropper(BaseSolution):

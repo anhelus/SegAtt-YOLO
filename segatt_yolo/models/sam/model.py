@@ -1,8 +1,8 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 """
 SAM model interface.
 
-This module provides an interface to the Segment Anything Model (SAM) from segab_yolo, designed for real-time image
+This module provides an interface to the Segment Anything Model (SAM) from segatt_yolo, designed for real-time image
 segmentation tasks. The SAM model allows for promptable segmentation with unparalleled versatility in image analysis,
 and has been trained on the SA-1B dataset. It features zero-shot performance capabilities, enabling it to adapt to new
 image distributions and tasks without prior knowledge.
@@ -18,8 +18,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from segab_yolo.engine.model import Model
-from segab_yolo.utils.torch_utils import model_info
+from segatt_yolo.engine.model import Model
+from segatt_yolo.utils.torch_utils import model_info
 
 from .predict import Predictor, SAM2Predictor, SAM3Predictor
 
@@ -27,7 +27,7 @@ from .predict import Predictor, SAM2Predictor, SAM3Predictor
 class SAM(Model):
     """SAM (Segment Anything Model) interface class for real-time image segmentation tasks.
 
-    This class provides an interface to the Segment Anything Model (SAM) from segab_yolo, designed for promptable
+    This class provides an interface to the Segment Anything Model (SAM) from segatt_yolo, designed for promptable
     segmentation with versatility in image analysis. It supports various prompts such as bounding boxes, points, or
     labels, and features zero-shot performance capabilities.
 
@@ -162,7 +162,7 @@ class SAM(Model):
             >>> sam = SAM("sam_b.pt")
             >>> task_map = sam.task_map
             >>> print(task_map)
-            {'segment': {'predictor': <class 'segab_yolo.models.sam.predict.Predictor'>}}
+            {'segment': {'predictor': <class 'segatt_yolo.models.sam.predict.Predictor'>}}
         """
         return {
             "segment": {"predictor": SAM2Predictor if self.is_sam2 else SAM3Predictor if self.is_sam3 else Predictor}

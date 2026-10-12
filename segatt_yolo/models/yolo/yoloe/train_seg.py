@@ -1,10 +1,10 @@
-# segab_yolo 🚀 AGPL-3.0 License - https://segab_yolo.com/license
+# segatt_yolo 🚀 AGPL-3.0 License - https://segatt_yolo.com/license
 
 from copy import copy, deepcopy
 
-from segab_yolo.models.yolo.segment import SegmentationTrainer
-from segab_yolo.nn.tasks import YOLOESegModel
-from segab_yolo.utils import RANK
+from segatt_yolo.models.yolo.segment import SegmentationTrainer
+from segatt_yolo.nn.tasks import YOLOESegModel
+from segatt_yolo.utils import RANK
 
 from .train import YOLOETrainer, YOLOETrainerFromScratch, YOLOEVPTrainer
 from .val import YOLOESegValidator
